@@ -1,0 +1,179 @@
+1. 查看数据api   
+
+点击表格查看数据 获取所有 start 0， end -1
+点击曲线查看数据  根据start  end  动态穿入
+
+
+request 
+	url:/manual/judge/listData
+ {"start":1.0,"end":20000.0,"listManualJudgeDTO":
+	[
+		{
+			"instanceId": 337,
+			"instanceName": "测试2(改北京时间)",
+			"taskName": "X1-Y1",
+			"tableName": "command_337",
+			"columnName": "c_203_1",
+			"paramCode": "进入飞控烧写状态",
+			"paramName": "进入飞控烧写状态",
+			"resultType": "cmdparam",
+			"formula": "",
+			"type": "command"
+		},
+		{
+			"instanceId": 348,
+			"instanceName": "动态数据-遥测缓变量",
+			"taskName": "X1-Y1",
+			"tableName": "t_yc_slow_348",
+			"columnName": "c_101_36",
+			"paramCode": "DL3",
+			"paramName": "",
+			"resultType": "float",
+			"formula": "X1",
+			"type": "slow"
+		}
+	]	
+ }
+ 
+ 
+ 响应：
+ 
+ {
+    "result": "0",
+    "data": {
+		
+        "commandDataList": [
+			{
+				"tableName": "t_yc_slow_348",
+				"tableData": [
+					{"id":15,"bt":1.2132, ,"yt":1.2132,"pc":"sss", "pn": "hello", "d": 0},
+					{"id":15,"bt":1.2132, ,"yt":1.2132,"pc":"sss", "pn": "hello", "d": 0}
+				]
+			},			
+			{
+				"tableName": "t_yc_slow_349",
+				"tableData": [
+					{"id":15,"bt":1.2132, ,"yt":1.2132,"pc":"sss", "pn": "hello", "d": 0},
+					{"id":15,"bt":1.2132, ,"yt":1.2132,"pc":"sss", "pn": "hello", "d": 0}
+				]
+			}
+		],
+		"statusDataList": [
+			{
+				"tableName": "t_yc_slow_348",
+				"tableData": [
+					{"id":15,"bt":1.2132, ,"yt":1.2132,"pc":"sss", "pn": "hello", "d": 0},
+					{"id":15,"bt":1.2132, ,"yt":1.2132,"pc":"sss", "pn": "hello", "d": 0}
+				]
+			},			
+			{
+				"tableName": "t_yc_slow_349",
+				"tableData": [
+					{"id":15,"bt":1.2132, ,"yt":1.2132,"pc":"sss", "pn": "hello", "d": 0},
+					{"id":15,"bt":1.2132, ,"yt":1.2132,"pc":"sss", "pn": "hello", "d": 0}
+				]
+			}
+		],		
+        "analogDatasList": [
+			{
+				"tableName": "t_yc_slow_1",
+				"analogDataKeys": [ 'a': 'bjTime', "b": "ycTime", "c": "data1", "d": "data2", "e": "data3"],
+				"analogDatasList": [
+					{"id":15,"a":1.2132, ,"b":1.2132, "c": 11, "d": 0, "e":4561},			
+				]
+			},
+			{
+				"tableName": "t_yc_slow_2",
+				"analogDataKeys": [ 'a': 'bjTime', "b": "ycTime", "c": "data1", "d": "data2", "e": "data3"],
+				"analogDatasList": [
+					{"id":15,"a":1.2132, ,"b":1.2132, "c": 11, "d": 0, "e":123},			
+				]
+			}
+        ]
+    }
+}
+
+ 
+ 2. 曲线API 
+ 
+ 响应的字段是根据paramCode 来显示 线数
+	url:/manual/judge/line
+ 请求：
+  {"start":1.0,"end":20000.0,"listManualJudgeDTO":
+	 [
+		{
+			"instanceId": 337,
+			"instanceName": "测试2(改北京时间)",
+			"taskName": "X1-Y1",
+			"tableName": "command_337",
+			"columnName": "c_203_1",
+			"paramCode": "进入飞控烧写状态",
+			"paramName": "进入飞控烧写状态",
+			"resultType": "cmdparam",
+			"formula": "",
+			"type": "command"
+		},
+		{
+			"instanceId": 348,
+			"instanceName": "动态数据-遥测缓变量",
+			"taskName": "X1-Y1",
+			"tableName": "t_yc_slow_348",
+			"columnName": "c_101_36",
+			"paramCode": "DL3",
+			"paramName": "",
+			"resultType": "float",
+			"formula": "X1",
+			"type": "slow"
+		}
+	]
+ }
+ 
+ 曲线响应：
+ {
+    "result": "0",
+    "data": {
+        "commandDataList": [],
+		"statusDataList": [],
+        "analogDatasList": [
+			{"t":15126215500,"DL3":1.2132,"DL4":1.2132,"DL5":1.2132, "DL6": null},
+			{"t":15126215500,"DL3":1.2132,"DL4":1.2132,"DL5":null,    "DL6": null},
+			{"t":15126215500,"DL3":1.2132,"DL4":1.2132,"DL5":null,   "DL6": 0.5},
+			{"t":15126215500,"DL3":1.2132,"DL4":1.2132,"DL5":1.2132, "DL6": null},
+			{"t":15126215500,"DL3":1.2132,"DL4":null,  "DL5":1.2132, "DL6": null}
+		
+        ]
+    }
+}
+
+3. 下载数据api
+request   post 提交  响应是提示保存框
+	url:/manual/judge/downloadFiles
+ {"listManualJudgeDTO":
+	[
+		{
+			"instanceId": 337,
+			"instanceName": "测试2(改北京时间)",
+			"taskName": "X1-Y1",
+			"tableName": "command_337",
+			"columnName": "c_203_1",
+			"paramCode": "进入飞控烧写状态",
+			"paramName": "进入飞控烧写状态",
+			"resultType": "cmdparam",
+			"formula": "",
+			"type": "command"
+		},
+		{
+			"instanceId": 348,
+			"instanceName": "动态数据-遥测缓变量",
+			"taskName": "X1-Y1",
+			"tableName": "t_yc_slow_348",
+			"columnName": "c_101_36",
+			"paramCode": "DL3",
+			"paramName": "",
+			"resultType": "float",
+			"formula": "X1",
+			"type": "slow"
+		}
+	]	
+ }
+

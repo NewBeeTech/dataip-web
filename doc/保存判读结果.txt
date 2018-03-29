@@ -1,0 +1,27 @@
+url:
+manual/judge/saveResult
+
+request:
+{
+  "start": 0,
+  "end": -1,
+  "listManualJudgeDTO": [{
+    "instanceId": 365,
+    "instanceName": "测试数据（2000递增）",
+    "taskName": "X1-Y1",
+    "tableName": "t_status_premc_365",
+    "columnName": "c_100_1",
+    "paramCode": "status",
+    "paramName": "运行状态",
+    "resultType": "int",
+    "formula": "",
+    "type": "frame",
+    "result":"人工",
+    "description":"description"
+  }
+}
+
+response:
+{
+    "result": "0"
+}
