@@ -20,9 +20,9 @@ export default {
       "pathRewrite": { "^/api/v1/weather": "/v3/weather" }
     },
     "/api/ispace": {
-      "target": "http://47.104.163.55:80/",
+      "target": "http://47.104.163.55:8081/",
       "changeOrigin": true,
-      "pathRewrite": { "^/api/onespace": "/" }
+      "pathRewrite": { "^/api/ispace": "/" }
     },
     // "/api/v2": {
     //   "target": "http://192.168.0.110",
