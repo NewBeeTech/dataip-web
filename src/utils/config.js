@@ -2,7 +2,7 @@ const APIV1 = '/api/v1'
 const APIV2 = '/api/v2'
 const APIV3 = '/api/ispace'
 //const APIV3 = ''
-const APIHOST = 'http://192.168.1.158:8088'
+const APIHOST = 'http://47.104.163.55:8081'
 
 module.exports = {
   name: 'Onespace',

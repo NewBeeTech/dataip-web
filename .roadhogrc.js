@@ -22,7 +22,7 @@ export default {
     "/api/ispace": {
       "target": "http://47.104.163.55:8081/",
       "changeOrigin": true,
-      "pathRewrite": { "^/api/ispace": "/" }
+      "pathRewrite": { "^/api/ispace": "/api/ispace" }
     },
     // "/api/v2": {
     //   "target": "http://192.168.0.110",
