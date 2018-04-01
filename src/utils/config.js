@@ -5,7 +5,7 @@ const APIV3 = '/api/ispace'
 const APIHOST = 'http://47.104.163.55:8081'
 
 module.exports = {
-  name: 'Onespace',
+  name: 'i-space',
   prefix: 'antdAdmin',
   footerText: 'Ant Design Admin  © 2017 zuiidea',
   logo: '/logo.png',
