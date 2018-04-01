@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "antd-admin",
-  "version": "4.3.9",
+  "version": "4.3.10",
   "dependencies": {
     "antd": "^2.13.8",
     "axios": "^0.16.2",
@@ -60,9 +60,7 @@
     "redbox-react": "^1.2.10",
     "roadhog": "^1.2.2"
   },
-  "pre-commit": [
-    "lint"
-  ],
+  "pre-commit": ["lint"],
   "scripts": {
     "dev": "cross-env BROWSER=none PORT=8006 HOST=0.0.0.0 roadhog server",
     "start": "roadhog buildDll && cross-env BROWSER=none HOST=0.0.0.0 roadhog server",
