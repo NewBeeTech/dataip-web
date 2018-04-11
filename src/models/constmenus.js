@@ -94,6 +94,7 @@ let database = [
     bpid: '1',
     name: '数据判读',
     icon: 'book',
+    isHidden:true
   },
   {
     id: '51',
@@ -102,6 +103,7 @@ let database = [
     name: '数据浏览', // 参数浏览
     icon: 'line-chart',
     route: '/paramsBrowse',
+    isHidden:true
   },
   {
     id: '52',

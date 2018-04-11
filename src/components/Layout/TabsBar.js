@@ -7,7 +7,7 @@ import { Tabs, Icon } from 'antd'
 import { Link } from 'react-router-dom'
 import { routerRedux } from 'dva/router'
 import styles from './TabsBar.less'
-
+import localmenus from 'models/constmenus'
 const TabPane = Tabs.TabPane
 
 class TabsBar extends React.Component {
@@ -33,12 +33,7 @@ class TabsBar extends React.Component {
   onEdit = (targetKey, action) => {
     this[action](targetKey)
   }
-  add = () => {
-    const panes = this.state.panes
-    const activeKey = `newTab${this.newTabIndex++}`
-    panes.push({ title: 'New Tab', content: 'Content of new Tab', key: activeKey })
-    this.setState({ panes, activeKey })
-  }
+
   remove = (targetKey) => {
     let activeKey = this.state.activeKey
     let lastIndex
@@ -62,10 +57,13 @@ class TabsBar extends React.Component {
 
     // console.log('TabsBar  pathname: %s ---- next: %s', location.pathname, nextPathname)
     const findCurrentPanes = panes.find(p => p.route === nextPathname)
+
     if (!findCurrentPanes) {
       if (menu.length === 1) { return }
-      const rolesList = _.flatMap(menu, m => m.roleList)
+      const rolesList = localmenus
+
       const currentMenu = rolesList.find(v => v.route === nextPathname)
+
       if (currentMenu) {
         panes.push({
           title: currentMenu.name,

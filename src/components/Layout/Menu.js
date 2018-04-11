@@ -7,6 +7,10 @@ import { arrayToTree, queryArray } from 'utils'
 import pathToRegexp from 'path-to-regexp'
 import constmenus from '../../models/constmenus'
 
+const hiddenMenuIdMap = {
+    54: true,
+    55: true
+}
 const SubMenu = Menu.SubMenu
 
 const Menus = ({ siderFold, darkTheme, navOpenKeys, changeOpenKeys, menu, location }) => {
