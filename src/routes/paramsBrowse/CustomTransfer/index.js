@@ -5,12 +5,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'dva'
-import { Row, Col, Tabs, Button, Icon } from 'antd'
+import { Row, Col, Tabs, Button, Icon, Input } from 'antd'
 import styles from './style.less'
 import CardList from './CardList'
 
 class TransferTable extends React.Component {
   state = {
+    targetMatchKey: '',
     targetKeys: [],
     selectedKeys: [], // 保持选择的状态  标记选中效果
     targetSelectedObjects: [], // 保持右边的数组 --object
@@ -19,7 +20,7 @@ class TransferTable extends React.Component {
   // 点击方向按钮触发
   handleChange = (direction) => {
     const { targetSelectedObjects, selectedKeys } = this.state
-    const targetSelectedObjectsCopy = _.clone(targetSelectedObjects)
+    let targetSelectedObjectsCopy = _.clone(targetSelectedObjects)
     const { paramsetList } = this.props
     // direction 向左 向右
     if (!direction) {
@@ -35,7 +36,12 @@ class TransferTable extends React.Component {
     } else if (direction === 'left') {
       // 只要删除选中数据里的就可以 右边
       _.remove(targetSelectedObjectsCopy, cy => _.findIndex(selectedKeys, k => k === cy.id) > -1)
-    }
+  }else if(direction === 'allLeft'){
+      targetSelectedObjectsCopy = []
+
+  }else if(direction === 'allRight'){
+      targetSelectedObjectsCopy = [...paramsetList]
+  }
     // console.log('----targetSelectedObjects ----', targetSelectedObjectsCopy)
     this.setState({
       targetSelectedObjects: targetSelectedObjectsCopy,
@@ -81,12 +87,19 @@ class TransferTable extends React.Component {
           <Button onClick={this.saveParamSet}>保存为参数组</Button>
         </div>
         <Row>
+            <Col span={10}>
+                选择参数： <Input value={state.targetMatchKey} onChange={e=>this.setState({targetMatchKey:e.target.value})}/>
+            </Col>
+        </Row>
+        <Row>
           <Col span={10}>
+
             <CardList
               rowKey="id"
               onSelectChange={this.handleSelectChange}
               selectedKeys={state.selectedKeys}
-              list={_.difference(paramsetList, state.targetSelectedObjects)}
+              list={_.difference(paramsetList, state.targetSelectedObjects)
+                  .filter(i=>(i.paramName.match(state.targetMatchKey) || i.paramCode.match(state.targetMatchKey)))}
               title="待选参数"
             />
           </Col>
@@ -94,9 +107,18 @@ class TransferTable extends React.Component {
             <Button type="primary" style={{ marginTop: 150 }} onClick={() => { this.handleChange('left') }}>
               <Icon type="left" />
             </Button>
+
+            <h3 style={{ height: 15 }} />
+            <Button type="primary"  onClick={() => { this.handleChange('allLeft') }}>
+              <Icon type="double-left" />
+            </Button>
             <h3 style={{ height: 15 }} />
             <Button type="primary" onClick={() => { this.handleChange('right') }}>
               <Icon type="right" />
+            </Button>
+            <h3 style={{ height: 15 }} />
+            <Button type="primary" onClick={() => { this.handleChange('allRight') }}>
+              <Icon type="double-right" />
             </Button>
           </Col>
           <Col span={10}>

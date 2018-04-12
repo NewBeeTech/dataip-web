@@ -48,7 +48,7 @@ class TransferTable extends React.Component {
     console.log('当前选择的paramsetName ---', paramsetName)
     // const transferList = paramsetList.map((p, i) => ({ key: `transfer-key-${i}`, title: p.paramName }))
     const transferList = paramsetList.map((p, i) => ({ key: p.paramName, title: p.paramName }))
-
+    console.log(paramsetList);
     return (
       <div>
         <div style={{ marginBottom: 10, marginLeft: 'calc( 40% + 45px )' }}>
@@ -56,6 +56,7 @@ class TransferTable extends React.Component {
           <Button onClick={this.saveParamSet}>保存为参数组</Button>
         </div>
         <Transfer
+            showSearch
           rowKey={record => record.id}
           dataSource={paramsetList}
           titles={['待选参数', '已选参数']}
