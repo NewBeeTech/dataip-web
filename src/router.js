@@ -41,6 +41,11 @@ const Routers = function ({ history, app }) {
       path: '/judgeReview',
       models: () => [import('./models/manualJudge')],
       component: () => import('./routes/manualJudge/view'),
+    }, {
+      // 判读 数据查看
+      path: '/multiPages',
+      models: () => [import('./models/multiPages')],
+      component: () => import('./routes/multiPages'),
     },
   ]
 

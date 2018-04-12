@@ -25,3 +25,5 @@ app.router(require('./router'))
 
 // 4. Start
 app.start('#root')
+
+export default app
