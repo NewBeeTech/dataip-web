@@ -8,7 +8,7 @@ import app from '../../index.js'
 import dynamic from 'dva/dynamic'
 
 const model = dynamic({ app, component: ()=>import('../paramsBrowse.js')});
-console.log(model,'model');
+// console.log(model,'model');
 app.model(modelExtend(model, {
     namespace: 'test' + Math.random()
 }))

@@ -100,7 +100,7 @@ let database = [
     id: '51',
     bpid: '5',
     mpid: '5',
-    name: '数据浏览', // 参数浏览
+    name: '参数浏览', // 参数浏览
     icon: 'line-chart',
     route: '/paramsBrowse',
     isHidden:true
@@ -112,6 +112,14 @@ let database = [
     name: '自动判读',
     icon: 'bar-chart',
     route: '/dataDecide/autoDecide',
+  },
+  {
+    id: '/autoIp',
+    bpid: '/autoIp',
+    mpid: '/autoIp',
+    name: '自动判读',
+    icon: 'bar-chart',
+    route: '/autoIp',
   },
   {
     id: '6',

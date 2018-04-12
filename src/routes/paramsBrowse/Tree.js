@@ -11,7 +11,7 @@ class TreeBar extends React.Component {
   onSelect = (selectedKeys, info) => {
     const { device } = info.node.props
     const { dispatch } = this.props
-    console.log('selected', selectedKeys, device)
+    // console.log('selected', selectedKeys, device)
 
     if (device && selectedKeys[0]) {
       dispatch({
@@ -24,7 +24,7 @@ class TreeBar extends React.Component {
     }
   }
   render () {
-    const { paramList } = this.props
+    const { paramList = [] } = this.props
 
     const treeNodes = paramList.map((p) => {
       const uniqueParamset = Array.from(new Set(p.paramsetName))

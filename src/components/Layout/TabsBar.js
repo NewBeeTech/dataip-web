@@ -24,19 +24,31 @@ class TabsBar extends React.Component {
   }
 
   onChange = (activeKey) => {
+
     const currentRoute = this.state.panes.find(p => p.key === activeKey)
     this.setState({ activeKey })
-    this.props.dispatch(routerRedux.push({
-      pathname: currentRoute.route,
-    }))
+
+    if(currentRoute) {
+        this.props.dispatch(routerRedux.push({
+          pathname: currentRoute.route,
+        }))
+    }else {
+        this.props.dispatch(routerRedux.push({
+          pathname: '/'
+        }))
+    }
+
   }
   onEdit = (targetKey, action) => {
     this[action](targetKey)
   }
 
   remove = (targetKey) => {
+
     let activeKey = this.state.activeKey
     let lastIndex
+    debugger
+
     this.state.panes.forEach((pane, i) => {
       if (pane.key === targetKey) {
         lastIndex = i - 1
@@ -47,6 +59,7 @@ class TabsBar extends React.Component {
       activeKey = panes[lastIndex].key
     }
     // panes = panes;
+    console.log(panes, activeKey);
     this.setState({ panes })
     this.onChange(activeKey)
   }
@@ -57,7 +70,7 @@ class TabsBar extends React.Component {
 
     // console.log('TabsBar  pathname: %s ---- next: %s', location.pathname, nextPathname)
     const findCurrentPanes = panes.find(p => p.route === nextPathname)
-
+    // console.log(findCurrentPanes,'findCurrentPanes');
     if (!findCurrentPanes) {
       if (menu.length === 1) { return }
       const rolesList = localmenus

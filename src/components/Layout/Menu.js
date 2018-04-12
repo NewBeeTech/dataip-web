@@ -92,7 +92,7 @@ const Menus = ({ siderFold, darkTheme, navOpenKeys, changeOpenKeys, menu, locati
     >
       { parent.roleList &&
         parent.roleList.map(item => (<Menu.Item key={`menu_${item.id}`}>
-          <Link to={item.route || '#'}>
+          <Link to={item.url || '#'}>
             {item.icon && <Icon type={item.icon} />}
             {!siderFoldN && item.name}
           </Link>
