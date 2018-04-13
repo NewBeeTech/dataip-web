@@ -5,9 +5,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'dva'
-import { Row, Col, Tabs, Button, Icon, Input, Tooltip} from 'antd'
+import { Row, Col, Tabs, Button, Icon, Input, Tooltip, Modal} from 'antd'
 import styles from './style.less'
 import CardList from './CardList'
+import InputSelect from '@@/Inputselect'
 
 class TransferTable extends React.Component {
   state = {
@@ -15,6 +16,8 @@ class TransferTable extends React.Component {
     targetKeys: [],
     selectedKeys: [], // 保持选择的状态  标记选中效果
     targetSelectedObjects: [], // 保持右边的数组 --object
+    isUpdating: false,
+    isSaving: false
   }
 
   // 点击方向按钮触发
@@ -62,6 +65,14 @@ class TransferTable extends React.Component {
 
   saveParamSet = () => {
     console.log('保存为参数组')
+    this.setState({
+        isSaving: true
+    })
+  }
+  updateParamSet = () => {
+    this.setState({
+        isUpdating: true
+    })
   }
 
   handleStarter = (key) => {
@@ -135,7 +146,7 @@ class TransferTable extends React.Component {
 
 
                 <Tooltip title='数据下载'>
-                    <Button icon='download' onClick={this.handleStarter} className="margin-bottom8" title='数据下载' ></Button>
+                    <Button icon='download' onClick={this.download} className="margin-bottom8" title='数据下载' ></Button>
                 </Tooltip>
 
 
@@ -145,13 +156,65 @@ class TransferTable extends React.Component {
 
 
                 <Tooltip title='更新参数组'>
-                    <Button icon='sync' onClick={this.saveParamSet} className="margin-bottom8" title='更新参数组' ></Button>
+                    <Button icon='sync' onClick={this.updateParamSet} className="margin-bottom8" title='更新参数组' ></Button>
                 </Tooltip>
-
 
               </div>
            </Col>
         </Row>
+
+        <Modal
+            visible={state.isSaving}
+            title='创建自定义参数组'
+            footer={
+                <div>
+                    <Button onClick={()=>this.setState({isSaving:false})}>取消</Button>
+                    <Button onClick={()=>this.setState({isSaving:false})} type='primary' style={{marginLeft:10}}>保存</Button>
+                </div>
+            }
+        >
+            <Row style={{marginBottom: 10, marginTop:20}}>
+                <Col span={2}>型号：</Col>
+                <Col span={22}>
+                    <InputSelect style={{width:'100%'}}></InputSelect>
+
+                </Col>
+
+            </Row>
+            <Row>
+                <Col span={2}>名称：</Col>
+                <Col span={22}>
+                    <Input type='textarea'></Input>
+                </Col>
+            </Row>
+        </Modal>
+
+        <Modal
+            visible={ state.isUpdating}
+            title='更新自定义参数组'
+            footer={
+                <div>
+                    <Button onClick={()=>this.setState({isUpdating:false})}>取消</Button>
+                    <Button onClick={()=>this.setState({isSaving:false})} type='primary' style={{marginLeft:10}}>追加</Button>
+                    <Button onClick={()=>this.setState({isSaving:false})} type='primary' style={{marginLeft:10}}>覆盖</Button>
+                </div>
+            }
+        >
+            <Row style={{marginBottom: 10, marginTop:20}}>
+                <Col span={2}>型号：</Col>
+                <Col span={22}>
+                    <InputSelect style={{width:'100%'}}></InputSelect>
+                </Col>
+
+            </Row>
+            <Row>
+                <Col span={2}>名称：</Col>
+                <Col span={22}>
+                    <InputSelect style={{width:'100%'}}></InputSelect>
+                </Col>
+            </Row>
+        </Modal>
+
       </div>
     )
   }
