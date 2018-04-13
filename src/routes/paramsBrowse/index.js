@@ -1,12 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'dva'
-import { Row, Col, Tabs, Button, Tooltip } from 'antd'
+import { Row, Col, Tabs, Button, Tooltip, Modal as AntdModal} from 'antd'
 import { routerRedux } from 'dva/router'
 import List from './List'
 import Tree from './Tree'
 import Transfer from './Transfer'
 import CustomTransfer from './CustomTransfer'
+import InputSelect from '@@/Inputselect'
 import Modal from './Modal'
 
 const TabPane = Tabs.TabPane
@@ -14,7 +15,7 @@ const TabPane = Tabs.TabPane
 
 const Index = ({ user, paramsBrowse, dispatch, loading, location }) => {
   const { paramList, pagination, listModalVisible, selectedRowKeys, paramsetList, listInstanceId , filterKey} = paramsBrowse
-  const { listInstance, listUserParam, listDeviceParamset, paramsetName } = paramsBrowse
+  const { listInstance, listUserParam, listDeviceParamset, paramsetName , isSetting} = paramsBrowse
   const { list, listTask } = user
   const { query = {}, pathname } = location
 
@@ -64,6 +65,15 @@ const Index = ({ user, paramsBrowse, dispatch, loading, location }) => {
     })
   }
 
+  function setCurrentTask() {
+      dispatch({
+        type: 'paramsBrowse/updateState',
+        payload: {
+            isSetting: true
+        }
+      })
+  }
+
 
   // 默认参数列表
   const treeProps = {
@@ -105,7 +115,7 @@ const Index = ({ user, paramsBrowse, dispatch, loading, location }) => {
                         <Button onClick={handleBtnClick} icon='select'></Button>
                     </Tooltip>
                     <Tooltip title='设置当前任务'>
-                        <Button onClick={handleBtnClick} icon='setting'></Button>
+                        <Button onClick={setCurrentTask} icon='setting'></Button>
                     </Tooltip>
 
                 </div>
@@ -120,7 +130,26 @@ const Index = ({ user, paramsBrowse, dispatch, loading, location }) => {
         </Row>
       </Col>
     </Row>
+    <AntdModal
+        visible={isSetting}
+        title='设置当前实验'
+        okText='设置'
+        onCancel={()=>dispatch({type:'paramsBrowse/updateState', payload: {isSetting:false}})}
+    >
+        <Row style={{marginBottom: 10, marginTop:20}}>
+            <Col span={2}>型号：</Col>
+            <Col span={22}>
+                <InputSelect style={{width:'100%'}}></InputSelect>
+            </Col>
 
+        </Row>
+        <Row>
+            <Col span={2}>任务：</Col>
+            <Col span={22}>
+                <InputSelect style={{width:'100%'}}></InputSelect>
+            </Col>
+        </Row>
+    </AntdModal>
   </div>)
 }
 
