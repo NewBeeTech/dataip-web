@@ -5,7 +5,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'dva'
-import { Row, Col, Tabs, Button, Icon, Input } from 'antd'
+import { Row, Col, Tabs, Button, Icon, Input, Tooltip} from 'antd'
 import styles from './style.less'
 import CardList from './CardList'
 
@@ -82,10 +82,7 @@ class TransferTable extends React.Component {
 
     return (
       <div>
-        <div style={{ marginBottom: 10, marginLeft: 'calc( 40% + 45px )' }}>
-          <Button onClick={this.handleStarter} className="margin-right8">启动判读</Button>
-          <Button onClick={this.saveParamSet}>保存为参数组</Button>
-        </div>
+
         <Row>
             <Col span={10}>
                 选择参数： <Input value={state.targetMatchKey} onChange={e=>this.setState({targetMatchKey:e.target.value})}/>
@@ -99,7 +96,7 @@ class TransferTable extends React.Component {
               onSelectChange={this.handleSelectChange}
               selectedKeys={state.selectedKeys}
               list={_.difference(paramsetList, state.targetSelectedObjects)
-                  .filter(i=>(i.paramName.match(state.targetMatchKey) || i.paramCode.match(state.targetMatchKey)))}
+                  .filter(i => (i.paramName.match(state.targetMatchKey) || i.paramCode.match(state.targetMatchKey)))}
               title="待选参数"
             />
           </Col>
@@ -130,6 +127,30 @@ class TransferTable extends React.Component {
               title="已选参数"
             />
           </Col>
+          <Col span={2}>
+              <div>
+                <Tooltip title='启动判'>
+                    <Button icon='play-circle' onClick={this.handleStarter} className="margin-bottom8" title='启动判读' ></Button>
+                </Tooltip>
+
+
+                <Tooltip title='数据下载'>
+                    <Button icon='download' onClick={this.handleStarter} className="margin-bottom8" title='数据下载' ></Button>
+                </Tooltip>
+
+
+                <Tooltip title='保存为参数组'>
+                    <Button icon='save' onClick={this.saveParamSet} className="margin-bottom8" title='保存为参数组' ></Button>
+                </Tooltip>
+
+
+                <Tooltip title='更新参数组'>
+                    <Button icon='sync' onClick={this.saveParamSet} className="margin-bottom8" title='更新参数组' ></Button>
+                </Tooltip>
+
+
+              </div>
+           </Col>
         </Row>
       </div>
     )

@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'dva'
-import { Row, Col, Tabs, Button } from 'antd'
+import { Row, Col, Tabs, Button, Tooltip } from 'antd'
 import { routerRedux } from 'dva/router'
 import List from './List'
 import Tree from './Tree'
@@ -13,7 +13,7 @@ const TabPane = Tabs.TabPane
 
 
 const Index = ({ user, paramsBrowse, dispatch, loading, location }) => {
-  const { paramList, pagination, listModalVisible, selectedRowKeys, paramsetList, listInstanceId } = paramsBrowse
+  const { paramList, pagination, listModalVisible, selectedRowKeys, paramsetList, listInstanceId , filterKey} = paramsBrowse
   const { listInstance, listUserParam, listDeviceParamset, paramsetName } = paramsBrowse
   const { list, listTask } = user
   const { query = {}, pathname } = location
@@ -39,7 +39,9 @@ const Index = ({ user, paramsBrowse, dispatch, loading, location }) => {
     dataSource: list,
     listTask,
     width: 900,
+    height: 800,
     dispatch,
+    filterKey,
     selectedRowKeys,
     title: '选择实验',
     confirmLoading: loading.effects['paramsBrowse/query'],
@@ -91,11 +93,25 @@ const Index = ({ user, paramsBrowse, dispatch, loading, location }) => {
         <Tree {...treeProps} />
       </Col>
       <Col span={20}>
-        <div style={{ marginBottom: 10 }}>
-          <Button onClick={handleBtnClick}>选择试验</Button>
-        </div>
+
         {listModalVisible && <Modal {...modalProps} />}
-        {(list.length && !listModalVisible || listInstance.length) && <List {...listProps} />}
+        <Row>
+            <Col span={22}>
+                {(list.length && !listModalVisible || listInstance.length) && <List {...listProps} />}
+            </Col>
+            <Col span={2}>
+                <div style={{ marginBottom: 10 }}>
+                    <Tooltip title='选择试验'>
+                        <Button onClick={handleBtnClick} icon='select'></Button>
+                    </Tooltip>
+                    <Tooltip title='设置当前任务'>
+                        <Button onClick={handleBtnClick} icon='setting'></Button>
+                    </Tooltip>
+
+                </div>
+            </Col>
+        </Row>
+
 
         <Row>
           <Col span={24}>

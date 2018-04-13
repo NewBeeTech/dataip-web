@@ -25,12 +25,13 @@ const modal = ({
     ...modalProps,
     onOk: handleOk,
   }
-  const { dataSource, confirmLoading } = modalProps
+  const { dataSource = [], confirmLoading } = modalProps
   const listProps = {
-    dataSource,
+    dataSource: dataSource.filter(i=>i.instanceName.includes(modalOpts.filterKey || '')),
     rowKey: 'instanceId',
     loading: confirmLoading,
     size: 'small',
+    height: 450,
     rowSelection: {
       selectedRowKeys,
       onChange: (keys) => {
@@ -63,16 +64,32 @@ const modal = ({
     },
   }
 
-
+  // let data = dataSource.filter(i=>i.instanceName.includes(modalOpts.filterKey || ''))
   return (
     <Modal {...modalOpts}>
-      <Row>
+      <Row style={{height: 500}}>
         <Col span={4}>
           <Tree {...taskTreeProps} />
         </Col>
+
         {
           dataSource.length &&
           <Col span={20}>
+            <Row style={{marginBottom: 10}}>
+                <Col span={4}>
+                    <label htmlFor="">根据名称过滤：</label>
+                </Col>
+
+                <Col span={18}>
+                    <Input value={modalOpts.filterKey}
+                    onChange={e=>dispatch({
+                        type:'paramsBrowse/updateState',
+                        payload: {filterKey: e.target.value}})}></Input>
+                </Col>
+            </Row>
+
+
+
             <List {...listProps} />
           </Col>
         }

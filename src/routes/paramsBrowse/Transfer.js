@@ -52,8 +52,10 @@ class TransferTable extends React.Component {
     return (
       <div>
         <div style={{ marginBottom: 10, marginLeft: 'calc( 40% + 45px )' }}>
-          <Button onClick={this.handleStarter} className="margin-right8">启动判读</Button>
-          <Button onClick={this.saveParamSet}>保存为参数组</Button>
+          <Button icon='play-circle' onClick={this.handleStarter} className="margin-right8">启动判读</Button>
+          <Button icon='download' onClick={this.handleStarter} className="margin-right8">数据下载</Button>
+          <Button icon='save' onClick={this.saveParamSet}>保存为参数组</Button>
+          <Button icon='sync' onClick={this.saveParamSet}>更新参数组</Button>
         </div>
         <Transfer
             showSearch

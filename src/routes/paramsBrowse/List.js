@@ -29,7 +29,7 @@ const List = ({ ...tableProps }) => {
   ]
 
   return (
-    <div>
+    <div style={{marginBottom: 10}}>
       <Table
         {...tableProps}
         bordered
@@ -37,6 +37,7 @@ const List = ({ ...tableProps }) => {
         columns={columns}
         simple
         className={styles.table}
+        pagination={false}
       />
     </div>
   )
