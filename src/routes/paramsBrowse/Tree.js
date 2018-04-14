@@ -9,7 +9,7 @@ const TreeNode = Tree.TreeNode
 
 class TreeBar extends React.Component {
   onSelect = (selectedKeys, info) => {
-    const { device } = info.node.props
+    const { device, isUser } = info.node.props
     const { dispatch } = this.props
     // console.log('selected', selectedKeys, device)
 
@@ -18,6 +18,7 @@ class TreeBar extends React.Component {
         type: 'paramsBrowse/queryParamsetName',
         payload: {
           device,
+          isUser,
           paramsetName: selectedKeys[0],
         },
       })
@@ -28,6 +29,10 @@ class TreeBar extends React.Component {
 
     const treeNodes = paramList.map((p) => {
       const uniqueParamset = Array.from(new Set(p.paramsetName))
+
+      if(!p.device) {
+          return <TreeNode title={p} key={p} device={p} isUser/>
+      }
       return (<TreeNode title={p.device} key={p.device} disable>
         { uniqueParamset.map(v => <TreeNode title={v} key={v} device={p.device} />) }
       </TreeNode>)
@@ -36,6 +41,7 @@ class TreeBar extends React.Component {
     return (<div>
       <Tree
         onSelect={this.onSelect}
+        style={{maxHeight:'45%'}}
       >
         {treeNodes}
       </Tree>

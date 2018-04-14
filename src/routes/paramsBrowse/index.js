@@ -80,6 +80,7 @@ const Index = ({ user, paramsBrowse, dispatch, loading, location }) => {
     paramList: paramList.length ? paramList : listDeviceParamset,
     dispatch,
   }
+  console.log(listUserParam,'listUserParam');
   // 自定义参数组
   const customTreeProps = {
     paramList: listUserParam,

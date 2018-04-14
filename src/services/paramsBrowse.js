@@ -37,6 +37,13 @@ export async function queryParamsetName (params) {
     data: params,
   })
 }
+export async function queryUserParamsetName (params) {
+  return request({
+    url: '/manual/judge/tree/UserParamsetName',
+    method: 'post',
+    data: params,
+  })
+}
 
 export async function queryStartJudge (params) {
   return request({

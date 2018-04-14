@@ -1,5 +1,5 @@
 import modelExtend from 'dva-model-extend'
-import { query, queryIndex, queryParams, queryParamsetName, queryStartJudge } from 'services/paramsBrowse'
+import { query, queryIndex, queryParams, queryParamsetName, queryStartJudge, queryUserParamsetName} from 'services/paramsBrowse'
 import { pageModel } from 'models/common'
 import queryString from 'query-string'
 import { routerRedux } from 'dva/router'
@@ -75,12 +75,12 @@ export default modelExtend(pageModel, {
       }
       const data = yield call(queryIndex, payload)
       if (data.result === '0') {
-        const { listInstance, listUserParam, listDeviceParamset } = data.data
+        const { listInstance, listUserParamSetName, listDeviceParamset } = data.data
         yield put({
           type: 'saveIndexDataList',
           payload: {
             listInstance,
-            listUserParam,
+            listUserParam:listUserParamSetName,
             listDeviceParamset,
           },
         })
@@ -139,7 +139,12 @@ export default modelExtend(pageModel, {
     // 根据paramname 获取list  下边transfer tree data
     * queryParamsetName ({ payload }, { call, put, select }) {
       let { listInstanceId, paramsetList } = yield select(_ => _.paramsBrowse)
-      const data = yield call(queryParamsetName, { ...payload, listInstanceId })
+      if(!payload.isUser) {
+          const data = yield call(queryParamsetName, { ...payload, listInstanceId })
+      }else {
+          const data = yield call(queryUserParamsetName, { userParamsetName: payload.device })
+      }
+
       if (data.result === '0') {
         const paramSet = genId(data.data.listParamSelectDTO)
         yield put({
