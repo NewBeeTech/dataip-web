@@ -71,7 +71,15 @@ export async function queryParamsetName (params) {
 }
 export async function queryUserParamsetName (params) {
   return request({
-    url: '/manual/judge/tree/UserParamsetName',
+    url: `${APIV3}/manual/judge/tree/UserParamsetName`,
+    method: 'post',
+    data: params,
+  })
+}
+//获取型号信息
+export async function setCurrTask (params) {
+  return request({
+    url: `${APIV3}/userConfig/setCurrTask`,
     method: 'post',
     data: params,
   })

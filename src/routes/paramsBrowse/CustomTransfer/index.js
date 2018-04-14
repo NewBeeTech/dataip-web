@@ -64,17 +64,22 @@ class TransferTable extends React.Component {
   }
 
   saveParamSet = () => {
-    console.log('保存为参数组')
-    this.setState({
-        isSaving: true,
-        paramsForm: {}
+    this.props.dispatch({
+        type: 'paramsBrowse/updateState',
+        payload: {
+            isSaving: true,
+            paramsForm: {}
+        }
     })
   }
   updateParamSet = () => {
-    this.setState({
-        isUpdating: true,
-        paramsForm: {}
-    })
+      this.props.dispatch({
+          type: 'paramsBrowse/updateState',
+          payload: {
+              isUpdating: true,
+              paramsForm: {}
+          }
+      })
   }
 
   handleStarter = (key) => {
@@ -93,7 +98,8 @@ class TransferTable extends React.Component {
 
   render () {
     const state = this.state
-    const { paramsetList, models, paramsForm={} , dispatch} = this.props
+    const props = this.props
+    const { paramsetList, models, paramsForm={} , dispatch, listUserParam = []} = props
 
     function onChangeParamForm(name, value) {
         dispatch({
@@ -202,11 +208,11 @@ class TransferTable extends React.Component {
         </Row>
 
         <Modal
-            visible={state.isSaving}
+            visible={props.isSaving}
             title='创建自定义参数组'
             footer={
                 <div>
-                    <Button onClick={()=>this.setState({isSaving:false})}>取消</Button>
+                    <Button  onClick={()=>dispatch({type:'paramsBrowse/updateState', payload: {isSaving:false}})}>取消</Button>
                     <Button onClick={confirmAdd} type='primary' style={{marginLeft:10}}>保存</Button>
                 </div>
             }
@@ -216,6 +222,7 @@ class TransferTable extends React.Component {
                 <Col span={2}>型号：</Col>
                 <Col span={22}>
                     <InputSelect style={{width:'100%'}}
+                        disableInput
                         onChange={value=>onChangeParamForm('modelName', value)}
                         options={models} value={paramsForm.modelName}></InputSelect>
                 </Col>
@@ -232,11 +239,11 @@ class TransferTable extends React.Component {
         </Modal>
 
         <Modal
-            visible={ state.isUpdating}
+            visible={ props.isUpdating}
             title='更新自定义参数组'
             footer={
                 <div>
-                    <Button onClick={()=>this.setState({isUpdating:false})}>取消</Button>
+                    <Button onClick={()=>dispatch({type:'paramsBrowse/updateState', payload: {isUpdating:false}})}>取消</Button>
                     <Button onClick={()=>confirmUpdate('append')} type='primary' style={{marginLeft:10}}>追加</Button>
                     <Button onClick={()=>confirmUpdate('update')} type='primary' style={{marginLeft:10}}>覆盖</Button>
                 </div>
@@ -246,6 +253,7 @@ class TransferTable extends React.Component {
                 <Col span={2}>型号：</Col>
                 <Col span={22}>
                     <InputSelect style={{width:'100%'}} options={models}
+                        disableInput
                         onChange={value=>onChangeParamForm('modelName', value)}
                         value={paramsForm.modelName}
                     ></InputSelect>
@@ -256,7 +264,9 @@ class TransferTable extends React.Component {
                 <Col span={2}>名称：</Col>
                 <Col span={22}>
                     <InputSelect style={{width:'100%'}}
+                        disableInput
                         value={paramsForm.userParamsetName}
+                        options={listUserParam.map(i=>({name:i, value:i}))}
                         onChange={value=>onChangeParamForm('userParamsetName', value)}
                     ></InputSelect>
                 </Col>

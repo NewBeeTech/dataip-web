@@ -15,7 +15,7 @@ module.exports = {
       listModel: ["X1 ", "x2"]
     }
   },
-  "/api/ispace/instance/listInstance": {
+  "POST /api/ispace/instance/listInstance": {
     result: "0",
     data: [
       {

@@ -131,7 +131,7 @@ const Index = ({ user, paramsBrowse, dispatch, loading, location }) => {
 
         <Row>
           <Col span={24}>
-            <CustomTransfer {...transferProps} />
+            <CustomTransfer {...paramsBrowse} {...transferProps} />
           </Col>
         </Row>
       </Col>
@@ -141,18 +141,24 @@ const Index = ({ user, paramsBrowse, dispatch, loading, location }) => {
         title='设置当前实验'
         okText='设置'
         onCancel={()=>dispatch({type:'paramsBrowse/updateState', payload: {isSetting:false}})}
+        onOk={()=>dispatch({type: 'paramsBrowse/confirmSetCurrentTask'})}
     >
         <Row style={{marginBottom: 10, marginTop:20}}>
             <Col span={2}>型号：</Col>
             <Col span={22}>
-                <InputSelect style={{width:'100%'}} options={models}></InputSelect>
+                <InputSelect style={{width:'100%'}} options={models}
+                onChange={value=>dispatch({type: 'paramsBrowse/updateState', payload: {currentTaskModel: value}})}
+                value={paramsBrowse.currentTaskModel}></InputSelect>
             </Col>
 
         </Row>
         <Row>
             <Col span={2}>任务：</Col>
             <Col span={22}>
-                <InputSelect style={{width:'100%'}}></InputSelect>
+                <InputSelect
+                    value={paramsBrowse.currentTask}
+                    onChange={value=>dispatch({type: 'paramsBrowse/updateState', payload: {currentTask: value}})}
+                    style={{width:'100%'}}></InputSelect>
             </Col>
         </Row>
     </AntdModal>

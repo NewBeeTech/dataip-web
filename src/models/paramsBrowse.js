@@ -2,10 +2,11 @@ import modelExtend from 'dva-model-extend'
 import { query, queryIndex, queryParams,
     queryParamsetName, queryStartJudge,
     addParamSet, appendParamSet, updateParamSet,
-    queryUserParamsetName, getModels} from 'services/paramsBrowse'
+    queryUserParamsetName, getModels, setCurrTask} from 'services/paramsBrowse'
 import { pageModel } from 'models/common'
 import queryString from 'query-string'
 import { routerRedux } from 'dva/router'
+import {error, success, warning} from '@@/note'
 
 const initialState = {
   paramList: [],
@@ -218,20 +219,63 @@ export default modelExtend(pageModel, {
     },
     //保存为自定义参数组
     * saveParamSet({payload}, {call, put, select}){
-        const data = yield call(addParamSet)
+
+        const  {type, listParamSelectDTO = []} = payload;
+        let paramsForm = yield select(_ => _.paramsBrowse.paramsForm)
+        if(!paramsForm.modelName) {
+            return warning('缺少型号')
+        }
+        if(!paramsForm.userParamsetName) {
+            return warning('缺少名称')
+        }
+        if(!listParamSelectDTO || !listParamSelectDTO.length) {
+            return warning('请选择参数')
+        }
+        const data = yield call(addParamSet, {...paramsForm, listParamSelectDTO}).catch(e=>null)
+        if(data) {
+            yield put({type: 'updateState', payload: {isSaving:false}})
+            success(data.data)
+        }
+
     },
      //更新跟新为自定义参数组
-    * updateParamSet({payload}, {call, put, select}){
+    * updateParamSet({payload}, {call, put, select}) {
         const  {type, listParamSelectDTO = []} = payload;
-        console.log(payload);
         let paramsForm = yield select(_ => _.paramsBrowse.paramsForm)
+        if(!paramsForm.modelName) {
+            return warning('缺少型号')
+        }
+        if(!paramsForm.userParamsetName) {
+            return warning('缺少名称')
+        }
+        if(!listParamSelectDTO || !listParamSelectDTO.length) {
+            return warning('请选择参数')
+        }
+
         let data;
         if(type === 'update') {
             data = yield call(appendParamSet, {...paramsForm, listParamSelectDTO})
         }else {
             data = yield call(updateParamSet, {listParamSelectDTO})
         }
-        console.log(data);
+        if(data) {
+            yield put({type: 'updateState', payload: {isUpdating:false}})
+            success(data.data)
+        }else {
+            error(data.data)
+        }
+
+    },
+    * confirmSetCurrentTask({payload}, {put, call, select}) {
+        const {currentTaskModel, currentTask} = yield select(_=>_.paramsBrowse)
+        if(!currentTaskModel) {
+            return warning('缺少型号')
+        }
+        if(!currentTask) {
+            return warning('缺少任务')
+        }
+
+        yield call()
 
     }
   }
