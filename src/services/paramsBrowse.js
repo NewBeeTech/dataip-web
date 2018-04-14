@@ -1,6 +1,6 @@
 import { request, config } from 'utils'
 
-const { api } = config
+const { api , APIV3, APIHOST} = config
 const {
   listInstance, paramTree,
   paramsetName, startJudge,
@@ -19,6 +19,38 @@ export async function query (params) {
   return request({
     url: listInstance,
     method: 'get',
+    data: params,
+  })
+}
+//获取型号
+export async function getModels (params) {
+  return request({
+    url: `${APIV3}/instance/model`,
+    method: 'get',
+    data: params,
+  })
+}
+//追加自定义参数
+export async function appendParamSet (params) {
+  return request({
+    url: `${APIV3}/UserParamset/append`,
+    method: 'post',
+    data: params,
+  })
+}
+//更新自定义参数
+export async function updateParamSet (params) {
+  return request({
+    url: `${APIV3}/UserParamset/update`,
+    method: 'post',
+    data: params,
+  })
+}
+//添加自定义参数
+export async function addParamSet (params) {
+  return request({
+    url: `${APIV3}/UserParamset/new`,
+    method: 'post',
     data: params,
   })
 }

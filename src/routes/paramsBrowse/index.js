@@ -15,7 +15,11 @@ const TabPane = Tabs.TabPane
 
 const Index = ({ user, paramsBrowse, dispatch, loading, location }) => {
   const { paramList, pagination, listModalVisible, selectedRowKeys, paramsetList, listInstanceId , filterKey} = paramsBrowse
-  const { listInstance, listUserParam, listDeviceParamset, paramsetName , isSetting} = paramsBrowse
+  const { listInstance, listUserParam,
+      listDeviceParamset, paramsetName,
+      isSetting, models = [],paramsForm = {}
+  } = paramsBrowse
+
   const { list, listTask } = user
   const { query = {}, pathname } = location
 
@@ -80,7 +84,6 @@ const Index = ({ user, paramsBrowse, dispatch, loading, location }) => {
     paramList: paramList.length ? paramList : listDeviceParamset,
     dispatch,
   }
-  console.log(listUserParam,'listUserParam');
   // 自定义参数组
   const customTreeProps = {
     paramList: listUserParam,
@@ -90,6 +93,8 @@ const Index = ({ user, paramsBrowse, dispatch, loading, location }) => {
   const transferProps = {
     paramsetList,
     paramsetName,
+    models,
+    paramsForm,
     dispatch,
   }
 
@@ -111,7 +116,7 @@ const Index = ({ user, paramsBrowse, dispatch, loading, location }) => {
                 {(list.length && !listModalVisible || listInstance.length) && <List {...listProps} />}
             </Col>
             <Col span={2}>
-                <div style={{ marginBottom: 10 }}>
+                <div style={{ marginBottom: 10, width: 20 }}>
                     <Tooltip title='选择试验'>
                         <Button onClick={handleBtnClick} icon='select'></Button>
                     </Tooltip>
@@ -140,7 +145,7 @@ const Index = ({ user, paramsBrowse, dispatch, loading, location }) => {
         <Row style={{marginBottom: 10, marginTop:20}}>
             <Col span={2}>型号：</Col>
             <Col span={22}>
-                <InputSelect style={{width:'100%'}}></InputSelect>
+                <InputSelect style={{width:'100%'}} options={models}></InputSelect>
             </Col>
 
         </Row>

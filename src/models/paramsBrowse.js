@@ -1,5 +1,8 @@
 import modelExtend from 'dva-model-extend'
-import { query, queryIndex, queryParams, queryParamsetName, queryStartJudge, queryUserParamsetName} from 'services/paramsBrowse'
+import { query, queryIndex, queryParams,
+    queryParamsetName, queryStartJudge,
+    addParamSet, appendParamSet, updateParamSet,
+    queryUserParamsetName, getModels} from 'services/paramsBrowse'
 import { pageModel } from 'models/common'
 import queryString from 'query-string'
 import { routerRedux } from 'dva/router'
@@ -15,7 +18,11 @@ const initialState = {
   // 默认首屏的数据
   listInstance: [], // 试验列表
   listUserParam: [], // 自定义参数组
-  listDeviceParamset: [], // 默认参数组
+  listDeviceParamset: [], // 默认参数组,
+  paramsForm: { // 保存为参数组数据
+      userParamsetName: '',
+      modelName: ''
+  }
 }
 
 // 根据paramList四个属性生成一个字符串ID
@@ -48,6 +55,16 @@ export default modelExtend(pageModel, {
     hideModal (state) {
       return { ...state, listModalVisible: false }
     },
+    updateParamForm (state, { payload }) {
+        const {name, value} = payload;
+        return {
+            ...state,
+            paramsForm: {
+                ...state.paramsForm,
+                [name]: value
+            }
+        }
+    }
   },
 
   subscriptions: {
@@ -56,6 +73,9 @@ export default modelExtend(pageModel, {
         // todo 这里切换时不要再次请求
         if (location.pathname === '/paramsBrowse') {
           dispatch({ type: 'queryIndex',
+            payload: { },
+          })
+          dispatch({ type: 'getModels',
             payload: { },
           })
         }
@@ -136,13 +156,30 @@ export default modelExtend(pageModel, {
         throw data
       }
     },
+    * getModels({payload}, {call, put}){
+
+        const data = yield getModels().catch(e=>null)
+        let result = [];
+        if(data){
+            result = data.data.listModel
+        }
+
+        yield put({
+            type:'updateState',
+            payload: {
+                models: result
+            }
+        })
+
+    },
     // 根据paramname 获取list  下边transfer tree data
     * queryParamsetName ({ payload }, { call, put, select }) {
       let { listInstanceId, paramsetList } = yield select(_ => _.paramsBrowse)
+      let data ;
       if(!payload.isUser) {
-          const data = yield call(queryParamsetName, { ...payload, listInstanceId })
+          data = yield call(queryParamsetName, { ...payload, listInstanceId })
       }else {
-          const data = yield call(queryUserParamsetName, { userParamsetName: payload.device })
+          data = yield call(queryUserParamsetName, { userParamsetName: payload.device })
       }
 
       if (data.result === '0') {
@@ -179,5 +216,24 @@ export default modelExtend(pageModel, {
         throw data
       }
     },
-  },
+    //保存为自定义参数组
+    * saveParamSet({payload}, {call, put, select}){
+        const data = yield call(addParamSet)
+    },
+     //更新跟新为自定义参数组
+    * updateParamSet({payload}, {call, put, select}){
+        const  {type, listParamSelectDTO = []} = payload;
+        console.log(payload);
+        let paramsForm = yield select(_ => _.paramsBrowse.paramsForm)
+        let data;
+        if(type === 'update') {
+            data = yield call(appendParamSet, {...paramsForm, listParamSelectDTO})
+        }else {
+            data = yield call(updateParamSet, {listParamSelectDTO})
+        }
+        console.log(data);
+
+    }
+  }
+
 })

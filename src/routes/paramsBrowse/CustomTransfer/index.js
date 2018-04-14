@@ -66,12 +66,14 @@ class TransferTable extends React.Component {
   saveParamSet = () => {
     console.log('保存为参数组')
     this.setState({
-        isSaving: true
+        isSaving: true,
+        paramsForm: {}
     })
   }
   updateParamSet = () => {
     this.setState({
-        isUpdating: true
+        isUpdating: true,
+        paramsForm: {}
     })
   }
 
@@ -87,10 +89,43 @@ class TransferTable extends React.Component {
     })
   }
 
+
+
   render () {
     const state = this.state
-    const { paramsetList } = this.props
+    const { paramsetList, models, paramsForm={} , dispatch} = this.props
 
+    function onChangeParamForm(name, value) {
+        dispatch({
+            type: 'paramsBrowse/updateParamForm',
+            payload: {
+                name,
+                value: value.target ? value.target.value : value
+            }
+        })
+    }
+
+    const confirmUpdate = (type)=>{
+        const { targetSelectedObjects } = this.state
+        const data = targetSelectedObjects.map(obj => _.omit(obj, 'id'))
+            dispatch({
+                type:'paramsBrowse/updateParamSet',
+                payload: {
+                    type,
+                    listParamSelectDTO: data
+                }
+            })
+    }
+    const confirmAdd = ()=>{
+        const { targetSelectedObjects } = this.state
+        const data = targetSelectedObjects.map(obj => _.omit(obj, 'id'))
+            dispatch({
+                type:'paramsBrowse/updateParamSet',
+                payload: {
+                    listParamSelectDTO: data
+                }
+            })
+    }
     return (
       <div>
 
@@ -112,22 +147,25 @@ class TransferTable extends React.Component {
             />
           </Col>
           <Col span={2} style={{ textAlign: 'center' }}>
-            <Button type="primary" style={{ marginTop: 150 }} onClick={() => { this.handleChange('left') }}>
-              <Icon type="left" />
-            </Button>
+            <div >
 
-            <h3 style={{ height: 15 }} />
-            <Button type="primary"  onClick={() => { this.handleChange('allLeft') }}>
-              <Icon type="double-left" />
-            </Button>
-            <h3 style={{ height: 15 }} />
-            <Button type="primary" onClick={() => { this.handleChange('right') }}>
-              <Icon type="right" />
-            </Button>
-            <h3 style={{ height: 15 }} />
-            <Button type="primary" onClick={() => { this.handleChange('allRight') }}>
-              <Icon type="double-right" />
-            </Button>
+                <Button type="primary" style={{ marginTop: 150 }} onClick={() => { this.handleChange('left') }}>
+                  <Icon type="left" />
+                </Button>
+
+                <h3 style={{ height: 15 }} />
+                <Button type="primary"  onClick={() => { this.handleChange('allLeft') }}>
+                  <Icon type="double-left" />
+                </Button>
+                <h3 style={{ height: 15 }} />
+                <Button type="primary" onClick={() => { this.handleChange('right') }}>
+                  <Icon type="right" />
+                </Button>
+                <h3 style={{ height: 15 }} />
+                <Button type="primary" onClick={() => { this.handleChange('allRight') }}>
+                  <Icon type="double-right" />
+                </Button>
+            </div>
           </Col>
           <Col span={10}>
             <CardList
@@ -139,7 +177,7 @@ class TransferTable extends React.Component {
             />
           </Col>
           <Col span={2}>
-              <div>
+              <div style={{width:15}}>
                 <Tooltip title='启动判'>
                     <Button icon='play-circle' onClick={this.handleStarter} className="margin-bottom8" title='启动判读' ></Button>
                 </Tooltip>
@@ -169,22 +207,26 @@ class TransferTable extends React.Component {
             footer={
                 <div>
                     <Button onClick={()=>this.setState({isSaving:false})}>取消</Button>
-                    <Button onClick={()=>this.setState({isSaving:false})} type='primary' style={{marginLeft:10}}>保存</Button>
+                    <Button onClick={confirmAdd} type='primary' style={{marginLeft:10}}>保存</Button>
                 </div>
             }
+            onCancel={()=>this.setState({isSaving:false})}
         >
             <Row style={{marginBottom: 10, marginTop:20}}>
                 <Col span={2}>型号：</Col>
                 <Col span={22}>
-                    <InputSelect style={{width:'100%'}}></InputSelect>
-
+                    <InputSelect style={{width:'100%'}}
+                        onChange={value=>onChangeParamForm('modelName', value)}
+                        options={models} value={paramsForm.modelName}></InputSelect>
                 </Col>
 
             </Row>
             <Row>
                 <Col span={2}>名称：</Col>
                 <Col span={22}>
-                    <Input type='textarea'></Input>
+                    <Input type='textarea'
+                        onChange={value=>onChangeParamForm('userParamsetName', value)}
+                        value={paramsForm.userParamsetName} ></Input>
                 </Col>
             </Row>
         </Modal>
@@ -195,22 +237,28 @@ class TransferTable extends React.Component {
             footer={
                 <div>
                     <Button onClick={()=>this.setState({isUpdating:false})}>取消</Button>
-                    <Button onClick={()=>this.setState({isSaving:false})} type='primary' style={{marginLeft:10}}>追加</Button>
-                    <Button onClick={()=>this.setState({isSaving:false})} type='primary' style={{marginLeft:10}}>覆盖</Button>
+                    <Button onClick={()=>confirmUpdate('append')} type='primary' style={{marginLeft:10}}>追加</Button>
+                    <Button onClick={()=>confirmUpdate('update')} type='primary' style={{marginLeft:10}}>覆盖</Button>
                 </div>
             }
         >
             <Row style={{marginBottom: 10, marginTop:20}}>
                 <Col span={2}>型号：</Col>
                 <Col span={22}>
-                    <InputSelect style={{width:'100%'}}></InputSelect>
+                    <InputSelect style={{width:'100%'}} options={models}
+                        onChange={value=>onChangeParamForm('modelName', value)}
+                        value={paramsForm.modelName}
+                    ></InputSelect>
                 </Col>
 
             </Row>
             <Row>
                 <Col span={2}>名称：</Col>
                 <Col span={22}>
-                    <InputSelect style={{width:'100%'}}></InputSelect>
+                    <InputSelect style={{width:'100%'}}
+                        value={paramsForm.userParamsetName}
+                        onChange={value=>onChangeParamForm('userParamsetName', value)}
+                    ></InputSelect>
                 </Col>
             </Row>
         </Modal>

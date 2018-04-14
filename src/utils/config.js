@@ -1,8 +1,8 @@
-const APIV1 = '/api/v1'
-const APIV2 = '/api/v2'
-const APIV3 = '/api/ispace'
+export const APIV1 = '/api/v1'
+export const APIV2 = '/api/v2'
+export const APIV3 = '/api/ispace'
 //const APIV3 = ''
-const APIHOST = 'http://47.104.163.55:8081'
+export const APIHOST = 'http://47.104.163.55:8081'
 
 module.exports = {
   name: 'i-space',

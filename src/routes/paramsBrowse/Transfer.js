@@ -48,10 +48,10 @@ class TransferTable extends React.Component {
     console.log('当前选择的paramsetName ---', paramsetName)
     // const transferList = paramsetList.map((p, i) => ({ key: `transfer-key-${i}`, title: p.paramName }))
     const transferList = paramsetList.map((p, i) => ({ key: p.paramName, title: p.paramName }))
-    console.log(paramsetList);
+    // console.log(paramsetList);
     return (
       <div>
-        <div style={{ marginBottom: 10, marginLeft: 'calc( 40% + 45px )' }}>
+        <div style={{ marginBottom: 10, width: 20 }}>
           <Button icon='play-circle' onClick={this.handleStarter} className="margin-right8">启动判读</Button>
           <Button icon='download' onClick={this.handleStarter} className="margin-right8">数据下载</Button>
           <Button icon='save' onClick={this.saveParamSet}>保存为参数组</Button>

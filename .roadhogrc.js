@@ -19,11 +19,6 @@ export default {
       "changeOrigin": true,
       "pathRewrite": { "^/api/v1/weather": "/v3/weather" }
     },
-    "/api/ispace": {
-      "target": "http://47.104.163.55:8081/",
-      "changeOrigin": true,
-      "pathRewrite": { "^/api/ispace": "/api/ispace" }
-    },
     // "/api/v2": {
     //   "target": "http://192.168.0.110",
     //   "changeOrigin": true,
