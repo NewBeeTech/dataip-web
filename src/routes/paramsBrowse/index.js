@@ -48,7 +48,7 @@ const Index = ({ user, paramsBrowse, dispatch, loading, location }) => {
     dispatch,
     filterKey,
     selectedRowKeys,
-    title: '选择实验',
+    title: '选择试验',
     confirmLoading: loading.effects['paramsBrowse/query'],
     onOk (data) {
       dispatch({
@@ -138,7 +138,7 @@ const Index = ({ user, paramsBrowse, dispatch, loading, location }) => {
     </Row>
     <AntdModal
         visible={isSetting}
-        title='设置当前实验'
+        title='设置当前任务'
         okText='设置'
         onCancel={()=>dispatch({type:'paramsBrowse/updateState', payload: {isSetting:false}})}
         onOk={()=>dispatch({type: 'paramsBrowse/confirmSetCurrentTask'})}

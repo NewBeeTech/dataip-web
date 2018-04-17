@@ -77,7 +77,7 @@ const modal = ({
           <Col span={20}>
             <Row style={{marginBottom: 10}}>
                 <Col span={4}>
-                    <label htmlFor="">根据名称过滤：</label>
+                    <label htmlFor="">过滤：</label>
                 </Col>
 
                 <Col span={18}>

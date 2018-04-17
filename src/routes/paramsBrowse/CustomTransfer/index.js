@@ -184,7 +184,7 @@ class TransferTable extends React.Component {
           </Col>
           <Col span={2}>
               <div style={{width:15}}>
-                <Tooltip title='启动判'>
+                <Tooltip title='启动判读'>
                     <Button icon='play-circle' onClick={this.handleStarter} className="margin-bottom8" title='启动判读' ></Button>
                 </Tooltip>
 
