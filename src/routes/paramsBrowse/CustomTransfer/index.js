@@ -236,6 +236,14 @@ class TransferTable extends React.Component {
                         value={paramsForm.userParamsetName} ></Input>
                 </Col>
             </Row>
+          <Row>
+            <Col span={2}></Col>
+            <Col span={22}>
+              <Input type='checkbox'
+                     onChange={value=>onChangeParamForm('userParamsetName', value)}
+                     value={paramsForm.userParamsetName} ></Input>
+            </Col>
+          </Row>
         </Modal>
 
         <Modal

@@ -70,12 +70,12 @@ const Index = ({ user, paramsBrowse, dispatch, loading, location }) => {
   }
 
   function setCurrentTask() {
-      dispatch({
-        type: 'paramsBrowse/updateState',
-        payload: {
-            isSetting: true
-        }
-      })
+    dispatch({
+      type: 'paramsBrowse/updateState',
+      payload: {
+        isSetting: true
+      }
+    })
   }
 
 
@@ -109,23 +109,22 @@ const Index = ({ user, paramsBrowse, dispatch, loading, location }) => {
         <Tree {...treeProps} />
       </Col>
       <Col span={20}>
-
         {listModalVisible && <Modal {...modalProps} />}
         <Row>
-            <Col span={22}>
-                {(list.length && !listModalVisible || listInstance.length) && <List {...listProps} />}
-            </Col>
-            <Col span={2}>
-                <div style={{ marginBottom: 10, width: 20 }}>
-                    <Tooltip title='选择试验'>
-                        <Button onClick={handleBtnClick} icon='select'></Button>
-                    </Tooltip>
-                    <Tooltip title='设置当前任务'>
-                        <Button onClick={setCurrentTask} icon='setting'></Button>
-                    </Tooltip>
+          <Col span={22}>
+            {(list.length && !listModalVisible || listInstance.length) && <List {...listProps} />}
+          </Col>
+          <Col span={2}>
+            <div style={{ marginBottom: 10, width: 20 }}>
+              <Tooltip title='选择试验'>
+                <Button onClick={handleBtnClick} icon='select'></Button>
+              </Tooltip>
+              <Tooltip title='设置当前任务'>
+                <Button onClick={setCurrentTask} icon='setting'></Button>
+              </Tooltip>
 
-                </div>
-            </Col>
+            </div>
+          </Col>
         </Row>
 
 
@@ -137,30 +136,30 @@ const Index = ({ user, paramsBrowse, dispatch, loading, location }) => {
       </Col>
     </Row>
     <AntdModal
-        visible={isSetting}
-        title='设置当前任务'
-        okText='设置'
-        onCancel={()=>dispatch({type:'paramsBrowse/updateState', payload: {isSetting:false}})}
-        onOk={()=>dispatch({type: 'paramsBrowse/confirmSetCurrentTask'})}
+      visible={isSetting}
+      title='设置当前任务'
+      okText='设置'
+      onCancel={()=>dispatch({type:'paramsBrowse/updateState', payload: {isSetting:false}})}
+      onOk={()=>dispatch({type: 'paramsBrowse/confirmSetCurrentTask'})}
     >
-        <Row style={{marginBottom: 10, marginTop:20}}>
-            <Col span={2}>型号：</Col>
-            <Col span={22}>
-                <InputSelect style={{width:'100%'}} options={models}
-                onChange={value=>dispatch({type: 'paramsBrowse/updateState', payload: {currentTaskModel: value}})}
-                value={paramsBrowse.currentTaskModel}></InputSelect>
-            </Col>
+      <Row style={{marginBottom: 10, marginTop:20}}>
+        <Col span={2}>型号：</Col>
+        <Col span={22}>
+          <InputSelect style={{width:'100%'}} options={models}
+                       onChange={value=>dispatch({type: 'paramsBrowse/updateState', payload: {currentTaskModel: value}})}
+                       value={paramsBrowse.currentTaskModel}></InputSelect>
+        </Col>
 
-        </Row>
-        <Row>
-            <Col span={2}>任务：</Col>
-            <Col span={22}>
-                <InputSelect
-                    value={paramsBrowse.currentTask}
-                    onChange={value=>dispatch({type: 'paramsBrowse/updateState', payload: {currentTask: value}})}
-                    style={{width:'100%'}}></InputSelect>
-            </Col>
-        </Row>
+      </Row>
+      <Row>
+        <Col span={2}>任务：</Col>
+        <Col span={22}>
+          <InputSelect
+            value={paramsBrowse.currentTask}
+            onChange={value=>dispatch({type: 'paramsBrowse/updateState', payload: {currentTask: value}})}
+            style={{width:'100%'}}></InputSelect>
+        </Col>
+      </Row>
     </AntdModal>
   </div>)
 }
