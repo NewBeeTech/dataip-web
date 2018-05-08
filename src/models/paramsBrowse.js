@@ -162,7 +162,7 @@ export default modelExtend(pageModel, {
         const data = yield getModels().catch(e=>null)
         let result = [];
         if(data){
-            result = data.data.map(item => ({ name: item.modelName, value: item.id }))
+            result = data.data.map(item => ({ name: item.modelName, value: item.modelName }))
         }
         // console.warn(data);
 
@@ -220,9 +220,10 @@ export default modelExtend(pageModel, {
     },
     //保存为自定义参数组
     * saveParamSet({payload}, {call, put, select}){
+        let paramsForm = yield select(_ => _.paramsBrowse.paramsForm)
 
         const  {type, listParamSelectDTO = []} = payload;
-        let paramsForm = yield select(_ => _.paramsBrowse.paramsForm)
+        console.warn('paramsForm',paramsForm);
         if(!paramsForm.modelName) {
             return warning('缺少型号')
         }
@@ -232,7 +233,7 @@ export default modelExtend(pageModel, {
         if(!listParamSelectDTO || !listParamSelectDTO.length) {
             return warning('请选择参数')
         }
-        const data = yield call(addParamSet, {...paramsForm, listParamSelectDTO}).catch(e=>null)
+        const data = yield call(addParamSet, {...paramsForm, listParamSelectDTO})
         if(data) {
             yield put({type: 'updateState', payload: {isSaving:false}})
             success(data.data)
@@ -241,42 +242,46 @@ export default modelExtend(pageModel, {
     },
      //更新跟新为自定义参数组
     * updateParamSet({payload}, {call, put, select}) {
-        const  {type, listParamSelectDTO = []} = payload;
-        let paramsForm = yield select(_ => _.paramsBrowse.paramsForm)
-        if(!paramsForm.modelName) {
-            return warning('缺少型号')
-        }
-        if(!paramsForm.userParamsetName) {
-            return warning('缺少名称')
-        }
-        if(!listParamSelectDTO || !listParamSelectDTO.length) {
-            return warning('请选择参数')
-        }
+      let paramsForm = yield select(_ => _.paramsBrowse.paramsForm)
+      console.warn('paramsForm',paramsForm);
+      console.warn('payload',payload);
 
-        let data;
-        if(type === 'update') {
-            data = yield call(appendParamSet, {...paramsForm, listParamSelectDTO})
-        }else {
-            data = yield call(updateParamSet, {listParamSelectDTO})
-        }
-        if(data) {
-            yield put({type: 'updateState', payload: {isUpdating:false}})
-            success(data.data)
-        }else {
-            error(data.data)
-        }
+        // const  {type, listParamSelectDTO = []} = payload;
+        // let paramsForm = yield select(_ => _.paramsBrowse.paramsForm)
+        // if(!paramsForm.modelName) {
+        //     return warning('缺少型号')
+        // }
+        // if(!paramsForm.userParamsetName) {
+        //     return warning('缺少名称')
+        // }
+        // if(!listParamSelectDTO || !listParamSelectDTO.length) {
+        //     return warning('请选择参数')
+        // }
+        //
+        // let data;
+        // if(type === 'update') {
+        //     data = yield call(appendParamSet, {...paramsForm, listParamSelectDTO})
+        // }else {
+        //     data = yield call(updateParamSet, {listParamSelectDTO})
+        // }
+        // if(data) {
+        //     yield put({type: 'updateState', payload: {isUpdating:false}})
+        //     success(data.data)
+        // }else {
+        //     error(data.data)
+        // }
 
     },
     * confirmSetCurrentTask({payload}, {put, call, select}) {
-        const {currentTaskModel, currentTask} = yield select(_=>_.paramsBrowse)
-        if(!currentTaskModel) {
-            return warning('缺少型号')
-        }
-        if(!currentTask) {
-            return warning('缺少任务')
-        }
-
-        yield call()
+        // const {currentTaskModel, currentTask} = yield select(_=>_.paramsBrowse)
+        // if(!currentTaskModel) {
+        //     return warning('缺少型号')
+        // }
+        // if(!currentTask) {
+        //     return warning('缺少任务')
+        // }
+        //
+        // yield call()
 
     }
   }

@@ -33,7 +33,7 @@ export async function getModels (params) {
 //追加自定义参数
 export async function appendParamSet (params) {
   return request({
-    url: `${APIV3}/UserParamset/append`,
+    url: `${APIV3}/userParamset/append`,
     method: 'post',
     data: params,
   })
@@ -41,7 +41,7 @@ export async function appendParamSet (params) {
 //更新自定义参数
 export async function updateParamSet (params) {
   return request({
-    url: `${APIV3}/UserParamset/update`,
+    url: `${APIV3}/userParamset/update`,
     method: 'post',
     data: params,
   })
@@ -49,7 +49,7 @@ export async function updateParamSet (params) {
 //添加自定义参数
 export async function addParamSet (params) {
   return request({
-    url: `${APIV3}/UserParamset/new`,
+    url: `${APIV3}/userParamset/new`,
     method: 'post',
     data: params,
   })
@@ -71,7 +71,7 @@ export async function queryParamsetName (params) {
 }
 export async function queryUserParamsetName (params) {
   return request({
-    url: `${APIV3}/manual/judge/tree/UserParamsetName`,
+    url: `${APIV3}/manual/judge/tree/userParamsetName`,
     method: 'post',
     data: params,
   })

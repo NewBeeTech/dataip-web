@@ -5,7 +5,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'dva'
-import { Row, Col, Tabs, Button, Icon, Input, Tooltip, Modal} from 'antd'
+import { Row, Col, Tabs, Button, Icon, Input, Tooltip, Modal, Checkbox} from 'antd'
 import styles from './style.less'
 import CardList from './CardList'
 import InputSelect from '@@/Inputselect'
@@ -63,7 +63,7 @@ class TransferTable extends React.Component {
     this.setState({ selectedKeys: newKeys })
   }
 
-  saveParamSet = () => {
+  saveParamSetModal = () => {
     this.props.dispatch({
         type: 'paramsBrowse/updateState',
         payload: {
@@ -126,7 +126,7 @@ class TransferTable extends React.Component {
         const { targetSelectedObjects } = this.state
         const data = targetSelectedObjects.map(obj => _.omit(obj, 'id'))
             dispatch({
-                type:'paramsBrowse/updateParamSet',
+                type:'paramsBrowse/saveParamSet',
                 payload: {
                     listParamSelectDTO: data
                 }
@@ -195,7 +195,7 @@ class TransferTable extends React.Component {
 
 
                 <Tooltip title='保存为参数组'>
-                    <Button icon='save' onClick={this.saveParamSet} className="margin-bottom8" title='保存为参数组' ></Button>
+                    <Button icon='save' onClick={this.saveParamSetModal} className="margin-bottom8" title='保存为参数组' ></Button>
                 </Tooltip>
 
 
@@ -238,10 +238,17 @@ class TransferTable extends React.Component {
             </Row>
           <Row>
             <Col span={2}></Col>
-            <Col span={22}>
-              <Input type='checkbox'
-                     onChange={value=>onChangeParamForm('userParamsetName', value)}
-                     value={paramsForm.userParamsetName} ></Input>
+            <Col span={22} className={styles.isEssential}>
+              <Checkbox
+                onChange={e=> {console.log(e);onChangeParamForm('isEssential', e.target.checked ? 1 : 0)}}
+                value={paramsForm.isEssential}
+              >
+                设置为必判参数
+              </Checkbox>
+              {/* <Input type='checkbox'
+                     onChange={value=>onChangeParamForm('isEssential', value)}
+                     value={paramsForm.isEssential} ></Input>
+                     <span>设置为必判参数</span> */}
             </Col>
           </Row>
         </Modal>

@@ -99,7 +99,7 @@ const Index = ({ user, paramsBrowse, dispatch, loading, location }) => {
   }
 
   // console.log(' listProps dataSource %o ---- selectedInstanceList length: %o', listProps.dataSource, selectedInstanceList.length)
-  console. warn(models);
+  // console. warn(models);
 
   return (<div className="content-inner">
     <Row>
