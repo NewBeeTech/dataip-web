@@ -162,8 +162,9 @@ export default modelExtend(pageModel, {
         const data = yield getModels().catch(e=>null)
         let result = [];
         if(data){
-            result = data.data.listModel
+            result = data.data.map(item => ({ name: item.modelName, value: item.id }))
         }
+        // console.warn(data);
 
         yield put({
             type:'updateState',

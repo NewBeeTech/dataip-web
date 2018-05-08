@@ -22,10 +22,10 @@ export async function query (params) {
     data: params,
   })
 }
-//获取型号
+// 获取型号
 export async function getModels (params) {
   return request({
-    url: `${APIV3}/instance/model`,
+    url: `${APIV3}/base/model`,
     method: 'get',
     data: params,
   })
