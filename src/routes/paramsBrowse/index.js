@@ -10,6 +10,7 @@ import CustomTransfer from './CustomTransfer'
 import InputSelect from '@@/Inputselect'
 import Modal from './Modal'
 
+const styles = require('./index.less');
 const TabPane = Tabs.TabPane
 
 
@@ -103,7 +104,7 @@ const Index = ({ user, paramsBrowse, dispatch, loading, location }) => {
 
   return (<div className="content-inner">
     <Row>
-      <Col span={4}>
+      <Col span={4} className={styles.leftTree}>
         <p>自定义参数组</p>
         <Tree {...customTreeProps} />
         <p>默认参数组</p>
@@ -118,10 +119,10 @@ const Index = ({ user, paramsBrowse, dispatch, loading, location }) => {
           <Col span={2}>
             <div style={{ marginBottom: 10, width: 20 }}>
               <Tooltip title='选择试验'>
-                <Button onClick={handleBtnClick} icon='select'></Button>
+                <Button className={styles.iconBtn} onClick={handleBtnClick} icon='select'></Button>
               </Tooltip>
               <Tooltip title='设置当前任务'>
-                <Button onClick={setCurrentTask} icon='setting'></Button>
+                <Button className={styles.iconBtn} onClick={setCurrentTask} icon='setting'></Button>
               </Tooltip>
 
             </div>

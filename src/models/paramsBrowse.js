@@ -235,8 +235,41 @@ export default modelExtend(pageModel, {
         }
         const data = yield call(addParamSet, {...paramsForm, listParamSelectDTO})
         if(data) {
-            yield put({type: 'updateState', payload: {isSaving:false}})
-            success(data.data)
+            // dispatch({ type: 'queryIndex',
+            //   payload: { },
+            // })
+            // yield call
+            // success(data.data)
+            console.warn(data.data.listUserParamSetName);
+            yield put({
+              type: 'updateState',
+              payload: {
+                isSaving:false,
+                listUserParam: data.data.listUserParamSetName,
+              }
+            });
+            // yield put({
+            //   type: 'saveIndexDataList',
+            //   payload: {
+            //     listUserParam: data.data.listUserParamSetName,
+            //   },
+            // })
+            // const data1 = yield call(queryIndex, {});
+            // console.warn(data1);
+            // setTimeout(function () {
+            //   window.location.reload();
+            // }, 1000);
+            // const data1 = yield call(queryIndex, {})
+            // if (data1.result === '0') {
+            //   const { listInstance, listUserParamSetName, listDeviceParamset } = data.data
+            //   console.warn(listUserParamSetName);
+              // yield put({
+              //   type: 'saveIndexDataList',
+              //   payload: {
+              //     listUserParam:listUserParamSetName,
+              //   },
+              // })
+            // }
         }
 
     },
