@@ -204,6 +204,10 @@ class TransferTable extends React.Component {
                     <Button className={indexStyles.iconBtn + ' margin-bottom8'} icon='sync' onClick={this.updateParamSet} title='更新参数组' ></Button>
                 </Tooltip>
 
+                <Tooltip title='管理参数组'>
+                    <Button className={indexStyles.iconBtn + ' margin-bottom8'} icon='exception' onClick={this.updateParamSet} title='管理参数组' ></Button>
+                </Tooltip>
+
               </div>
            </Col>
         </Row>

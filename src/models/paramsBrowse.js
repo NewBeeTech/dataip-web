@@ -180,27 +180,45 @@ export default modelExtend(pageModel, {
       let data ;
       if(!payload.isUser) {
           data = yield call(queryParamsetName, { ...payload, listInstanceId })
+          if (data.result === '0') {
+            const paramSet = genId(data.data.listParamSelectDTO)
+            yield put({
+              type: 'saveParamsetList',
+              payload: {
+                paramsetList: Array.from(new Set(paramSet)), // 去重
+              },
+            })
+            yield put({
+              type: 'updateState',
+              payload: {
+                paramsetName: payload.paramsetName,
+              },
+            })
+          } else {
+            throw data
+          }
       }else {
           data = yield call(queryUserParamsetName, { userParamsetName: payload.device })
+          if (data.result === '0') {
+            const paramSet = genId(data.data.userParamsetDTO.listParamSelectDTO)
+            yield put({
+              type: 'saveParamsetList',
+              payload: {
+                paramsetList: Array.from(new Set(paramSet)), // 去重
+              },
+            })
+            yield put({
+              type: 'updateState',
+              payload: {
+                paramsetName: payload.paramsetName,
+              },
+            })
+          } else {
+            throw data
+          }
       }
 
-      if (data.result === '0') {
-        const paramSet = genId(data.data.listParamSelectDTO)
-        yield put({
-          type: 'saveParamsetList',
-          payload: {
-            paramsetList: Array.from(new Set(paramSet)), // 去重
-          },
-        })
-        yield put({
-          type: 'updateState',
-          payload: {
-            paramsetName: payload.paramsetName,
-          },
-        })
-      } else {
-        throw data
-      }
+
     },
     // 启动判读
     * queryStartJudge ({ payload }, { call, put, select }) {
