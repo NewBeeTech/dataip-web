@@ -2,7 +2,7 @@ node_modules
 npm-debug.log
 # ide
 .idea
-
+dist
 # Mac General
 .DS_Store
 .AppleDouble

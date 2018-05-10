@@ -46,7 +46,11 @@ const Routers = function ({ history, app }) {
       path: '/multiPages',
       models: () => [import('./models/multiPages')],
       component: () => import('./routes/multiPages'),
-    },
+    }, {
+      path: '/paramsManage',
+      models: () => [import('./models/paramsManage')],
+      component: () => import('./routes/paramsManage'),
+    }
   ]
 
   return (

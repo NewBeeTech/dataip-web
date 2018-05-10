@@ -180,27 +180,45 @@ export default modelExtend(pageModel, {
       let data ;
       if(!payload.isUser) {
           data = yield call(queryParamsetName, { ...payload, listInstanceId })
+          if (data.result === '0') {
+            const paramSet = genId(data.data.listParamSelectDTO)
+            yield put({
+              type: 'saveParamsetList',
+              payload: {
+                paramsetList: Array.from(new Set(paramSet)), // 去重
+              },
+            })
+            yield put({
+              type: 'updateState',
+              payload: {
+                paramsetName: payload.paramsetName,
+              },
+            })
+          } else {
+            throw data
+          }
       }else {
           data = yield call(queryUserParamsetName, { userParamsetName: payload.device })
+          if (data.result === '0') {
+            const paramSet = genId(data.data.userParamsetDTO.listParamSelectDTO)
+            yield put({
+              type: 'saveParamsetList',
+              payload: {
+                paramsetList: Array.from(new Set(paramSet)), // 去重
+              },
+            })
+            yield put({
+              type: 'updateState',
+              payload: {
+                paramsetName: payload.paramsetName,
+              },
+            })
+          } else {
+            throw data
+          }
       }
 
-      if (data.result === '0') {
-        const paramSet = genId(data.data.listParamSelectDTO)
-        yield put({
-          type: 'saveParamsetList',
-          payload: {
-            paramsetList: Array.from(new Set(paramSet)), // 去重
-          },
-        })
-        yield put({
-          type: 'updateState',
-          payload: {
-            paramsetName: payload.paramsetName,
-          },
-        })
-      } else {
-        throw data
-      }
+
     },
     // 启动判读
     * queryStartJudge ({ payload }, { call, put, select }) {
@@ -235,8 +253,41 @@ export default modelExtend(pageModel, {
         }
         const data = yield call(addParamSet, {...paramsForm, listParamSelectDTO})
         if(data) {
-            yield put({type: 'updateState', payload: {isSaving:false}})
-            success(data.data)
+            // dispatch({ type: 'queryIndex',
+            //   payload: { },
+            // })
+            // yield call
+            // success(data.data)
+            console.warn(data.data.listUserParamSetName);
+            yield put({
+              type: 'updateState',
+              payload: {
+                isSaving:false,
+                listUserParam: data.data.listUserParamSetName,
+              }
+            });
+            // yield put({
+            //   type: 'saveIndexDataList',
+            //   payload: {
+            //     listUserParam: data.data.listUserParamSetName,
+            //   },
+            // })
+            // const data1 = yield call(queryIndex, {});
+            // console.warn(data1);
+            // setTimeout(function () {
+            //   window.location.reload();
+            // }, 1000);
+            // const data1 = yield call(queryIndex, {})
+            // if (data1.result === '0') {
+            //   const { listInstance, listUserParamSetName, listDeviceParamset } = data.data
+            //   console.warn(listUserParamSetName);
+              // yield put({
+              //   type: 'saveIndexDataList',
+              //   payload: {
+              //     listUserParam:listUserParamSetName,
+              //   },
+              // })
+            // }
         }
 
     },

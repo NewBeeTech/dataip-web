@@ -192,7 +192,12 @@ let database = [
     icon: 'book',
     name: '参数判读',
     route: '/manualJudge',
-  },
+  }, {
+    id: '11',
+    icon: 'book',
+    name: '参数组管理',
+    route: '/paramsManage',
+  }
 ]
 
 module.exports = database

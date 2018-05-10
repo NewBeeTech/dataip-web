@@ -7,6 +7,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'dva'
 import { Row, Col, Tabs, Button, Icon, Input, Tooltip, Modal, Checkbox} from 'antd'
 import styles from './style.less'
+import indexStyles from '../index.less';
 import CardList from './CardList'
 import InputSelect from '@@/Inputselect'
 
@@ -185,22 +186,26 @@ class TransferTable extends React.Component {
           <Col span={2}>
               <div style={{width:15}}>
                 <Tooltip title='启动判读'>
-                    <Button icon='play-circle' onClick={this.handleStarter} className="margin-bottom8" title='启动判读' ></Button>
+                    <Button className={indexStyles.iconBtn + ' margin-bottom8'} icon='play-circle' onClick={this.handleStarter}  title='启动判读' ></Button>
                 </Tooltip>
 
 
                 <Tooltip title='数据下载'>
-                    <Button icon='download' onClick={this.download} className="margin-bottom8" title='数据下载' ></Button>
+                    <Button className={indexStyles.iconBtn + ' margin-bottom8'} icon='download' onClick={this.download} title='数据下载' ></Button>
                 </Tooltip>
 
 
                 <Tooltip title='保存为参数组'>
-                    <Button icon='save' onClick={this.saveParamSetModal} className="margin-bottom8" title='保存为参数组' ></Button>
+                    <Button className={indexStyles.iconBtn + ' margin-bottom8'} icon='save' onClick={this.saveParamSetModal} title='保存为参数组' ></Button>
                 </Tooltip>
 
 
                 <Tooltip title='更新参数组'>
-                    <Button icon='sync' onClick={this.updateParamSet} className="margin-bottom8" title='更新参数组' ></Button>
+                    <Button className={indexStyles.iconBtn + ' margin-bottom8'} icon='sync' onClick={this.updateParamSet} title='更新参数组' ></Button>
+                </Tooltip>
+
+                <Tooltip title='管理参数组'>
+                    <Button className={indexStyles.iconBtn + ' margin-bottom8'} icon='exception' onClick={this.updateParamSet} title='管理参数组' ></Button>
                 </Tooltip>
 
               </div>

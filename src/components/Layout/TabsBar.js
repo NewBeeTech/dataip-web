@@ -98,6 +98,8 @@ class TabsBar extends React.Component {
     }
   }
   render () {
+    // console.warn('this.state.panes', this.state.panes);
+    // console.warn('this.props', this.props);
     return (
       <div className={styles.tabsBarContainer}>
         <Tabs

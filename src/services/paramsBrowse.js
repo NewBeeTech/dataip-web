@@ -69,9 +69,13 @@ export async function queryParamsetName (params) {
     data: params,
   })
 }
+/**
+ * 获取用户的自定义参数组
+ * @param {[type]} params [description]
+ */
 export async function queryUserParamsetName (params) {
   return request({
-    url: `${APIV3}/manual/judge/tree/userParamsetName`,
+    url: `${APIV3}/userParamset/listParam`,
     method: 'post',
     data: params,
   })
