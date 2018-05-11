@@ -10,6 +10,7 @@ import styles from './style.less'
 import indexStyles from '../index.less';
 import CardList from './CardList'
 import InputSelect from '@@/Inputselect'
+import { routerRedux } from 'dva/router'
 
 class TransferTable extends React.Component {
   state = {
@@ -95,6 +96,15 @@ class TransferTable extends React.Component {
     })
   }
 
+  /**
+   * 跳转到参数组管理
+   * @return {[type]} [description]
+   */
+  navToParamsManage = () => {
+    const { dispatch } = this.props
+    console.log('paramsManage');
+    dispatch(routerRedux.push('/paramsManage'))
+  }
 
 
   render () {
@@ -205,7 +215,7 @@ class TransferTable extends React.Component {
                 </Tooltip>
 
                 <Tooltip title='管理参数组'>
-                    <Button className={indexStyles.iconBtn + ' margin-bottom8'} icon='exception' onClick={this.updateParamSet} title='管理参数组' ></Button>
+                    <Button className={indexStyles.iconBtn + ' margin-bottom8'} icon='exception' onClick={this.navToParamsManage} title='管理参数组' ></Button>
                 </Tooltip>
 
               </div>
