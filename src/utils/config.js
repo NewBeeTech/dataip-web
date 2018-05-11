@@ -18,6 +18,7 @@ module.exports = {
   APIV2,
   APIV3,
   api: {
+    listUserParamsetByModelName: `${APIV3}/userParamset/listUserParamsetByModelName`, // 根据型号名称获取用户的自定义参数组
     userLogin: `${APIV3}/login`,
     userLogout: `${APIV3}/logout`,
     instanceIndex: `${APIV3}/instance/index`, // 获取任务树列表

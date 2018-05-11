@@ -8,6 +8,7 @@ import get from 'lodash/get'
 //   queryChartLine,
 // } from 'services/manualJudge'
 import {  getModels } from 'services/paramsBrowse'
+import { queryListUserParamsetByModelName } from 'services/paramsManage'
 
 import { config } from 'utils'
 
@@ -57,9 +58,9 @@ export default modelExtend(pageModel, {
       history.listen((location) => {
         // todo 这里切换时不要再次请求
         if (location.pathname === '/paramsManage') {
-          // dispatch({ type: 'queryIndex',
-          //   payload: { },
-          // })
+          dispatch({ type: 'queryParamsList',
+            payload: { },
+          })
           dispatch({ type: 'getModels',
             payload: { },
           });
@@ -88,13 +89,13 @@ export default modelExtend(pageModel, {
 
     },
     // 根据paramname 获取list
-    * query ({ payload }, { call, put }) {
-      const data = yield call(queryParamsetName, payload)
+    * queryParamsList ({ payload }, { call, put }) {
+      const data = yield call(queryListUserParamsetByModelName, payload)
       if (data.result === '0') {
         yield put({
           type: 'setState',
           payload: {
-            list: data.data,
+            list: data.data.userParamsetDTOList,
           },
         })
       } else {

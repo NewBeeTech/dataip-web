@@ -23,6 +23,8 @@ const Index = ({ user, paramsBrowse, dispatch, loading, location, paramsManage }
     { title: '是否必判', dataIndex: 'isEssential', key: 'isEssential' },
     { title: '所属型号', dataIndex: 'modelName', key: 'modelName' },
   ];
+  let data = paramsManage.list;
+  data = data && data.map((item, key) => ({ ...item, key }));
   const expandedRowRender = () => {
     const columns = [
       { title: '参数代号', dataIndex: 'date', key: 'date' },
@@ -84,7 +86,7 @@ const Index = ({ user, paramsBrowse, dispatch, loading, location, paramsManage }
       className="components-table-demo-nested"
       columns={columns}
       expandedRowRender={expandedRowRender}
-      // dataSource={data}
+      dataSource={data}
     />
   </div>)
 }
