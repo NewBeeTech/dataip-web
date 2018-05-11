@@ -54,6 +54,10 @@ const Routers = function ({ history, app }) {
       path: '/system/userManage',
       models: () => [import('./models/userManage')],
       component: () => import('./routes/userManage'),
+    }, {
+      path: '/system/monitor',
+      models: () => [import('./models/monitor')],
+      component: () => import('./routes/monitor'),
     }
   ]
 
