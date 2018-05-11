@@ -96,6 +96,7 @@ class UserList extends React.Component {
               style={{color: '#1372d8'}}
               onClick={(e) => {
                 e.preventDefault();
+                this.setState({ visible: true })
               }}
             >
               编辑
@@ -110,7 +111,7 @@ class UserList extends React.Component {
               style={{color: '#1372d8'}}
               onClick={(e) => {
                 e.preventDefault();
-                this.setState({ passVisible: true }) 
+                this.setState({ passVisible: true })
               }}
             >
               重置密码

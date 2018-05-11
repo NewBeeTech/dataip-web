@@ -62,6 +62,7 @@ class RoleList extends React.Component {
               style={{color: '#1372d8'}}
               onClick={(e) => {
                 e.preventDefault();
+                this.setState({ visible: true })
               }}
             >
               编辑
@@ -90,7 +91,7 @@ class RoleList extends React.Component {
         {/*  角色列表  */}
         <div className={styles.tableTitle}>
            <div>角色列表</div>
-           <Button type="primary">新增角色</Button>
+           <Button type="primary" onClick={() => { this.setState({ visible: true })}}>新增角色</Button>
         </div>
         <Table
           size="middle"
