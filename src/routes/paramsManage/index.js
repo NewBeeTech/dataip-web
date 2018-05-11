@@ -28,7 +28,16 @@ const Index = ({ user, paramsBrowse, dispatch, loading, location, paramsManage }
   }
   const columns = [
     { title: '参数组名称', dataIndex: 'userParamsetName', key: 'userParamsetName' },
-    { title: '是否必判', dataIndex: 'isEssential', key: 'isEssential' },
+    {
+      title: '是否必判',
+      dataIndex: 'isEssential',
+      key: 'isEssential',
+      render: (value) => (
+        <span className="table-operation">
+          {value ? '否' : '是'}
+        </span>
+      )
+    },
     { title: '所属型号', dataIndex: 'modelName', key: 'modelName' },
     {
       title: '操作',
