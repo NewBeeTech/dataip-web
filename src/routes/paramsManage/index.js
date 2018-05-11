@@ -9,6 +9,14 @@ const TabPane = Tabs.TabPane
 
 
 const Index = ({ user, paramsBrowse, dispatch, loading, location, paramsManage }) => {
+  function search() {
+    dispatch({
+      type: 'paramsManage/queryParamsList',
+      payload: {
+        modelName: paramsManage.paramsForm.modelName,
+      },
+    })
+  }
   function onChangeParamForm(name, value) {
       dispatch({
           type: 'paramsManage/updateParamForm',
@@ -80,7 +88,7 @@ const Index = ({ user, paramsBrowse, dispatch, loading, location, paramsManage }
             >
             </InputSelect>
         </Col>
-        <Button>查询</Button>
+        <Button onClick={search}>查询</Button>
     </Row>
     <Table
       className="components-table-demo-nested"
