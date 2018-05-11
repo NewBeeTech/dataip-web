@@ -1,12 +1,14 @@
 import modelExtend from 'dva-model-extend'
 import { message } from 'antd'
 import get from 'lodash/get'
-import {
-  queryParamsetName,
-  download,
-  saveJudgeResult,
-  queryChartLine,
-} from 'services/manualJudge'
+// import {
+//   queryParamsetName,
+//   download,
+//   saveJudgeResult,
+//   queryChartLine,
+// } from 'services/manualJudge'
+import {  getModels } from 'services/paramsBrowse'
+
 import { config } from 'utils'
 
 import { pageModel } from 'models/common'
@@ -18,8 +20,9 @@ const getRandomColor = () => {
 }
 
 export default modelExtend(pageModel, {
-  namespace: 'manualJudge',
+  namespace: 'paramsManage',
   state: {
+    models: [],  // 型号下拉列表数据
     selectedRowKeys: [],
     list: [],
     lineLoading: false,
@@ -28,31 +31,62 @@ export default modelExtend(pageModel, {
     lineKeys: [],
     YAxisMin: 0,
     YAxisMax: 0,
+    paramsForm: { // 保存为参数组数据
+        modelName: ''
+    }
   },
 
   reducers: {
     setState (state, { payload }) {
       return { ...state, ...payload }
     },
+    updateParamForm (state, { payload }) {
+        const {name, value} = payload;
+        return {
+            ...state,
+            paramsForm: {
+                ...state.paramsForm,
+                [name]: value
+            }
+        }
+    }
   },
 
   subscriptions: {
     setup ({ dispatch, history }) {
       history.listen((location) => {
-        if (location.pathname === '/manualJudge') {
-          // 清空表格line chart 数据
-          dispatch({ type: 'setState',
-            payload: {
-              lineChartData: [],
-              selectedRowKeys: [],
-            },
-          })
+        // todo 这里切换时不要再次请求
+        if (location.pathname === '/paramsManage') {
+          // dispatch({ type: 'queryIndex',
+          //   payload: { },
+          // })
+          dispatch({ type: 'getModels',
+            payload: { },
+          });
         }
       })
     },
   },
 
   effects: {
+    // 获取型号下拉列表
+    * getModels({payload}, {call, put}){
+
+        const data = yield getModels().catch(e=>null)
+        let result = [];
+        if(data){
+            result = data.data.map(item => ({ name: item.modelName, value: item.modelName }))
+        }
+        // console.warn(data);
+
+        yield put({
+            type:'updateState',
+            payload: {
+                models: result
+            }
+        })
+
+    },
     // 根据paramname 获取list
     * query ({ payload }, { call, put }) {
       const data = yield call(queryParamsetName, payload)
