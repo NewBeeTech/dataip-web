@@ -50,6 +50,10 @@ const Routers = function ({ history, app }) {
       path: '/paramsManage',
       models: () => [import('./models/paramsManage')],
       component: () => import('./routes/paramsManage'),
+    }, {
+      path: '/system/userManage',
+      models: () => [import('./models/userManage')],
+      component: () => import('./routes/userManage'),
     }
   ]
 

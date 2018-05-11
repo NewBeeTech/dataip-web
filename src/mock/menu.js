@@ -118,7 +118,7 @@ let database = [
     bpid: '5',
     mpid: '5',
     name: '自动判读',
-    icon: 'bar-chart',
+    // icon: 'bar-chart',
     route: '/dataDecide/autoDecide',
   },
   {

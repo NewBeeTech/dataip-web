@@ -70,7 +70,7 @@ let database = [
     bpid: '4',
     mpid: '4',
     name: '用户管理',
-    icon: 'heart-o',
+    icon: '',
     route: '/authority/users',
   },
   {
@@ -110,7 +110,7 @@ let database = [
     bpid: '5',
     mpid: '5',
     name: '自动判读',
-    icon: 'bar-chart',
+    // icon: 'bar-chart',
     route: '/dataDecide/autoDecide',
   },
   {
@@ -118,7 +118,7 @@ let database = [
     bpid: '/autoIp',
     mpid: '/autoIp',
     name: '自动判读',
-    icon: 'bar-chart',
+    // icon: 'bar-chart',
     route: '/autoIp',
   },
   {
@@ -197,6 +197,11 @@ let database = [
     icon: 'book',
     name: '参数组管理',
     route: '/paramsManage',
+  } , {
+    id: '152',
+    icon: '',
+    name: '用户管理',
+    route: '/userManage',
   }
 ]
 
