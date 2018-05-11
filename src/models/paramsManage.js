@@ -8,7 +8,7 @@ import get from 'lodash/get'
 //   queryChartLine,
 // } from 'services/manualJudge'
 import {  getModels } from 'services/paramsBrowse'
-import { queryListUserParamsetByModelName } from 'services/paramsManage'
+import { queryListUserParamsetByModelName, userParamsetDeleteService } from 'services/paramsManage'
 
 import { config } from 'utils'
 
@@ -102,47 +102,16 @@ export default modelExtend(pageModel, {
         throw data
       }
     },
-    // 保存判读结果
-    * postJudgeResult ({ payload }, { call, put }) {
-      const data = yield call(saveJudgeResult, payload)
+    // 删除自定义参数组
+    * userParamsetDeleteModel ({ payload }, { call, put, select }) {
+      const data = yield call(userParamsetDeleteService, payload)
       if (data.result === '0') {
-        message.success('保存成功')
-      } else {
-        throw data
-      }
-    },
-    // 获取表格数据
-    * loadChart ({ payload }, { call, put, select }) {
-      //  根据 paramCode 区分每条线
-      yield put({ type: 'setState', payload: { lineLoading: true } })
-      const data = yield call(queryChartLine, payload)
-      if (data.result === '0') {
-        const analogDatasList = get(data, 'data.analogDataList.data', [])
-        const lineKeys = Object.keys(_.first(analogDatasList) || {})
-        const YAxisMax = get(data, 'data.analogDataList.max', 0)
-        const YAxisMin = get(data, 'data.analogDataList.min', 0)
-
-        yield put({ type: 'setState',
-          payload: {
-            lineChartData: analogDatasList,
-            lineLoading: false,
-            lineKeys,
-            YAxisMax,
-            YAxisMin,
-            colorArray: lineKeys.map(_ => getRandomColor()), // 放state  鼠标滑动时颜色不要动
-          },
-        })
-      } else {
-        yield put({ type: 'setState', payload: { lineLoading: false } })
-        throw data
-      }
-    },
-    // 下载数据
-    * downloadData ({ payload }, { call }) {
-      const data = yield call(download, payload)
-      if (data.result === '0') {
-        console.log('zip标识：', data.data)
-        window.open(`${downloadZipUrl}${data.data}`)
+        const modelName = yield select(state => state.paramsManage.paramsForm.modelName) || null;
+        const payload = modelName ? { modelName } : {};
+        yield put({
+          type: 'queryParamsList',
+          payload
+        });
       } else {
         throw data
       }

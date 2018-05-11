@@ -17,6 +17,18 @@ const Index = ({ user, paramsBrowse, dispatch, loading, location, paramsManage }
       },
     })
   }
+  function deleteParams(record) {
+    // console.log('delete: ', record);
+    dispatch({
+      type: 'paramsManage/userParamsetDeleteModel',
+      payload: {
+        userParamsetName: record.userParamsetName,
+        userParamsetId: record.userParamsetId,
+        modelName: record.modelName,
+        isEssential: record.isEssential,
+      }
+    })
+  }
   function onChangeParamForm(name, value) {
       dispatch({
           type: 'paramsManage/updateParamForm',
@@ -43,11 +55,11 @@ const Index = ({ user, paramsBrowse, dispatch, loading, location, paramsManage }
       title: '操作',
       dataIndex: 'operation',
       key: 'operation',
-      render: () => (
+      render: (rowValue, record) => (
         <span className="table-operation">
           <Button type="primary">编辑</Button>
           <Button style={{ margin: '0 5px' }}>保存</Button>
-          <Button type="danger">删除</Button>
+          <Button onClick={() => deleteParams(record)}  type="danger">删除</Button>
         </span>
       ),
     },
