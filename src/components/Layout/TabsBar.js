@@ -74,7 +74,8 @@ class TabsBar extends React.Component {
     if (!findCurrentPanes) {
       if (menu.length === 1) { return }
       const rolesList = localmenus
-
+      console.log(rolesList);
+      console.log(nextPathname);
       const currentMenu = rolesList.find(v => v.route === nextPathname)
 
       if (currentMenu) {

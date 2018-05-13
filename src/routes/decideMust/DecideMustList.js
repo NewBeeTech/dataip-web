@@ -151,15 +151,6 @@ class DecideMustList extends React.Component {
       labelCol: { span: 4 },
       wrapperCol: { span: 14 },
     };
-    const rowSelection = {
-      onChange: (selectedRowKeys, selectedRows) => {
-        console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-      },
-      getCheckboxProps: record => ({
-        disabled: record.name === 'Disabled User', // Column configuration not to be checked
-        name: record.name,
-      }),
-    };
     return (
       <div>
         {/*  用户列表  */}
@@ -210,18 +201,14 @@ class DecideMustList extends React.Component {
             </Col>
           </Row>
           <Row>
-            <Col span={4} offset={16} style={{ textAlign: 'right' }}>
+            <Col span={4} offset={20} style={{ textAlign: 'right' }}>
               <Button type="primary" htmlType="submit">查询</Button>
-            </Col>
-            <Col span={4} style={{ textAlign: 'right' }}>
-              <Button type="primary" onClick={(e) => this.downLoadReport(e)}>下载报告</Button>
             </Col>
           </Row>
         </Form>
         </div>
         用户必判统计信息：
         <Table
-          rowSelection={rowSelection}
           size="middle"
           columns={this.columns}
           dataSource={this._renderDataSource(data)}

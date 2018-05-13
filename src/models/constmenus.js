@@ -152,14 +152,14 @@ let database = [
     bpid: '7',
     mpid: '7',
     name: '判读结果统计',
-    route: '/decideResult/decide',
+    route: '/statisticsResult',
   },
   {
     id: '72',
     bpid: '7',
     mpid: '7',
     name: '必判参数统计',
-    route: '/decideResult/must',
+    route: '/forcedResult',
   },
   {
     id: '8',
