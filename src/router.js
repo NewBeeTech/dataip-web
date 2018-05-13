@@ -37,6 +37,26 @@ const Routers = function ({ history, app }) {
       models: () => [import('./models/paramsBrowse'), import('./models/manualJudge')],
       component: () => import('./routes/manualJudge/'),
     }, {
+      // 判读结果管理-判读结果统计
+      path: '/decideResult/decide',
+      // models: () => [import('./models/reportBrowse')],
+      // component: () => import('./routes/reportBrowse'),
+    }, {
+      // 判读结果管理-必判参数统计
+      path: '/decideResult/must',
+      // models: () => [import('./models/decideMust')],
+      component: () => import('./routes/decideMust'),
+    }, {
+      // 报告管理-报告浏览
+      path: '/report/list',
+      models: () => [import('./models/reportBrowse')],
+      component: () => import('./routes/reportBrowse'),
+    }, {
+      // 报告管理-我的报告
+      path: '/report/mine',
+      models: () => [import('./models/myReport')],
+      component: () => import('./routes/myReport'),
+    }, {
       // 判读 数据查看
       path: '/judgeReview',
       models: () => [import('./models/manualJudge')],
