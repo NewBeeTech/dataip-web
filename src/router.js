@@ -67,14 +67,17 @@ const Routers = function ({ history, app }) {
       models: () => [import('./models/multiPages')],
       component: () => import('./routes/multiPages'),
     }, {
+      // 参数管理
       path: '/paramsManage',
       models: () => [import('./models/paramsManage')],
       component: () => import('./routes/paramsManage'),
     }, {
+      // 用户管理
       path: '/system/userManage',
       models: () => [import('./models/userManage')],
       component: () => import('./routes/userManage'),
     }, {
+      // 状态监控
       path: '/system/monitor',
       models: () => [import('./models/monitor')],
       component: () => import('./routes/monitor'),
