@@ -1,0 +1,12 @@
+.editModal {
+  display: flex;
+  width: 700px;
+}
+
+.editForm {
+  width: 450px;
+}
+
+.editTree {
+  width: 200px;
+}

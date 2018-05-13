@@ -305,8 +305,8 @@ module.exports = {
           id: 91,
           name: "判读结果管理",
           roleList: [
-            { id: 92, name: "判读结果统计", url: null, tabs: [] },
-            { id: 93, name: "必判参数统计", url: null, tabs: [] }
+            { id: 92, name: "判读结果统计", url: "/decideResult/decide", tabs: [] },
+            { id: 93, name: "必判参数统计", url: "/decideResult/must", tabs: [] }
           ]
         },
         {
