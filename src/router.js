@@ -36,14 +36,16 @@ const Routers = function ({ history, app }) {
       path: '/manualJudge',
       models: () => [import('./models/paramsBrowse'), import('./models/manualJudge')],
       component: () => import('./routes/manualJudge/'),
-    }, {
+    },
+    // {
       // 判读结果管理-判读结果统计
-      path: '/decideResult/decide',
+      // path: '/statisticsResult',
       // models: () => [import('./models/reportBrowse')],
       // component: () => import('./routes/reportBrowse'),
-    }, {
+    // },
+    {
       // 判读结果管理-必判参数统计
-      path: '/decideResult/must',
+      path: '/forcedResult',
       // models: () => [import('./models/decideMust')],
       component: () => import('./routes/decideMust'),
     }, {
