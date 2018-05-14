@@ -8,7 +8,11 @@ import get from 'lodash/get'
 //   queryChartLine,
 // } from 'services/manualJudge'
 import {  getModels } from 'services/paramsBrowse'
-import { queryListUserParamsetByModelName, userParamsetDeleteService } from 'services/paramsManage'
+import {
+  queryListUserParamsetByModelName,
+  userParamsetDeleteService,
+  userParamsetUpdateService,
+} from 'services/paramsManage'
 
 import { config } from 'utils'
 
@@ -28,6 +32,7 @@ export default modelExtend(pageModel, {
       userParamsetName: '', // 参数组名称
       isEssential: '', // 必判
       modelName: '', // 型号
+      userParamsetId: '',
     },
     models: [],  // 型号下拉列表数据
     selectedRowKeys: [],
@@ -112,6 +117,32 @@ export default modelExtend(pageModel, {
     * userParamsetDeleteModel ({ payload }, { call, put, select }) {
       const data = yield call(userParamsetDeleteService, payload)
       if (data.result === '0') {
+        const modelName = yield select(state => state.paramsManage.paramsForm.modelName) || null;
+        const payload = modelName ? { modelName } : {};
+        yield put({
+          type: 'queryParamsList',
+          payload
+        });
+      } else {
+        throw data
+      }
+    },
+    // 更新自定义参数组
+    * userParamsetUpdateModel ({ payload }, { call, put, select }) {
+      const data = yield call(userParamsetUpdateService, payload)
+      if (data.result === '0') {
+        yield put({
+          type: 'updateState',
+          payload: {
+            showEditModal: false, // 是否展示编辑模态框
+            editInfo: {
+              userParamsetName: '', // 参数组名称
+              isEssential: '', // 必判
+              modelName: '', // 型号
+              userParamsetId: '',
+            },
+          }
+        });
         const modelName = yield select(state => state.paramsManage.paramsForm.modelName) || null;
         const payload = modelName ? { modelName } : {};
         yield put({

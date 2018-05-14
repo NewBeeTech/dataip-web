@@ -17,6 +17,11 @@ const Index = ({ user, paramsBrowse, dispatch, loading, location, paramsManage }
       },
     })
   }
+  /**
+   * 删除自定义参数组
+   * @param  {[type]} record [description]
+   * @return {[type]}        [description]
+   */
   function deleteParams(record) {
     // console.log('delete: ', record);
     dispatch({
@@ -27,7 +32,18 @@ const Index = ({ user, paramsBrowse, dispatch, loading, location, paramsManage }
         modelName: record.modelName,
         isEssential: record.isEssential,
       }
-    })
+    });
+  }
+  /**
+   * 更新自定义参数组
+   * @return {[type]}        [description]
+   */
+  function updateParams() {
+    // console.log('delete: ', record);
+    dispatch({
+      type: 'paramsManage/userParamsetUpdateModel',
+      payload: paramsManage.editInfo,
+    });
   }
   function onChangeParamForm(name, value) {
       dispatch({
@@ -36,7 +52,7 @@ const Index = ({ user, paramsBrowse, dispatch, loading, location, paramsManage }
               name,
               value: value.target ? value.target.value : value
           }
-      })
+      });
   }
   /**
    * 展现编辑模态框
@@ -51,6 +67,7 @@ const Index = ({ user, paramsBrowse, dispatch, loading, location, paramsManage }
             modelName: record.modelName,
             isEssential: record.isEssential,
             userParamsetName: record.userParamsetName,
+            userParamsetId: record.userParamsetId,
           }
         }
     });
@@ -64,6 +81,7 @@ const Index = ({ user, paramsBrowse, dispatch, loading, location, paramsManage }
             userParamsetName: '', // 参数组名称
             isEssential: '', // 必判
             modelName: '', // 型号
+            userParamsetId: '',
           },
         }
     });
@@ -157,7 +175,7 @@ const Index = ({ user, paramsBrowse, dispatch, loading, location, paramsManage }
         footer={
             <div>
                 <Button onClick={hideEditModal}>取消</Button>
-                <Button onClick={()=>confirmUpdate('append')} type='primary' style={{marginLeft:10}}>更新</Button>
+                <Button onClick={updateParams} type='primary' style={{marginLeft:10}}>更新</Button>
             </div>
         }
         onCancel={hideEditModal}

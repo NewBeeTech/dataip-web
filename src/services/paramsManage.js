@@ -4,6 +4,7 @@ const { api , APIV3, APIHOST} = config
 const {
   listUserParamsetByModelName,
   userParamsetDeleteAPI,
+  userParamsetUpdateAPI,
 } = api
 
 /**
@@ -25,6 +26,18 @@ export async function queryListUserParamsetByModelName(params) {
 export async function userParamsetDeleteService(params) {
   return request({
     url: userParamsetDeleteAPI,
+    method: 'post',
+    data: params,
+  });
+}
+
+/**
+ * 更新自定义参数组
+ * @param {[type]} params [description]
+ */
+export async function userParamsetUpdateService(params) {
+  return request({
+    url: userParamsetUpdateAPI,
     method: 'post',
     data: params,
   });
