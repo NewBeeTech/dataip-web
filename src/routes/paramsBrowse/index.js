@@ -18,7 +18,7 @@ const Index = ({ user, paramsBrowse, dispatch, loading, location }) => {
   const { paramList, pagination, listModalVisible, selectedRowKeys, paramsetList, listInstanceId , filterKey} = paramsBrowse
   const { listInstance, listUserParam,
       listDeviceParamset, paramsetName,
-      isSetting, models = [],paramsForm = {}
+      isSetting, models = [],paramsForm = {}, taskModels = [],
   } = paramsBrowse
 
   const { list, listTask } = user
@@ -148,7 +148,15 @@ const Index = ({ user, paramsBrowse, dispatch, loading, location }) => {
         <Col span={2}>型号：</Col>
         <Col span={22}>
           <InputSelect style={{width:'100%'}} options={models}
-                       onChange={value=>dispatch({type: 'paramsBrowse/updateState', payload: {currentTaskModel: value}})}
+                       onChange={value=> {
+                         dispatch({type: 'paramsBrowse/updateState', payload: {currentTaskModel: value}});
+                         dispatch({
+                           type: 'paramsBrowse/queryTasksByModelNameModel',
+                           payload: {
+                             modelName: value,
+                           }
+                         });
+                       }}
                        value={paramsBrowse.currentTaskModel}></InputSelect>
         </Col>
 
@@ -157,6 +165,7 @@ const Index = ({ user, paramsBrowse, dispatch, loading, location }) => {
         <Col span={2}>任务：</Col>
         <Col span={22}>
           <InputSelect
+            options={taskModels}
             value={paramsBrowse.currentTask}
             onChange={value=>dispatch({type: 'paramsBrowse/updateState', payload: {currentTask: value}})}
             style={{width:'100%'}}></InputSelect>

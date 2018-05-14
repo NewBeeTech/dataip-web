@@ -2,13 +2,16 @@ import modelExtend from 'dva-model-extend'
 import { query, queryIndex, queryParams,
     queryParamsetName, queryStartJudge,
     addParamSet, appendParamSet, updateParamSet,
-    queryUserParamsetName, getModels, setCurrTask} from 'services/paramsBrowse'
+    queryUserParamsetName, getModels, setCurrTask,
+    queryTasksByModelNameService,
+} from 'services/paramsBrowse'
 import { pageModel } from 'models/common'
 import queryString from 'query-string'
 import { routerRedux } from 'dva/router'
 import {error, success, warning} from '@@/note'
 
 const initialState = {
+  taskModels: [], // 任务列表
   paramList: [],
   listInstanceId: [], // 选择的试验id
   paramsetName: '', // 当前选择的试验参数 -- 左侧参数树选中的
@@ -322,6 +325,23 @@ export default modelExtend(pageModel, {
         //     error(data.data)
         // }
 
+    },
+    // 根据型号名称获取任务信息
+    * queryTasksByModelNameModel({ payload }, { put, call, select }) {
+      const data = yield call(queryTasksByModelNameService, payload)
+      if (data.result === '0') {
+        console.warn(data);
+        const result = data.data.map(item => ({ name: item.taskName, value: item.taskName }))
+        yield put({
+          type: 'updateState',
+          payload: {
+            taskModels: result,
+            currentTask: '',
+          }
+        });
+      } else {
+        throw data
+      }
     },
     * confirmSetCurrentTask({payload}, {put, call, select}) {
         // const {currentTaskModel, currentTask} = yield select(_=>_.paramsBrowse)
