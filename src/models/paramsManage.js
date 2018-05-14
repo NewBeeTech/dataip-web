@@ -23,6 +23,12 @@ const getRandomColor = () => {
 export default modelExtend(pageModel, {
   namespace: 'paramsManage',
   state: {
+    showEditModal: false, // 是否展示编辑模态框
+    editInfo: {
+      userParamsetName: '', // 参数组名称
+      isEssential: '', // 必判
+      modelName: '', // 型号
+    },
     models: [],  // 型号下拉列表数据
     selectedRowKeys: [],
     list: [],

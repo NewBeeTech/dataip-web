@@ -38,6 +38,36 @@ const Index = ({ user, paramsBrowse, dispatch, loading, location, paramsManage }
           }
       })
   }
+  /**
+   * 展现编辑模态框
+   * @return {[type]} [description]
+   */
+  function showEditModal(record) {
+    dispatch({
+        type: 'paramsManage/updateState',
+        payload: {
+          showEditModal: true,
+          editInfo: {
+            modelName: record.modelName,
+            isEssential: record.isEssential,
+            userParamsetName: record.userParamsetName,
+          }
+        }
+    });
+  }
+  function hideEditModal() {
+    dispatch({
+        type: 'paramsManage/updateState',
+        payload: {
+          showEditModal: false,
+          editInfo: {
+            userParamsetName: '', // 参数组名称
+            isEssential: '', // 必判
+            modelName: '', // 型号
+          },
+        }
+    });
+  }
   const columns = [
     { title: '参数组名称', dataIndex: 'userParamsetName', key: 'userParamsetName' },
     {
@@ -46,7 +76,7 @@ const Index = ({ user, paramsBrowse, dispatch, loading, location, paramsManage }
       key: 'isEssential',
       render: (value) => (
         <span className="table-operation">
-          {value ? '否' : '是'}
+          {value == 1 ? '是' : '否'}
         </span>
       )
     },
@@ -57,7 +87,7 @@ const Index = ({ user, paramsBrowse, dispatch, loading, location, paramsManage }
       key: 'operation',
       render: (rowValue, record) => (
         <span className="table-operation">
-          <Button type="primary">编辑</Button>
+          <Button onClick={() => showEditModal(record)} type="primary">编辑</Button>
           <Button style={{ margin: '0 5px' }}>保存</Button>
           <Button onClick={() => deleteParams(record)}  type="danger">删除</Button>
         </span>
@@ -121,6 +151,82 @@ const Index = ({ user, paramsBrowse, dispatch, loading, location, paramsManage }
       expandedRowRender={expandedRowRender}
       dataSource={data}
     />
+    <Modal
+        visible={ paramsManage.showEditModal}
+        title='更新自定义参数组'
+        footer={
+            <div>
+                <Button onClick={hideEditModal}>取消</Button>
+                <Button onClick={()=>confirmUpdate('append')} type='primary' style={{marginLeft:10}}>更新</Button>
+            </div>
+        }
+        onCancel={hideEditModal}
+    >
+        <Row style={{marginBottom: 10, marginTop:20}}>
+            <Col span={2}>型号：</Col>
+            <Col span={22}>
+                <InputSelect
+                    style={{width:'100%'}}
+                    options={paramsManage.models}
+                    disableInput
+                    onChange={value=> {
+                      dispatch({
+                        type: 'paramsManage/updateState',
+                        payload: {
+                          editInfo: {
+                            ...paramsManage.editInfo,
+                            modelName: value,
+                          }
+                        }
+                      });
+                    }}
+                    value={paramsManage.editInfo.modelName}
+                ></InputSelect>
+            </Col>
+
+        </Row>
+        <Row>
+            <Col span={2}>名称：</Col>
+            <Col span={22}>
+                <Input style={{width:'100%'}}
+                    disableInput
+                    value={paramsManage.editInfo.userParamsetName}
+                    onChange={e => {
+                      dispatch({
+                        type: 'paramsManage/updateState',
+                        payload: {
+                          editInfo: {
+                            ...paramsManage.editInfo,
+                            userParamsetName: e.target.value,
+                          }
+                        }
+                      });
+                    }}
+                ></Input>
+            </Col>
+        </Row>
+        <Row>
+          <Col>
+            <Checkbox
+              onChange={e => {
+                // console.log(e);onChangeParamForm('isEssential', e.target.checked ? 1 : 0)
+                dispatch({
+                  type: 'paramsManage/updateState',
+                  payload: {
+                    editInfo: {
+                      ...paramsManage.editInfo,
+                      isEssential: e.target.checked ? 1 : 0,
+                    }
+                  }
+                });
+              }}
+              checked={paramsManage.editInfo.isEssential}
+            >
+              设置为必判参数
+            </Checkbox>
+          </Col>
+        </Row>
+    </Modal>
   </div>)
 }
 
