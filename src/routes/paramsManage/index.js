@@ -114,7 +114,8 @@ const Index = ({ user, paramsBrowse, dispatch, loading, location, paramsManage }
   ];
   let data = paramsManage.list;
   data = data && data.map((item, key) => ({ ...item, key }));
-  const expandedRowRender = (row) => {
+  console.warn('data', data);
+  const expandedRowRender = (row, key) => {
     const columns = [
       { title: '参数代号', dataIndex: 'paramCode', key: 'paramCode' },
       { title: '参数名称', dataIndex: 'paramName', key: 'paramName' },
@@ -123,20 +124,17 @@ const Index = ({ user, paramsBrowse, dispatch, loading, location, paramsManage }
       { title: '所属设备', dataIndex: 'device', key: 'device' },
       // { title: '操作', dataIndex: 'upgradeNum', key: 'upgradeNum' },
       {
-        title: 'Action',
+        title: '排序',
         dataIndex: 'operation',
         key: 'operation',
-        render: () => (
-          <span className="table-operation">
-            <a href="javascript:;">Pause</a>
-            <a href="javascript:;">Stop</a>
-            {/* <Dropdown overlay={menu}>
-              <a href="javascript:;">
-                More <Icon type="down" />
-              </a>
-            </Dropdown> */}
-          </span>
-        ),
+        render: (value, row, index) => {
+          return (
+            <div>
+              <Icon type="up" style={{ marginRight: '5px', color: '#49a9ee'}} />
+              <Icon type="down" style={{ marginRight: '5px', color: '#49a9ee'}} />
+            </div>
+          )
+        },
       },
     ];
 
