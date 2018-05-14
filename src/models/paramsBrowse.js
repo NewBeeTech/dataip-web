@@ -4,6 +4,7 @@ import { query, queryIndex, queryParams,
     addParamSet, appendParamSet, updateParamSet,
     queryUserParamsetName, getModels, setCurrTask,
     queryTasksByModelNameService,
+    setCurrTaskService,
 } from 'services/paramsBrowse'
 import { pageModel } from 'models/common'
 import queryString from 'query-string'
@@ -344,7 +345,20 @@ export default modelExtend(pageModel, {
       }
     },
     * confirmSetCurrentTask({payload}, {put, call, select}) {
-        // const {currentTaskModel, currentTask} = yield select(_=>_.paramsBrowse)
+        const {currentTaskModel, currentTask} = yield select(_=>_.paramsBrowse)
+        const data = yield call(setCurrTaskService, { taskName: currentTask });
+        if (data.result === '0') {
+          yield put({
+            type: 'updateState',
+            payload: {
+              isSetting: false,
+              currentTaskModel: '',
+              currentTask: '',
+            }
+          });
+        } else {
+          throw data
+        }
         // if(!currentTaskModel) {
         //     return warning('缺少型号')
         // }

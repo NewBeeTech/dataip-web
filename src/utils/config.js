@@ -22,6 +22,7 @@ module.exports = {
     userParamsetDeleteAPI: `${APIV3}/userParamset/delete`, // 删除自定义参数组
     userParamsetUpdateAPI: `${APIV3}/userParamset/updateName`, // 更新自定义参数组基本信息
     queryTasksByModelNameAPI: `${APIV3}/base/task`, // 根据型号名称获取任务信息
+    setCurrTaskAPI: `${APIV3}/userConfig/setCurrTask`, // 设置用户当前任务
     userLogin: `${APIV3}/login`,
     userLogout: `${APIV3}/logout`,
     instanceIndex: `${APIV3}/instance/index`, // 获取任务树列表

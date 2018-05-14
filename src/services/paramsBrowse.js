@@ -6,6 +6,7 @@ const {
   paramsetName, startJudge,
   judgeIndex,
   queryTasksByModelNameAPI,
+  setCurrTaskAPI,
 } = api
 
 export async function queryIndex (params) {
@@ -102,6 +103,14 @@ export async function queryStartJudge (params) {
 export async function queryTasksByModelNameService (params) {
   return request({
     url: queryTasksByModelNameAPI,
+    method: 'post',
+    data: params,
+  })
+}
+// 设置用户当前任务
+export async function setCurrTaskService (params) {
+  return request({
+    url: setCurrTaskAPI,
     method: 'post',
     data: params,
   })
