@@ -45,6 +45,23 @@ const Index = ({ user, paramsBrowse, dispatch, loading, location, paramsManage }
       payload: paramsManage.editInfo,
     });
   }
+  /**
+   * 覆盖自定义参数组
+   * @return {[type]}        [description]
+   */
+  function replaceParams(record) {
+    console.log('replace: ', record);
+    dispatch({
+      type: 'paramsManage/userParamsetReplaceModel',
+      payload: {
+        userParamsetId: record.userParamsetId,
+        modelName: record.modelName,
+        userParamsetName: record.userParamsetName,
+        isEssential: record.isEssential,
+        listParamSelectDTO: record.listParamSelectDTO,
+      },
+    });
+  }
   function onChangeParamForm(name, value) {
       dispatch({
           type: 'paramsManage/updateParamForm',
@@ -72,6 +89,10 @@ const Index = ({ user, paramsBrowse, dispatch, loading, location, paramsManage }
         }
     });
   }
+  /**
+   * 隐藏编辑模态框
+   * @return {[type]} [description]
+   */
   function hideEditModal() {
     dispatch({
         type: 'paramsManage/updateState',
@@ -85,6 +106,34 @@ const Index = ({ user, paramsBrowse, dispatch, loading, location, paramsManage }
           },
         }
     });
+  }
+  /**
+   * 向上
+   * @return {[type]} [description]
+   */
+  function forward(key, index) {
+    console.log(key, index);
+    dispatch({
+      type: 'paramsManage/forward',
+      payload: {
+        firstRow: key,
+        secondRow: index,
+      },
+    })
+  }
+  /**
+   * 向下
+   * @return {[type]} [description]
+   */
+  function backward(key, index) {
+    console.log(key, index);
+    dispatch({
+      type: 'paramsManage/backward',
+      payload: {
+        firstRow: key,
+        secondRow: index,
+      },
+    })
   }
   const columns = [
     { title: '参数组名称', dataIndex: 'userParamsetName', key: 'userParamsetName' },
@@ -106,7 +155,7 @@ const Index = ({ user, paramsBrowse, dispatch, loading, location, paramsManage }
       render: (rowValue, record) => (
         <span className="table-operation">
           <Button onClick={() => showEditModal(record)} type="primary">编辑</Button>
-          <Button style={{ margin: '0 5px' }}>保存</Button>
+          <Button onClick={() => replaceParams(record)} style={{ margin: '0 5px' }}>保存</Button>
           <Button onClick={() => deleteParams(record)}  type="danger">删除</Button>
         </span>
       ),
@@ -127,11 +176,11 @@ const Index = ({ user, paramsBrowse, dispatch, loading, location, paramsManage }
         title: '排序',
         dataIndex: 'operation',
         key: 'operation',
-        render: (value, row, index) => {
+        render: (value, row1, index) => {
           return (
             <div>
-              <Icon type="up" style={{ marginRight: '5px', color: '#49a9ee'}} />
-              <Icon type="down" style={{ marginRight: '5px', color: '#49a9ee'}} />
+              <Icon type="up" onClick={() => forward(key, index)} style={{ marginRight: '15px', color: '#49a9ee'}} />
+              <Icon type="down" onClick={() => backward(key, index)} style={{ color: '#49a9ee'}} />
             </div>
           )
         },

@@ -12,7 +12,9 @@ import {
   queryListUserParamsetByModelName,
   userParamsetDeleteService,
   userParamsetUpdateService,
+  userParamsetReplaceService,
 } from 'services/paramsManage'
+import {error, success, warning} from '@@/note'
 
 import { config } from 'utils'
 
@@ -153,5 +155,48 @@ export default modelExtend(pageModel, {
         throw data
       }
     },
+    // 更新自定义参数组
+    * userParamsetReplaceModel ({ payload }, { call, put, select }) {
+      const data = yield call(userParamsetReplaceService, payload)
+      if (data.result === '0') {
+        success('保存成功');
+      } else {
+        throw data
+      }
+    },
+    * forward({ payload }, { call, put, select }) {
+      const { firstRow, secondRow } = payload;
+      const list  = yield select(_ => _.paramsManage.list);
+      let listParamSelectDTO = list[firstRow].listParamSelectDTO;
+      if (secondRow != 0) {
+        const temp = listParamSelectDTO[secondRow];
+        listParamSelectDTO[secondRow] = listParamSelectDTO[secondRow - 1];
+        listParamSelectDTO[secondRow - 1] = temp;
+        list[firstRow].listParamSelectDTO = listParamSelectDTO;
+        put({
+          type: 'updateState',
+          payload: {
+            list,
+          }
+        });
+      }
+    },
+    * backward({ payload }, { call, put, select }) {
+      const { firstRow, secondRow } = payload;
+      const list  = yield select(_ => _.paramsManage.list);
+      let listParamSelectDTO = list[firstRow].listParamSelectDTO;
+      if (secondRow != listParamSelectDTO.length - 1) {
+        const temp = listParamSelectDTO[secondRow];
+        listParamSelectDTO[secondRow] = listParamSelectDTO[secondRow + 1];
+        listParamSelectDTO[secondRow + 1] = temp;
+        list[firstRow].listParamSelectDTO = listParamSelectDTO;
+        put({
+          type: 'updateState',
+          payload: {
+            list,
+          }
+        });
+      }
+    }
   },
 })

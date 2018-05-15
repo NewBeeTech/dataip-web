@@ -5,6 +5,7 @@ const {
   listUserParamsetByModelName,
   userParamsetDeleteAPI,
   userParamsetUpdateAPI,
+  userParamsetReplaceAPI,
 } = api
 
 /**
@@ -38,6 +39,18 @@ export async function userParamsetDeleteService(params) {
 export async function userParamsetUpdateService(params) {
   return request({
     url: userParamsetUpdateAPI,
+    method: 'post',
+    data: params,
+  });
+}
+
+/**
+ * 覆盖自定义参数组
+ * @param {[type]} params [description]
+ */
+export async function userParamsetReplaceService(params) {
+  return request({
+    url: userParamsetReplaceAPI,
     method: 'post',
     data: params,
   });
