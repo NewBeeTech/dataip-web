@@ -6,6 +6,7 @@ import { routerRedux } from 'dva/router'
 import InputSelect from '@@/Inputselect'
 
 const TabPane = Tabs.TabPane
+const styles = require('./styles.less');
 
 
 const Index = ({ user, paramsBrowse, dispatch, loading, location, paramsManage }) => {
@@ -179,8 +180,8 @@ const Index = ({ user, paramsBrowse, dispatch, loading, location, paramsManage }
         render: (value, row1, index) => {
           return (
             <div>
-              <Icon type="up" onClick={() => forward(key, index)} style={{ marginRight: '15px', color: '#49a9ee'}} />
-              <Icon type="down" onClick={() => backward(key, index)} style={{ color: '#49a9ee'}} />
+              <Button icon="up" onClick={() => forward(key, index)} style={{ marginRight: '15px' }} />
+              <Button icon="down" onClick={() => backward(key, index)} />
             </div>
           )
         },
@@ -197,21 +198,23 @@ const Index = ({ user, paramsBrowse, dispatch, loading, location, paramsManage }
     );
   };
   return (<div className="content-inner">
-    <Row style={{marginBottom: 10, marginTop:20}}>
-        <Col span={2}>型号：</Col>
-        <Col span={6}>
-            <InputSelect style={{width:'100%'}}
+    <div className={styles.modelNameHeader}>
+        <div >型号：</div>
+        <div className={styles.modelNameSelect}>
+            <InputSelect
+
                 disableInput
                 onChange={value=>onChangeParamForm('modelName', value)}
                 options={paramsManage.models}
                 value={paramsManage.paramsForm.modelName}
             >
             </InputSelect>
-        </Col>
+        </div>
         <Button onClick={search}>查询</Button>
-    </Row>
+    </div>
     <Table
       className="components-table-demo-nested"
+      rowClassName={() => styles.rowClassName}
       columns={columns}
       expandedRowRender={expandedRowRender}
       dataSource={data}

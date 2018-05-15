@@ -104,7 +104,7 @@ const Index = ({ user, paramsBrowse, dispatch, loading, location }) => {
 
   return (<div className="content-inner">
     <Row>
-      <Col span={4} className={styles.leftTree}>
+      <Col span={3} className={styles.leftTree}>
         <p>自定义参数组</p>
         <Tree {...customTreeProps} />
         <p>默认参数组</p>
