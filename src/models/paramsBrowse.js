@@ -6,6 +6,9 @@ import { query, queryIndex, queryParams,
     queryTasksByModelNameService,
     setCurrTaskService,
 } from 'services/paramsBrowse'
+import {
+  userParamsetReplaceService,
+} from 'services/paramsManage'
 import { pageModel } from 'models/common'
 import queryString from 'query-string'
 import { routerRedux } from 'dva/router'
@@ -300,8 +303,27 @@ export default modelExtend(pageModel, {
       let paramsForm = yield select(_ => _.paramsBrowse.paramsForm)
       console.warn('paramsForm',paramsForm);
       console.warn('payload',payload);
+      const  {type, listParamSelectDTO = []} = payload;
+      let data;
+      if (type === 'append') { // 追加
+        data = yield call(appendParamSet, {...paramsForm, listParamSelectDTO})
+        if(data) {
+            yield put({type: 'updateState', payload: {isUpdating:false}})
+            success('更新成功')
+        }else {
+            error('更新失败')
+        }
+      } else if (type === 'update') {
+        data = yield call(userParamsetReplaceService, {...paramsForm, listParamSelectDTO})
+        if(data) {
+            yield put({type: 'updateState', payload: {isUpdating:false}})
+            success('更新成功')
+        }else {
+            error('更新失败')
+        }
+      }
 
-        // const  {type, listParamSelectDTO = []} = payload;
+
         // let paramsForm = yield select(_ => _.paramsBrowse.paramsForm)
         // if(!paramsForm.modelName) {
         //     return warning('缺少型号')
