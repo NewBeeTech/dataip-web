@@ -198,6 +198,11 @@ let database = [
     name: '参数组管理',
     route: '/paramsManage',
   } , {
+    id: '11',
+    icon: 'book',
+    name: '数据浏览',
+    route: '/judgeReview',
+  }, {
     id: '152',
     icon: '',
     name: '用户管理',

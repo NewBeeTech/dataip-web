@@ -7,6 +7,7 @@ const {
   judgeIndex,
   queryTasksByModelNameAPI,
   setCurrTaskAPI,
+  downloadFiles1API,
 } = api
 
 export async function queryIndex (params) {
@@ -111,6 +112,15 @@ export async function queryTasksByModelNameService (params) {
 export async function setCurrTaskService (params) {
   return request({
     url: setCurrTaskAPI,
+    method: 'post',
+    data: params,
+  })
+}
+
+// 下载数据
+export async function downloadFiles1Service (params) {
+  return request({
+    url: downloadFiles1API,
     method: 'post',
     data: params,
   })

@@ -85,6 +85,10 @@ class TransferTable extends React.Component {
           }
       })
   }
+  /**
+   * 下载数据模态框
+   * @return {[type]} [description]
+   */
   showDownloadModal = () => {
     this.props.dispatch({
       type: 'paramsBrowse/updateState',
@@ -92,6 +96,17 @@ class TransferTable extends React.Component {
         showDownloadModal: !this.props.showDownloadModal,
       }
     })
+  }
+  // 数据下载
+  download = () => {
+    const { targetSelectedObjects } = this.state
+    const data = targetSelectedObjects.map(obj => _.omit(obj, 'id'))
+    this.props.dispatch({
+      type: 'paramsBrowse/downloadFiles1Model',
+      payload: {
+        paramSelect: data
+      }
+    });
   }
 
   handleStarter = (key) => {
@@ -243,7 +258,7 @@ class TransferTable extends React.Component {
             footer={
                 <div>
                     <Button  onClick={this.showDownloadModal}>取消</Button>
-                    <Button onClick={confirmAdd} type='primary' style={{marginLeft:10}}>下载</Button>
+                    <Button onClick={this.download} type='primary' style={{marginLeft:10}}>下载</Button>
                 </div>
             }
         >

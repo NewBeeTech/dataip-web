@@ -5,10 +5,13 @@ import { query, queryIndex, queryParams,
     queryUserParamsetName, getModels, setCurrTask,
     queryTasksByModelNameService,
     setCurrTaskService,
+    downloadFiles1Service,
 } from 'services/paramsBrowse'
 import {
   userParamsetReplaceService,
-} from 'services/paramsManage'
+} from 'services/paramsManage';
+import { config } from 'utils';
+const { APIV3 } = config;
 import { pageModel } from 'models/common'
 import queryString from 'query-string'
 import { routerRedux } from 'dva/router'
@@ -16,7 +19,7 @@ import {error, success, warning} from '@@/note'
 
 const initialState = {
   showDownloadModal: false, // 是否展现下载模态框
-  
+
   taskModels: [], // 任务列表
   paramList: [],
   listInstanceId: [], // 选择的试验id
@@ -380,6 +383,26 @@ export default modelExtend(pageModel, {
               currentTask: '',
             }
           });
+        } else {
+          throw data
+        }
+        // if(!currentTaskModel) {
+        //     return warning('缺少型号')
+        // }
+        // if(!currentTask) {
+        //     return warning('缺少任务')
+        // }
+        //
+        // yield call()
+
+    },
+    * downloadFiles1Model({payload}, {put, call, select}) {
+        const  { paramSelect = [] } = payload;
+        let { listInstanceId } = yield select(_ => _.paramsBrowse)
+        const data = yield call(downloadFiles1Service, { paramSelect, instanceIds: listInstanceId });
+        if (data.result === '0') {
+          const token = data.data; // 下载令牌
+          window.open(APIV3+'/manual/judge/downloadZIP?ZIP='+token);
         } else {
           throw data
         }
