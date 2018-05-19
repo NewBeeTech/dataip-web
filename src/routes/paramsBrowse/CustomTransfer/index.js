@@ -5,12 +5,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'dva'
-import { Row, Col, Tabs, Button, Icon, Input, Tooltip, Modal, Checkbox} from 'antd'
+import { Row, Col, Tabs, Button, Icon, Input, Tooltip, Modal, Checkbox, Radio} from 'antd'
 import styles from './style.less'
 import indexStyles from '../index.less';
 import CardList from './CardList'
 import InputSelect from '@@/Inputselect'
 import { routerRedux } from 'dva/router'
+
+const RadioGroup = Radio.Group;
 
 class TransferTable extends React.Component {
   state = {
@@ -83,6 +85,14 @@ class TransferTable extends React.Component {
           }
       })
   }
+  showDownloadModal = () => {
+    this.props.dispatch({
+      type: 'paramsBrowse/updateState',
+      payload: {
+        showDownloadModal: !this.props.showDownloadModal,
+      }
+    })
+  }
 
   handleStarter = (key) => {
     const { targetSelectedObjects } = this.state
@@ -111,6 +121,11 @@ class TransferTable extends React.Component {
     const state = this.state
     const props = this.props
     const { paramsetList, models, paramsForm={} , dispatch, listUserParam = []} = props
+    const radioStyle = {
+      display: 'block',
+      height: '30px',
+      lineHeight: '30px',
+    };
 
     function onChangeParamForm(name, value) {
         dispatch({
@@ -201,7 +216,7 @@ class TransferTable extends React.Component {
 
 
                 <Tooltip title='数据下载'>
-                    <Button className={indexStyles.iconBtn + ' margin-bottom8'} icon='download' onClick={this.download} title='数据下载' ></Button>
+                    <Button className={indexStyles.iconBtn + ' margin-bottom8'} icon='download' onClick={this.showDownloadModal} title='数据下载' ></Button>
                 </Tooltip>
 
 
@@ -221,7 +236,31 @@ class TransferTable extends React.Component {
               </div>
            </Col>
         </Row>
-
+        <Modal
+            visible={props.showDownloadModal}
+            title='数据下载'
+            onCancel={this.showDownloadModal}
+            footer={
+                <div>
+                    <Button  onClick={this.showDownloadModal}>取消</Button>
+                    <Button onClick={confirmAdd} type='primary' style={{marginLeft:10}}>下载</Button>
+                </div>
+            }
+        >
+          <RadioGroup>
+            <Radio style={radioStyle} value={1}>多参数合并为一个文件</Radio>
+            <Radio style={radioStyle} value={2}>一个参数一个文件</Radio>
+          </RadioGroup>
+            <Row>
+                <Col span={5}>数据小数点位数：</Col>
+                <Col span={19}>
+                    <Input
+                        type="number"
+                        onChange={value=>onChangeParamForm('userParamsetName', value)}
+                        value={paramsForm.userParamsetName} ></Input>
+                </Col>
+            </Row>
+        </Modal>
         <Modal
             visible={props.isSaving}
             title='创建自定义参数组'

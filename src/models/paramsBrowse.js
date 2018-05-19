@@ -15,6 +15,8 @@ import { routerRedux } from 'dva/router'
 import {error, success, warning} from '@@/note'
 
 const initialState = {
+  showDownloadModal: false, // 是否展现下载模态框
+  
   taskModels: [], // 任务列表
   paramList: [],
   listInstanceId: [], // 选择的试验id
