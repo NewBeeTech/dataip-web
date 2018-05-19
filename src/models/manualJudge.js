@@ -6,6 +6,7 @@ import {
   download,
   saveJudgeResult,
   queryChartLine,
+  judgeListDataService,
 } from 'services/manualJudge'
 import { config } from 'utils'
 
@@ -20,6 +21,7 @@ const getRandomColor = () => {
 export default modelExtend(pageModel, {
   namespace: 'manualJudge',
   state: {
+    viewData: [], // 查看数据
     selectedRowKeys: [],
     list: [],
     lineLoading: false,
@@ -108,6 +110,20 @@ export default modelExtend(pageModel, {
       if (data.result === '0') {
         console.log('zip标识：', data.data)
         window.open(`${downloadZipUrl}${data.data}`)
+      } else {
+        throw data
+      }
+    },
+    // 下载数据
+    * judgeListDataModel ({ payload }, { call }) {
+      const data = yield call(judgeListDataService, payload);
+      if (data.result === '0') {
+          yield put({
+            type: 'setState',
+            payload: {
+              viewData: data.data,
+            }
+          });
       } else {
         throw data
       }

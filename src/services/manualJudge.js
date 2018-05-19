@@ -5,6 +5,7 @@ import { request, config } from 'utils'
 
 const { api } = config
 const { startJudge, saveJudgeResultApi,
+  judgeListDataAPI,
   lineData,
   downloadChart,
 } = api
@@ -52,3 +53,16 @@ export async function download (params) {
   })
 }
 // end chart
+
+/**
+ * 查询参数数据
+ * @param  {[type]} params [description]
+ * @return {[type]}        [description]
+ */
+export async function judgeListDataService(params) {
+  return request({
+    url: judgeListDataAPI,
+    method: 'post',
+    data: params,
+  });
+}

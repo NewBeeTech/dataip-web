@@ -18,6 +18,7 @@ module.exports = {
   APIV2,
   APIV3,
   api: {
+    judgeListDataAPI: `${APIV3}/manual/judge/listData`, // 查询参数数据
     downloadFiles1API: `${APIV3}/manual/judge/downloadFiles1`, // 下载数据
     listUserParamsetByModelName: `${APIV3}/userParamset/listUserParamsetByModelName`, // 根据型号名称获取用户的自定义参数组
     userParamsetDeleteAPI: `${APIV3}/userParamset/delete`, // 删除自定义参数组

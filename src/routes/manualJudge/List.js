@@ -41,6 +41,16 @@ const List = ({ dispatch, ...tableProps }) => {
     dispatch,
     viewData: () => {
       console.log('查看数据-- UserTypeDataDTO len-- ', UserTypeDataDTO.length)
+      const { dataSource } = tableProps
+      const selectedDto = dataSource.filter(v => selectedRowKeys.indexOf(`${v.tableName}-${v.columnName}`) > -1)
+      dispatch({
+        type: 'manualJudge/judgeListDataModel',
+        payload: {
+          listManualJudgeDTO: selectedDto,
+          start: 0,
+          end: -1,
+        }
+      });
       dispatch(routerRedux.push('/judgeReview'))
     },
     downloadData: () => {
