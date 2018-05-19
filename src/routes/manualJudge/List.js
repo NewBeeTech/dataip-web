@@ -66,16 +66,22 @@ const List = ({ dispatch, ...tableProps }) => {
       }
     },
     // 保存判读结果
+    // FIXME: 行内修改的结果要同步
     saveJudgeResult: () => {
-      // 过滤 --已选中的
-      const selectedLlist = UserTypeDataDTO.filter(dto => selectedRowKeys.indexOf(dto.columnName) > -1)
-      const listParamResult = selectedLlist.map(dto => _.pick(dto, ['instanceId', 'paramCode', 'paramName', 'result', 'description']))
+      // console.log('tableProps: ', tableProps);
+      // // 过滤 --已选中的
+      // console.log(UserTypeDataDTO);
+      // const selectedLlist = UserTypeDataDTO.filter(v => selectedRowKeys.indexOf(`${v.tableName}-${v.columnName}`) > -1)
+      // console.log(selectedLlist);
+      // const listParamResult = selectedLlist.map(dto => _.pick(dto, ['instanceId', 'paramCode', 'paramName', 'result', 'description']))
       // todo 可能要删除一下不需要的
-      console.log('保存判读结果--', listParamResult.length)
+      const { dataSource } = tableProps
+      const selectedDto = dataSource.filter(v => selectedRowKeys.indexOf(`${v.tableName}-${v.columnName}`) > -1);
+      console.log('保存判读结果--', listParamResult)
       dispatch({
         type: 'manualJudge/postJudgeResult',
         payload: {
-          listParamResult,
+          listManualJudgeDTO: selectedDto,
         },
       })
     },

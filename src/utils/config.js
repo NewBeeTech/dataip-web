@@ -49,7 +49,7 @@ module.exports = {
     paramTree: `${APIV3}/manual/judge/tree/instanceId`, // 查询tree
     paramsetName: `${APIV3}/manual/judge/tree/paramsetName`, // 查询paramsetName
     startJudge: `${APIV3}/manual/judge/startJudge`, // 启动判读
-    saveJudgeResultApi: `${APIV3}/manual/judge/ipResult`, // 保存判读结果
+    saveJudgeResultApi: `${APIV3}/manual/judge/saveResult`, // 保存判读结果
     lineData: `${APIV3}/manual/judge/line`, // 只剩一个
     downloadChart: `${APIV3}/manual/judge/downloadFiles`,
     downloadZipUrl: `${APIHOST}/manual/judge/downloadZIP?ZIP=`, // 这里是直接请求服务器 get
