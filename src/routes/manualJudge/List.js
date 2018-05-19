@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { Table, Modal, Button, Icon, Select, Input } from 'antd'
 import { routerRedux } from 'dva/router'
 import Toolbar from './Toolbar'
+import styles from './List.less';
 
 const Option = Select.Option
 
@@ -110,7 +111,7 @@ const List = ({ dispatch, ...tableProps }) => {
 
 
   return (
-    <div>
+    <div className={styles.listContainer}>
       <Toolbar {...toolbarProps} />
       <Table
         {...tableProps}
