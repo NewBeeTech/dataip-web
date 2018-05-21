@@ -262,17 +262,18 @@ class TransferTable extends React.Component {
                 </div>
             }
         >
-          <RadioGroup>
-            <Radio style={radioStyle} value={1}>多参数合并为一个文件</Radio>
-            <Radio style={radioStyle} value={2}>一个参数一个文件</Radio>
+          <RadioGroup onChange={value=>onChangeParamForm('fileType', value)}>
+            <Radio style={radioStyle} value="SingleFile">多参数合并为一个文件</Radio>
+            <Radio style={radioStyle} value="MultiFile">一个参数一个文件</Radio>
           </RadioGroup>
             <Row>
                 <Col span={5}>数据小数点位数：</Col>
                 <Col span={19}>
                     <Input
                         type="number"
-                        onChange={value=>onChangeParamForm('userParamsetName', value)}
-                        value={paramsForm.userParamsetName} ></Input>
+                        onChange={value => onChangeParamForm('precision', value)}
+                    >
+                    </Input>
                 </Col>
             </Row>
         </Modal>

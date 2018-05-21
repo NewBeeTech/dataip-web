@@ -19,7 +19,6 @@ import {error, success, warning} from '@@/note'
 
 const initialState = {
   showDownloadModal: false, // 是否展现下载模态框
-
   taskModels: [], // 任务列表
   paramList: [],
   listInstanceId: [], // 选择的试验id
@@ -34,7 +33,9 @@ const initialState = {
   listDeviceParamset: [], // 默认参数组,
   paramsForm: { // 保存为参数组数据
       userParamsetName: '',
-      modelName: ''
+      modelName: '',
+      fileType: '', // 下载类型
+      precision: '',
   }
 }
 
@@ -398,8 +399,9 @@ export default modelExtend(pageModel, {
     },
     * downloadFiles1Model({payload}, {put, call, select}) {
         const  { paramSelect = [] } = payload;
-        let { listInstanceId } = yield select(_ => _.paramsBrowse)
-        const data = yield call(downloadFiles1Service, { paramSelect, instanceIds: listInstanceId });
+        let { listInstanceId, paramsForm } = yield select(_ => _.paramsBrowse)
+        const { fileType, precision } = paramsForm;
+        const data = yield call(downloadFiles1Service, { fileType, precision, paramSelect, instanceIds: listInstanceId });
         if (data.result === '0') {
           const token = data.data; // 下载令牌
           window.open(APIV3+'/manual/judge/downloadZIP?ZIP='+token);
