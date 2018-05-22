@@ -12,44 +12,110 @@ import AnimTableBody from 'components/DataTable/AnimTableBody'
 
 const confirm = Modal.confirm
 
-const List = ({ ...tableProps }) => {
+const List = ({ analogDataKeys, analogDataList }) => {
   const handleDeleteClick = (record) => {
 
   }
 
 
-  const columns = [
-    {
-      title: '序号',
-      dataIndex: 'columnIndexId',
-      key: 'columnIndexId',
-    }, {
-      title: '时间',
-      dataIndex: 'paramName',
-      key: 'paramName',
-    }, {
-      title: '参数1',
-      dataIndex: 'paramCode',
-      key: 'paramCode',
-    },, {
-      title: '参数2',
-      dataIndex: 'paramCode',
-      key: 'paramCode',
-    },
-  ]
+  // const columns = [
+  //   {
+  //     title: '序号',
+  //     dataIndex: 'id',
+  //     key: analogDataKeys.id,
+  //   }, {
+  //     title: '时间',
+  //     dataIndex: analogDataKeys.b,
+  //     key: analogDataKeys.b,
+  //   }, {
+  //     title: analogDataKeys.a,
+  //     dataIndex: analogDataKeys.a,
+  //     key: analogDataKeys.a,
+  //   }, {
+  //     title: analogDataKeys.c,
+  //     dataIndex: analogDataKeys.c,
+  //     key: analogDataKeys.c,
+  //   }, {
+  //     title: analogDataKeys.d,
+  //     dataIndex: analogDataKeys.d,
+  //     key: analogDataKeys.d,
+  //   }, {
+  //     title: analogDataKeys.e,
+  //     dataIndex: analogDataKeys.e,
+  //     key: analogDataKeys.e,
+  //   },
+  // ]
+  let obj = {};
+  analogDataKeys && analogDataKeys.map(item => {
+    obj = { ...obj, ...item };
+  })
+  console.log('obj:: ', obj);
+  const columns1 =  Object.keys(obj).map(key => ({
+    title: obj[key],
+    dataIndex: key,
+    key: key,
+  }));
+
+  const columns = analogDataKeys && analogDataKeys.map( item => {
+    console.log(item);
+    if (item.id) {
+      return ({
+        title: '序号',
+        dataIndex: 'id',
+        key: item.id,
+      });
+    } else if (item.a) {
+      return ({
+        title: item.a,
+        dataIndex: 'a',
+        key: 'a',
+      });
+    } else if (item.b) {
+      return ({
+        title: item.b,
+        dataIndex: 'b',
+        key: 'b',
+      });
+    } else if (item.c) {
+      return ({
+        title: item.c,
+        dataIndex: 'c',
+        key: 'c',
+      });
+    } else if (item.d) {
+      return ({
+        title: item.d,
+        dataIndex: 'd',
+        key: 'd',
+      });
+    } else if (item.e) {
+      return ({
+        title: item.e,
+        dataIndex: 'e',
+        key: 'e',
+      });
+    }
+  });
 
 
   // const getBodyWrapper = (body) => { return isMotion ? <AnimTableBody {...getBodyWrapperProps} body={body} /> : body }
 
   return (
     <div>
+      {analogDataKeys.a}
+      {console.log(analogDataKeys)}
+      <Button style={{ marginRight: '10px' }}>设为野点</Button>
+      <Button>下载</Button>
       <Table
-        {...tableProps}
-        size="middle"
+        
+        // size="middle"
+        pagination={false}
+        rowSelection={() => {}}
         bordered
-        scroll={{ x: 1250 }}
-        columns={columns}
-        simple
+        scroll={{ x: 600, y: 800 }}
+        columns={columns1}
+        dataSource={analogDataList}
+        // simple
       />
     </div>
   )

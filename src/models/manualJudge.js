@@ -9,6 +9,7 @@ import {
   judgeListDataService,
 } from 'services/manualJudge'
 import { config } from 'utils'
+const { APIV3 } = config;
 
 import { pageModel } from 'models/common'
 
@@ -109,13 +110,13 @@ export default modelExtend(pageModel, {
       const data = yield call(download, payload)
       if (data.result === '0') {
         console.log('zip标识：', data.data)
-        window.open(`${downloadZipUrl}${data.data}`)
+        window.open(APIV3+'/manual/judge/downloadZIP?ZIP='+data.data);
       } else {
         throw data
       }
     },
-    // 下载数据
-    * judgeListDataModel ({ payload }, { call }) {
+    // 数据展示
+    * judgeListDataModel ({ payload }, { call, put }) {
       const data = yield call(judgeListDataService, payload);
       if (data.result === '0') {
           yield put({
