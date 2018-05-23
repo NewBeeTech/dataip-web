@@ -101,18 +101,18 @@ const List = ({ analogDataKeys, analogDataList }) => {
   // const getBodyWrapper = (body) => { return isMotion ? <AnimTableBody {...getBodyWrapperProps} body={body} /> : body }
 
   return (
-    <div>
+    <div style={{ marginRight: '20px' }}>
       {analogDataKeys.a}
       {console.log(analogDataKeys)}
       <Button style={{ marginRight: '10px' }}>设为野点</Button>
       <Button>下载</Button>
       <Table
-        
+
         // size="middle"
         pagination={false}
         rowSelection={() => {}}
         bordered
-        scroll={{ x: 600, y: 800 }}
+        scroll={{ x: 600, y: 600 }}
         columns={columns1}
         dataSource={analogDataList}
         // simple
