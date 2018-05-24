@@ -9,7 +9,10 @@ import {
   judgeListDataService,
   getCurrentReportService,
   reportCreateService,
-} from 'services/manualJudge'
+} from 'services/manualJudge';
+import {
+  getModels
+} from 'services/paramsBrowse';
 import { config } from 'utils'
 const { APIV3 } = config;
 
@@ -24,6 +27,7 @@ const getRandomColor = () => {
 export default modelExtend(pageModel, {
   namespace: 'manualJudge',
   state: {
+    models: [], // 型号
     viewData: [], // 查看数据
     selectedRowKeys: [],
     list: [],
@@ -54,13 +58,33 @@ export default modelExtend(pageModel, {
               lineChartData: [],
               selectedRowKeys: [],
             },
-          })
+          })；
+          dispatch({ type: 'getModels',
+            payload: { },
+          });
         }
       })
     },
   },
 
   effects: {
+    // 获取当前型号下拉框数据
+    * getModels({payload}, {call, put}){
+
+        const data = yield getModels().catch(e=>null)
+        let result = [];
+        if(data){
+            result = data.data.map(item => ({ name: item.modelName, value: item.modelName }))
+        }
+        // console.warn(data);
+
+        yield put({
+            type:'updateState',
+            payload: {
+                models: result
+            }
+        });
+    },
     // 根据paramname 获取list
     * query ({ payload }, { call, put }) {
       const data = yield call(queryParamsetName, payload)
