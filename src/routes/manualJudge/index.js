@@ -9,7 +9,8 @@ import { request, config } from 'utils'
 import { connect } from 'dva'
 import List from './List'
 import Line from './Line'
-
+import HasReportModal from './HasReportModal';
+import CreateReportModal from './CreateReportModal';
 
 class ManualJudgePage extends React.Component {
   constructor (props) {
@@ -70,6 +71,8 @@ class ManualJudgePage extends React.Component {
 
     return (
       <Page inner>
+        <HasReportModal dispatch={dispatch} hasReportModal={manualJudge.hasReportModal} />
+        <CreateReportModal dispatch={dispatch} createReportModal={manualJudge.createReportModal} />
         {
           paramsBrowse.judgeList.length ?
             <div>

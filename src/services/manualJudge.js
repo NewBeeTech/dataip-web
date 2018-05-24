@@ -8,6 +8,8 @@ const { startJudge, saveJudgeResultApi,
   judgeListDataAPI,
   lineData,
   downloadChart,
+  getCurrentReportAPI,
+  reportCreateAPI
 } = api
 
 
@@ -62,6 +64,31 @@ export async function download (params) {
 export async function judgeListDataService(params) {
   return request({
     url: judgeListDataAPI,
+    method: 'post',
+    data: params,
+  });
+}
+/**
+ * 查询参数数据
+ * @param  {[type]} params [description]
+ * @return {[type]}        [description]
+ */
+export async function getCurrentReportService(params) {
+  return request({
+    url: getCurrentReportAPI,
+    method: 'post',
+    data: params,
+  });
+}
+
+/**
+ * 创建报告
+ * @param  {[type]} params [description]
+ * @return {[type]}        [description]
+ */
+export async function reportCreateService(params) {
+  return request({
+    url: reportCreateAPI,
     method: 'post',
     data: params,
   });

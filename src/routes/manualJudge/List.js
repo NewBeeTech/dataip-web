@@ -65,6 +65,11 @@ const List = ({ dispatch, ...tableProps }) => {
         })
       }
     },
+    report: () => {
+      dispatch({
+        type: 'manualJudge/getCurrentReportModel',
+      });
+    },
     // 保存判读结果
     // FIXME: 行内修改的结果要同步
     saveJudgeResult: () => {

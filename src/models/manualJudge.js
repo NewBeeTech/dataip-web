@@ -7,6 +7,7 @@ import {
   saveJudgeResult,
   queryChartLine,
   judgeListDataService,
+  getCurrentReportService,
 } from 'services/manualJudge'
 import { config } from 'utils'
 const { APIV3 } = config;
@@ -31,6 +32,9 @@ export default modelExtend(pageModel, {
     lineKeys: [],
     YAxisMin: 0,
     YAxisMax: 0,
+    hasReportModal: false, // 当前有报告modal
+    noReportModal: true, // 当前没有报告modal
+    createReportModal: false, // 创建报告modal
   },
 
   reducers: {
@@ -129,5 +133,29 @@ export default modelExtend(pageModel, {
         throw data
       }
     },
+    * getCurrentReportModel({ payload }, { call, put }) {
+      const data = yield call(getCurrentReportService, payload);
+      if (data.result === '0') {
+        if (data.data.reportDTO) { // 有当前报告
+          yield put({
+            type: 'setState',
+            payload: {
+              hasReportModal: true,
+              noReportModal: false,
+            }
+          });
+        } else {
+          yield put({
+            type: 'setState',
+            payload: {
+              hasReportModal: false,
+              noReportModal: true,
+            }
+          });
+        }
+      } else {
+        throw data
+      }
+    }
   },
 })

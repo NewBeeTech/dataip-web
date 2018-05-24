@@ -1,7 +1,7 @@
 import { Table, Modal, Button, Icon, Tooltip } from 'antd'
 import styles from './styles.less';
 
-export default ({ saveJudgeResult, viewData, downloadData }) => {
+export default ({ saveJudgeResult, viewData, downloadData, report }) => {
   function handleSaveJudge () {
     // saveJudge('abc')
   }
@@ -26,7 +26,7 @@ export default ({ saveJudgeResult, viewData, downloadData }) => {
       <Button className={styles.iconBtn} {...BtnProps} icon="save" onClick={saveJudgeResult}></Button>
     </Tooltip>
     <Tooltip title='写入报告'>
-      <Button className={styles.iconBtn} {...BtnProps} icon="edit" onClick={saveJudgeResult}></Button>
+      <Button className={styles.iconBtn} {...BtnProps} icon="edit" onClick={report}></Button>
     </Tooltip>
     <Tooltip title='数据下载'>
       <Button className={styles.iconBtn} {...BtnProps} icon="download" onClick={downloadData}></Button>

@@ -18,6 +18,8 @@ module.exports = {
   APIV2,
   APIV3,
   api: {
+    reportCreateAPI: `${APIV3}/report/create`, // 创建报告
+    getCurrentReportAPI: `${APIV3}/report/getCurrent`, // 查询当前报告
     judgeListDataAPI: `${APIV3}/manual/judge/listData`, // 查询参数数据
     downloadFiles1API: `${APIV3}/manual/judge/downloadFiles1`, // 下载数据
     listUserParamsetByModelName: `${APIV3}/userParamset/listUserParamsetByModelName`, // 根据型号名称获取用户的自定义参数组
