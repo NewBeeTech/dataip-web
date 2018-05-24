@@ -8,6 +8,7 @@ import {
   queryChartLine,
   judgeListDataService,
   getCurrentReportService,
+  reportCreateService,
 } from 'services/manualJudge'
 import { config } from 'utils'
 const { APIV3 } = config;
@@ -153,6 +154,22 @@ export default modelExtend(pageModel, {
             }
           });
         }
+      } else {
+        throw data
+      }
+    },
+    // 创建报告
+    * reportCreateModel({ payload }, { call, put }) {
+      const data = yield call(reportCreateService, payload);
+      if (data.result === '0') {
+        message.success('创建成功');
+        // 创建报告弹窗消失
+        yield put({
+          type: 'setState',
+          payload: {
+            createReportModal: false,
+          }
+        })
       } else {
         throw data
       }
