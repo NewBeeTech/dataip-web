@@ -113,11 +113,11 @@ const Index = ({ user, paramsBrowse, dispatch, loading, location }) => {
       <Col span={20}>
         {listModalVisible && <Modal {...modalProps} />}
         <Row>
-          <Col span={22}>
+          <Col span={23}>
             {(list.length && !listModalVisible || listInstance.length) && <List {...listProps} />}
           </Col>
-          <Col span={2}>
-            <div style={{ marginBottom: 10, width: 20 }}>
+          <Col span={1}>
+            <div style={{ marginBottom: 10, width: 20, marginLeft: 10 }}>
               <Tooltip title='选择试验'>
                 <Button className={styles.iconBtn} onClick={handleBtnClick} icon='select'></Button>
               </Tooltip>
