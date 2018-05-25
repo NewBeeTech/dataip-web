@@ -174,11 +174,12 @@ class TransferTable extends React.Component {
             })
     }
     return (
-      <div>
+      <div >
 
-        <Row>
-            <Col span={10}>
-                选择参数： <Input value={state.targetMatchKey} onChange={e=>this.setState({targetMatchKey:e.target.value})}/>
+        <Row >
+            <Col span={10} style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', margin: '10px 0'}}>
+                <div style={{ width: '80px'}}>选择参数：</div>
+                <Input value={state.targetMatchKey} onChange={e=>this.setState({targetMatchKey:e.target.value})}/>
             </Col>
         </Row>
         <Row>
@@ -214,8 +215,9 @@ class TransferTable extends React.Component {
                 </Button>
             </div>
           </Col>
-          <Col span={10}>
+          <Col span={11} className={styles.yixuan}>
             <CardList
+              height="390"
               rowKey="id"
               onSelectChange={this.handleSelectChange}
               selectedKeys={state.selectedKeys}
@@ -223,8 +225,8 @@ class TransferTable extends React.Component {
               title="已选参数"
             />
           </Col>
-          <Col span={2}>
-              <div style={{width:15}}>
+          <Col span={1} >
+              <div style={{width:15}} style={{ marginLeft: '10px'}}>
                 <Tooltip title='启动判读'>
                     <Button className={indexStyles.iconBtn + ' margin-bottom8'} icon='play-circle' onClick={this.handleStarter}  title='启动判读' ></Button>
                 </Tooltip>

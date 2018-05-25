@@ -110,9 +110,9 @@ const Index = ({ user, paramsBrowse, dispatch, loading, location }) => {
         <p>默认参数组</p>
         <Tree {...treeProps} />
       </Col>
-      <Col span={20}>
+      <Col span={21}>
         {listModalVisible && <Modal {...modalProps} />}
-        <Row>
+        <Row style={{ marginLeft: '10px'}}>
           <Col span={23}>
             {(list.length && !listModalVisible || listInstance.length) && <List {...listProps} />}
           </Col>
@@ -130,7 +130,7 @@ const Index = ({ user, paramsBrowse, dispatch, loading, location }) => {
         </Row>
 
 
-        <Row>
+        <Row style={{ marginLeft: '10px'}}>
           <Col span={24}>
             <CustomTransfer {...paramsBrowse} {...transferProps} />
           </Col>
