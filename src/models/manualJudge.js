@@ -58,7 +58,7 @@ export default modelExtend(pageModel, {
               lineChartData: [],
               selectedRowKeys: [],
             },
-          })；
+          });
           dispatch({ type: 'getModels',
             payload: { },
           });

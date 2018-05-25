@@ -18,6 +18,7 @@ module.exports = {
   APIV2,
   APIV3,
   api: {
+    getTaskListAPI: `${APIV3}/base/taskList`, // 获取型号任务列表
     reportCreateAPI: `${APIV3}/report/create`, // 创建报告
     getCurrentReportAPI: `${APIV3}/report/getCurrent`, // 查询当前报告
     judgeListDataAPI: `${APIV3}/manual/judge/listData`, // 查询参数数据

@@ -9,7 +9,8 @@ const { startJudge, saveJudgeResultApi,
   lineData,
   downloadChart,
   getCurrentReportAPI,
-  reportCreateAPI
+  reportCreateAPI,
+  getTaskListAPI,
 } = api
 
 
@@ -89,6 +90,19 @@ export async function getCurrentReportService(params) {
 export async function reportCreateService(params) {
   return request({
     url: reportCreateAPI,
+    method: 'post',
+    data: params,
+  });
+}
+
+/**
+ * 获取型号任务列表
+ * @param  {[type]} params [description]
+ * @return {[type]}        [description]
+ */
+export async function getTaskListService(params) {
+  return request({
+    url: getTaskListAPI,
     method: 'post',
     data: params,
   });
