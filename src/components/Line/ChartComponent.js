@@ -70,14 +70,14 @@ class ChartComponent extends React.Component {
       queryChartData,
       selectedJudges,
       clear,
+      report,
     } = this.props
     const { refAreaLeft, refAreaRight } = this.state
 
     const toolBarProps = {
       queryChartData,
-      clear() {
-        clear();
-      },
+      clear,
+      report,
       reset () {
         zoomQueryChartData(0, -1)
       },
