@@ -31,6 +31,9 @@ const List = ({ ...tableProps }) => {
   return (
     <div style={{marginBottom: 10}}>
       <Table
+        style={{
+          width: '100%',
+        }}
         {...tableProps}
         bordered
         scroll={{ x: 1200 }}

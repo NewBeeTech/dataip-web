@@ -136,9 +136,12 @@ const List = ({ dispatch, ...tableProps }) => {
       <Toolbar {...toolbarProps} />
       <Table
         {...tableProps}
+        style={{
+          width: '100%'
+        }}
         size="small"
         bordered
-        scroll={{ x: 1250, y: 450 }}
+        scroll={{ x: 1250, y: 250 }}
         columns={columns}
         simple
       />

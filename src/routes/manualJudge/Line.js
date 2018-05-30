@@ -11,6 +11,23 @@ import { connect } from 'dva'
 const Line = ({ manualJudge, ...prevProps }) => {
   const { lineChartData, colorArray, lineKeys, YAxisMax, YAxisMin, lineLoading } = manualJudge
 
+  function clear() {
+    prevProps.dispatch({
+      type: 'manualJudge/updateState',
+      payload: {
+        YAxisMin: 0,
+        YAxisMax: 0,
+        lineChartData: [],
+        lineKeys: [],
+      }
+    });
+  }
+  function report() {
+    prevProps.dispatch({
+      type: 'manualJudge/getCurrentReportModel',
+    });
+  }
+
   const chartProps = {
     lineChartData,
     colorArray,
@@ -18,6 +35,8 @@ const Line = ({ manualJudge, ...prevProps }) => {
     lineKeys,
     YAxisMax,
     YAxisMin,
+    clear,
+    report,
     ...prevProps,
   }
   return (

@@ -5,12 +5,12 @@ import React from 'react'
 import { Card } from 'antd'
 import styles from './style.less'
 
-const CardList = ({ list, title, rowKey, onSelectChange, selectedKeys }) => { // eslint-disable-line
+const CardList = ({ list, title, rowKey, onSelectChange, selectedKeys, height }) => { // eslint-disable-line
   const ItemCls = item => (selectedKeys.indexOf(item[rowKey]) > -1 ? styles.itemActive : '')
   // style={{ width: 300 }}
   return (<Card
     title={title}
-    bodyStyle={{ padding: '8px 0', height: 350 }}
+    bodyStyle={{ padding: '8px 0', height: height || 350 }}
     extra={<span>{list.length}</span>}
   >
     <ul className="ant-transfer-list-content">
@@ -31,4 +31,3 @@ const CardList = ({ list, title, rowKey, onSelectChange, selectedKeys }) => { //
 }
 
 export default CardList
-
