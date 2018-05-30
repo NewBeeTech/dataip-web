@@ -19,10 +19,10 @@ export default {
       "changeOrigin": true,
       "pathRewrite": { "^/api/v1/weather": "/v3/weather" }
     },
-    // "/api/v2": {
-    //   "target": "http://192.168.0.110",
+    // "/api/v3": {
+    //   "target": "http://47.104.163.55:8081",
     //   "changeOrigin": true,
-    //   "pathRewrite": { "^/api/v2" : "/api/v2" }
+    //   "pathRewrite": { "^/api/v3" : "/api/v3" }
     // }
   },
   env: {
