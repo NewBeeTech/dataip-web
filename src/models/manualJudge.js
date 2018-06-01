@@ -29,6 +29,7 @@ export default modelExtend(pageModel, {
   state: {
     models: [], // 型号
     viewData: [], // 查看数据
+    loadViewData: false,
     selectedRowKeys: [],
     list: [],
     lineLoading: false,
@@ -146,12 +147,37 @@ export default modelExtend(pageModel, {
     },
     // 数据展示
     * judgeListDataModel ({ payload }, { call, put }) {
+      yield put({
+        type: 'setState',
+        payload: {
+          loadViewData: false,
+        }
+      });
       const data = yield call(judgeListDataService, payload);
       if (data.result === '0') {
+        console.log('viewData: ', data.data);
+        let viewData = data.data;
+        viewData = viewData.map(item => {
+          let analogDataKeys = item.analogDataKeys;
+          let obj = {};
+          analogDataKeys.map(item => {
+            obj = { ...obj, ...item };
+          });
+          const columns1 =  Object.keys(obj).map(key => ({
+            title: obj[key],
+            dataIndex: key,
+            key: key,
+          }));
+          return {
+            analogDataKeys: columns1,
+            analogDataList: item.analogDataList,
+          }
+        })
+        window.localStorage.setItem('viewData', JSON.stringify(viewData));
           yield put({
             type: 'setState',
             payload: {
-              viewData: data.data,
+              loadViewData: true,
             }
           });
       } else {
