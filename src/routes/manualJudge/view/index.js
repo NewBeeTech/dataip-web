@@ -36,6 +36,12 @@ class ViewChartData  extends React.PureComponent {
   state = {
     viewData: [],
   };
+  componentWillMount() {
+    console.warn(new Date());
+  }
+  componentDidMount() {
+    console.warn(new Date());
+  }
   render() {
     const { loadViewData } =  this.props.manualJudge;
       if (!loadViewData) {
@@ -50,7 +56,10 @@ class ViewChartData  extends React.PureComponent {
           );
         } else {
           let viewData = window.localStorage.getItem('viewData');
-          viewData = viewData && JSON.parse(viewData);
+          console.log(new Date());
+          viewData = window.viewData || [];
+          // viewData = viewData && JSON.parse(viewData);
+          console.log(new Date());
           const view = [];
           viewData.map(list => {
             console.log(list);

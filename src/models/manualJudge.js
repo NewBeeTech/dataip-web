@@ -173,7 +173,9 @@ export default modelExtend(pageModel, {
             analogDataList: item.analogDataList,
           }
         })
-        window.localStorage.setItem('viewData', JSON.stringify(viewData));
+        window.viewData = viewData;
+        console.log('window.viewData', window.viewData);
+        // window.localStorage.setItem('viewData', JSON.stringify(viewData));
           yield put({
             type: 'setState',
             payload: {
