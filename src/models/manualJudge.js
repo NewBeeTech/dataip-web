@@ -104,7 +104,7 @@ export default modelExtend(pageModel, {
     * postJudgeResult ({ payload }, { call, put }) {
       const data = yield call(saveJudgeResult, payload)
       if (data.result === '0') {
-        message.success('保存成功')
+        message.success('保存判读结果成功')
       } else {
         throw data
       }
