@@ -3,7 +3,11 @@ import { connect } from 'dva';
 import { Table, Button } from 'antd';
 
 class CrossComparison extends Component {
-
+  reportComparison = () => {
+    this.props.dispatch({
+      type: 'crossComparison/reportComparisonModel',
+    });
+  }
   render() {
     const {
       instance,
@@ -33,7 +37,7 @@ class CrossComparison extends Component {
     console.warn(dataSource);
     return (
       <div style={{ background: '#fff', padding: '20px 20px' }}>
-        <Button style={{ marginBottom: '10px',  }} type="primary">写入报告</Button>
+        <Button onClick={this.reportComparison} style={{ marginBottom: '10px',  }} type="primary">写入报告</Button>
         <Table
           dataSource={dataSource}
           columns={columns}
