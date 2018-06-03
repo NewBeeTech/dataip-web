@@ -72,7 +72,18 @@ class ManualJudgePage extends React.Component {
     return (
       <Page inner>
         <HasReportModal dispatch={dispatch} hasReportModal={manualJudge.hasReportModal} />
-        <CreateReportModal dispatch={dispatch} createReportModal={manualJudge.createReportModal} />
+        <CreateReportModal
+          dispatch={dispatch}
+          createReportModal={manualJudge.createReportModal}
+          models={manualJudge.models}
+          tasks={manualJudge.tasks}
+          instances={manualJudge.instances}
+          createReport={() => {
+            dispatch({
+              type: 'manualJudge/reportCreateModel',
+            });
+          }}
+        />
         {
           paramsBrowse.judgeList.length ?
             <div>

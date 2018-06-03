@@ -9,9 +9,11 @@ import {
   judgeListDataService,
   getCurrentReportService,
   reportCreateService,
+  getTaskListService,
 } from 'services/manualJudge';
 import {
-  getModels
+  getModels,
+  query,
 } from 'services/paramsBrowse';
 import { config } from 'utils'
 const { APIV3 } = config;
@@ -28,6 +30,8 @@ export default modelExtend(pageModel, {
   namespace: 'manualJudge',
   state: {
     models: [], // 型号
+    tasks: [], // 任务
+    instances: [], // 试验
     viewData: [], // 查看数据
     loadViewData: false,
     selectedRowKeys: [],
@@ -41,12 +45,24 @@ export default modelExtend(pageModel, {
     hasReportModal: false, // 当前有报告modal
     noReportModal: true, // 当前没有报告modal
     createReportModal: false, // 创建报告modal
+    createReport: {
+    },
   },
 
   reducers: {
     setState (state, { payload }) {
       return { ...state, ...payload }
     },
+    onChangeCreateReport (state, { payload }) {
+        const {name, value} = payload;
+        return {
+            ...state,
+            createReport: {
+                ...state.createReport,
+                [name]: value
+            }
+        }
+    }
   },
 
   subscriptions: {
@@ -63,6 +79,12 @@ export default modelExtend(pageModel, {
           dispatch({ type: 'getModels',
             payload: { },
           });
+          dispatch({ type: 'getTaskListModel',
+            payload: { },
+          });
+          dispatch({ type: 'getInstances',
+            payload: { },
+          });
         }
       })
     },
@@ -70,22 +92,72 @@ export default modelExtend(pageModel, {
 
   effects: {
     // 获取当前型号下拉框数据
-    * getModels({payload}, {call, put}){
+    * getModels({payload}, { call, put, select }){
+        const models = yield select(_ => _.manualJudge.models);
+        if (models.length) {
+        } else {
+          const data = yield getModels().catch(e=>null)
+          let result = [];
+          if(data){
+              result = data.data.map(item => ({ name: item.modelName, value: item.modelName }))
+          }
+          // console.warn(data);
 
-        const data = yield getModels().catch(e=>null)
+          yield put({
+              type:'updateState',
+              payload: {
+                  models: result
+              }
+          });
+        }
+
+    },
+    // 查询所有试验
+    * getInstances({payload}, { call, put, select }){
+        const instances = yield select(_ => _.manualJudge.models);
+        if (instances.length) {
+        } else {
+          const data = yield call(query);
+          let result = [];
+          if(data){
+              result = data.data.map(item => ({ name: item.instanceName, value: item.instanceName+','+item.instanceId }))
+          }
+          // console.warn(data);
+
+          yield put({
+              type:'updateState',
+              payload: {
+                  instances: result
+              }
+          });
+        }
+
+    },
+    * getTaskListModel({payload}, { call, put, select }){
+      const tasks = yield select(_ => _.manualJudge.tasks);
+      if (tasks.length) {
+      } else {
+        const data = yield call(getTaskListService);
         let result = [];
-        if(data){
-            result = data.data.map(item => ({ name: item.modelName, value: item.modelName }))
+        if(data.result == 0){
+            // result = data.data.map(item => ({ name: item.modelName, value: item.modelName }))
+            result = Object.values(data.data.listTask);
+            console.log(result);
+            var arr = [];
+            result.map(item => arr = arr.concat(item));
+            result = arr.map(item => ({ name: item, value: item}));
         }
         // console.warn(data);
 
         yield put({
             type:'updateState',
             payload: {
-                models: result
+                tasks: result
             }
         });
-    },
+      }
+
+  },
     // 根据paramname 获取list
     * query ({ payload }, { call, put }) {
       const data = yield call(queryParamsetName, payload)
@@ -211,8 +283,10 @@ export default modelExtend(pageModel, {
       }
     },
     // 创建报告
-    * reportCreateModel({ payload }, { call, put }) {
-      const data = yield call(reportCreateService, payload);
+    * reportCreateModel({ payload }, { call, put, select }) {
+      const createReport = yield select(_ => _.manualJudge.createReport);
+      console.log(createReport);
+      const data = yield call(reportCreateService, createReport);
       if (data.result === '0') {
         message.success('创建成功');
         // 创建报告弹窗消失
