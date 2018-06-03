@@ -121,6 +121,20 @@ class TransferTable extends React.Component {
     })
   }
 
+  crossComparison =() => {
+    const { targetSelectedObjects } = this.state
+    const { dispatch, listInstanceId } = this.props
+    const dataDto = targetSelectedObjects.map(obj => _.omit(obj, 'id'))
+    console.log(dataDto, listInstanceId);
+    dispatch({
+      type: 'crossComparison/crossComparisonModel',
+      payload: {
+        instanceIds: listInstanceId,
+        paramSelect: dataDto,
+      },
+    });
+  }
+
   /**
    * 跳转到参数组管理
    * @return {[type]} [description]
@@ -229,6 +243,10 @@ class TransferTable extends React.Component {
               <div style={{width:15}} style={{ marginLeft: '10px'}}>
                 <Tooltip title='启动判读'>
                     <Button className={indexStyles.iconBtn + ' margin-bottom8'} icon='play-circle' onClick={this.handleStarter}  title='启动判读' ></Button>
+                </Tooltip>
+
+                <Tooltip title='横向对比'>
+                    <Button className={indexStyles.iconBtn + ' margin-bottom8'} icon='layout' onClick={this.crossComparison}  title='启动判读' ></Button>
                 </Tooltip>
 
 

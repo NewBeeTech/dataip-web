@@ -37,7 +37,7 @@ const Index = ({ user, paramsBrowse, dispatch, loading, location }) => {
       total: selectedInstanceList.length,
     },
     dataSource: selectedInstanceList.length ? selectedInstanceList : listInstance,
-    loading: loading.effects['paramsBrowse/query'],
+    loading: loading.effects['paramsBrowse/query', 'crossComparison/crossComparisonModel'],
   }
 
   const modalProps = {
@@ -183,4 +183,4 @@ Index.propTypes = {
   dispatch: PropTypes.func,
 }
 
-export default connect(({ user, paramsBrowse, loading }) => ({ user, paramsBrowse, loading }))(Index)
+export default connect(({ user, paramsBrowse, crossComparison, loading }) => ({ user, paramsBrowse, loading }))(Index)

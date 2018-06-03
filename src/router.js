@@ -29,7 +29,7 @@ const Routers = function ({ history, app }) {
       // 参数浏览
       path: '/paramsBrowse',
       // 需要任务树
-      models: () => [import('./models/user'), import('./models/paramsBrowse')],
+      models: () => [import('./models/user'), import('./models/paramsBrowse'), import('./models/crossComparison')],
       component: () => import('./routes/paramsBrowse/'),
     }, {
       // 参数判读
@@ -83,6 +83,11 @@ const Routers = function ({ history, app }) {
       path: '/system/monitor',
       models: () => [import('./models/monitor')],
       component: () => import('./routes/monitor'),
+    }, {
+      // 横向对比
+      path: '/crossComparison',
+      models: () => [import('./models/crossComparison')],
+      component: () => import('./routes/crossComparison'),
     }
   ]
 

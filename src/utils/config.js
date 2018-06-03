@@ -18,6 +18,7 @@ module.exports = {
   APIV2,
   APIV3,
   api: {
+    crossComparisonAPI: `${APIV3}/manual/judge/crossComparison`, // 显示横向比对页面
     getTaskListAPI: `${APIV3}/base/taskList`, // 获取型号任务列表
     reportCreateAPI: `${APIV3}/report/create`, // 创建报告
     getCurrentReportAPI: `${APIV3}/report/getCurrent`, // 查询当前报告
