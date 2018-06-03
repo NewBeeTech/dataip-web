@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
-import { Table } from 'antd';
+import { Table, Button } from 'antd';
 
 class CrossComparison extends Component {
 
@@ -32,12 +32,15 @@ class CrossComparison extends Component {
     });
     console.warn(dataSource);
     return (
-      <Table
-        dataSource={dataSource}
-        columns={columns}
-        pagination={false}
-        bordered
-      />
+      <div style={{ background: '#fff', padding: '20px 20px' }}>
+        <Button style={{ marginBottom: '10px',  }} type="primary">写入报告</Button>
+        <Table
+          dataSource={dataSource}
+          columns={columns}
+          pagination={false}
+          bordered
+        />
+      </div>
     );
   }
 
