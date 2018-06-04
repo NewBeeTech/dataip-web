@@ -45,6 +45,7 @@ export default modelExtend(pageModel, {
     lineKeys: [],
     YAxisMin: 0,
     YAxisMax: 0,
+    hasReport: false, // 当前没有报告
     hasReportModal: false, // 当前有报告modal
     noReportModal: true, // 当前没有报告modal
     createReportModal: false, // 创建报告modal
@@ -52,6 +53,8 @@ export default modelExtend(pageModel, {
     },
     chooseReportModal: false,
     chooseReport: {
+    },
+    currentReport: {
     }
   },
 
@@ -300,7 +303,9 @@ export default modelExtend(pageModel, {
             type: 'setState',
             payload: {
               hasReportModal: true,
+              hasReport: true,
               noReportModal: false,
+              currentReport: data.data.reportDTO,
             }
           });
         } else {
@@ -308,6 +313,7 @@ export default modelExtend(pageModel, {
             type: 'setState',
             payload: {
               hasReportModal: false,
+              hasReport: false,
               noReportModal: true,
             }
           });

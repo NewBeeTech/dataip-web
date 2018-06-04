@@ -72,7 +72,12 @@ class ManualJudgePage extends React.Component {
 
     return (
       <Page inner>
-        <HasReportModal dispatch={dispatch} hasReportModal={manualJudge.hasReportModal} />
+        <HasReportModal
+          dispatch={dispatch}
+          hasReportModal={manualJudge.hasReportModal}
+          hasReport={manualJudge.hasReport}
+          currentReport={manualJudge.currentReport}
+        />
         <CreateReportModal
           dispatch={dispatch}
           createReportModal={manualJudge.createReportModal}
