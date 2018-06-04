@@ -12,6 +12,7 @@ import {
   getTaskListService,
   listReportMineService,
   setCurrentReportService,
+  reportResultService,
 } from 'services/manualJudge';
 import {
   getModels,
@@ -55,6 +56,8 @@ export default modelExtend(pageModel, {
     chooseReport: {
     },
     currentReport: {
+    },
+    report: {
     }
   },
 
@@ -78,6 +81,16 @@ export default modelExtend(pageModel, {
             ...state,
             chooseReport: {
                 ...state.chooseReport,
+                [name]: value
+            }
+        }
+    },
+    onChangeReport(state, { payload }) {
+        const {name, value} = payload;
+        return {
+            ...state,
+            report: {
+                ...state.report,
                 [name]: value
             }
         }
@@ -351,6 +364,21 @@ export default modelExtend(pageModel, {
           type: 'setState',
           payload: {
             chooseReportModal: false,
+          }
+        })
+      } else {
+        throw data
+      }
+    },
+    * reportResultModel({ payload }, { call, put, select }) {
+      const report = yield select(_ => _.manualJudge.report);
+      const data = yield call(reportResultService, payload);
+      if (data.result === '0') {
+        // 创建报告弹窗消失
+        yield put({
+          type: 'setState',
+          payload: {
+            hasReportModal: false,
           }
         })
       } else {

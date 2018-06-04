@@ -18,6 +18,15 @@ export default (props) => {
     width: '90px',
     height: '90px',
   };
+  function onChangeReport(name, value) {
+    props.dispatch({
+        type: 'manualJudge/onChangeReport',
+        payload: {
+            name,
+            value: value.target ? value.target.value : value
+        }
+    })
+  }
   return (<div>
     <Modal
         visible={props.hasReportModal}
@@ -36,7 +45,7 @@ export default (props) => {
                     hasReportModal: false,
                   }
                 })}>取消</Button>
-                <Button onClick={props.download} type='primary' style={{marginLeft:10}}>写入报告</Button>
+                <Button onClick={props.reportResult} type='primary' style={{marginLeft:10}}>写入报告</Button>
             </div>
         }
     >
@@ -76,7 +85,7 @@ export default (props) => {
             <Col span={2}>标题：</Col>
             <Col span={19}>
                 <Input
-                    onChange={value => onChangeParamForm('precision', value)}
+                    onChange={value => onChangeReport('title', value)}
                 >
                 </Input>
             </Col>
@@ -86,7 +95,7 @@ export default (props) => {
             <Col span={19}>
                 <Input
                     type="textarea"
-                    onChange={value => onChangeParamForm('precision', value)}
+                    onChange={value => onChangeReport('description', value)}
                 >
                 </Input>
             </Col>

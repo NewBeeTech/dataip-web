@@ -77,6 +77,16 @@ class ManualJudgePage extends React.Component {
           hasReportModal={manualJudge.hasReportModal}
           hasReport={manualJudge.hasReport}
           currentReport={manualJudge.currentReport}
+          reportResult={() => {
+            dispatch({
+              type: 'manualJudge/reportResultModel',
+              payload: {
+                title: manualJudge.report.title,
+                description: manualJudge.report.description,
+                listParamResult: paramsBrowse.judgeList,
+              }
+            });
+          }}
         />
         <CreateReportModal
           dispatch={dispatch}

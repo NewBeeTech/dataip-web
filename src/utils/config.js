@@ -18,6 +18,7 @@ module.exports = {
   APIV2,
   APIV3,
   api: {
+    reportResultAPI: `${APIV3}/report/reportResult`, // 用户在数据判读页面完成数据判读后点击写入报告时调用此接口
     setCurrentReportAPI: `${APIV3}/report/setCurrent`, // 设为当前报告
     listReportMineAPI: `${APIV3}/report/listReportMine`, // 查询用户报告
     reportComparisonAPI: `${APIV3}/manual/judge/reportComparison`, // 将横向比对的结果写入到报告
