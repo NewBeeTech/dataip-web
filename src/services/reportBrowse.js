@@ -6,6 +6,9 @@ const {
   listTaskAPI,
   listInstanceAPI,
   downloadReportAPI,
+  checkReportAPI,
+  auditReportAPI,
+  approveReportAPI,
 } = api;
 
 // 通过型号查询任务下所有的报告
@@ -36,6 +39,27 @@ export async function listTaskService(params) {
 export async function downloadReportService(params) {
   return request({
     url: downloadReportAPI,
+    method: 'post',
+    data: params,
+  });
+}
+export async function checkReportService(params) {
+  return request({
+    url: checkReportAPI,
+    method: 'post',
+    data: params,
+  });
+}
+export async function auditReportService(params) {
+  return request({
+    url: auditReportAPI,
+    method: 'post',
+    data: params,
+  });
+}
+export async function approveReportService(params) {
+  return request({
+    url: approveReportAPI,
     method: 'post',
     data: params,
   });

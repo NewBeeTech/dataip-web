@@ -18,6 +18,9 @@ module.exports = {
   APIV2,
   APIV3,
   api: {
+    checkReportAPI: `${APIV3}/report/check`, // 校对报告
+    auditReportAPI: `${APIV3}/report/audit`, // 审核报告
+    approveReportAPI: `${APIV3}/report/approve`, // 批准报告
     downloadReportAPI: `${APIV3}/report/download`, // 下载判读报告
     listInstanceAPI: `${APIV3}/report/listInstance`, // 通过型号查询任务下所有的报告
     listTaskAPI: `${APIV3}/report/listTask`, // 通过型号查询任务下所有的报告

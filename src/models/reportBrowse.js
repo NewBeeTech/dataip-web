@@ -23,6 +23,9 @@ import{
   listInstanceService,
   listTaskService,
   downloadReportService,
+  checkReportService,
+  auditReportService,
+  approveReportService,
 } from 'services/reportBrowse';
 import { config } from 'utils'
 const { APIV3 } = config;
@@ -441,6 +444,39 @@ export default modelExtend(pageModel, {
       const data = yield call(downloadReportService, payload);
       if (data.result === '0') {
         window.open(APIV3+'/manual/judge/downloadZIP?ZIP='+data.data);
+      } else {
+        throw data
+      }
+    },
+    *checkReportModel({ payload }, { call, put, select }) {
+      const data = yield call(checkReportService, payload);
+      if (data.result === '0') {
+        message.success(data.data);
+        yield put({
+          type: 'searchModel',
+        });
+      } else {
+        throw data
+      }
+    },
+    *auditReportModel({ payload }, { call, put, select }) {
+      const data = yield call(auditReportService, payload);
+      if (data.result === '0') {
+        message.success(data.data);
+        yield put({
+          type: 'searchModel',
+        });
+      } else {
+        throw data
+      }
+    },
+    *approveReportModel({ payload }, { call, put, select }) {
+      const data = yield call(approveReportService, payload);
+      if (data.result === '0') {
+        message.success(data.data);
+        yield put({
+          type: 'searchModel',
+        });
       } else {
         throw data
       }

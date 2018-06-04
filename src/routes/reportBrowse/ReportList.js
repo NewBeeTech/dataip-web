@@ -143,6 +143,12 @@ class ReportList extends React.Component {
               style={{color: '#1372d8'}}
               onClick={(e) => {
                 e.preventDefault();
+                this.props.dispatch({
+                  type: 'reportBrowse/checkReportModel',
+                  payload: {
+                    reportId: data.reportId,
+                  }
+                });
               }}
             >
               校对
@@ -150,7 +156,12 @@ class ReportList extends React.Component {
               style={{color: '#1372d8'}}
               onClick={(e) => {
                 e.preventDefault();
-                this.setState({ passVisible: true })
+                this.props.dispatch({
+                  type: 'reportBrowse/auditReportModel',
+                  payload: {
+                    reportId: data.reportId,
+                  }
+                });
               }}
             >
               审批
@@ -158,7 +169,12 @@ class ReportList extends React.Component {
               style={{color: '#1372d8'}}
               onClick={(e) => {
                 e.preventDefault();
-                this.setState({ passVisible: true })
+                this.props.dispatch({
+                  type: 'reportBrowse/approveReportModel',
+                  payload: {
+                    reportId: data.reportId,
+                  }
+                });
               }}
             >
               批准
