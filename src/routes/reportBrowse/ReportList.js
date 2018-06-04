@@ -91,12 +91,11 @@ class ReportList extends React.Component {
       console.log('Received values of form: ', values);
     });
   }
-  downLoadReport = (e) => {
-    e.preventDefault();
+  downLoadReport = (listReportId) => {
     this.props.dispatch({
       type: 'reportBrowse/downloadReportModel',
       payload: {
-        listReportId: this.props.reportBrowse.searchData.map(item => item.reportId)
+        listReportId,
       }
     })
   }
@@ -136,8 +135,7 @@ class ReportList extends React.Component {
             <a
               style={{color: '#1372d8'}}
               onClick={(e) => {
-                e.preventDefault();
-                this.setState({ visible: true })
+                this.downLoadReport([data.reportId]);
               }}
             >
               查看
@@ -248,7 +246,7 @@ class ReportList extends React.Component {
                 }
               });
             }}>查询</Button>
-            <Button type="primary" onClick={(e) => this.downLoadReport(e)}>下载报告</Button>
+            <Button type="primary" onClick={() => this.downLoadReport(this.props.reportBrowse.searchData.map(item => item.reportId))}>下载报告</Button>
           </div>
         </Form>
         </div>
