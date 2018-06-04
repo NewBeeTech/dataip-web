@@ -347,8 +347,10 @@ export default modelExtend(pageModel, {
           type: 'setState',
           payload: {
             createReportModal: false,
+            hasReport: true,
+            currentReport: data.data,
           }
-        })
+        });
       } else {
         throw data
       }
@@ -364,6 +366,8 @@ export default modelExtend(pageModel, {
           type: 'setState',
           payload: {
             chooseReportModal: false,
+            hasReport: true,
+            currentReport: data.data,
           }
         })
       } else {
