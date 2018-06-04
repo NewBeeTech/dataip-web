@@ -198,7 +198,7 @@ let database = [
     name: '参数组管理',
     route: '/paramsManage',
   } , {
-    id: '11',
+    id: '12',
     icon: 'book',
     name: '数据浏览',
     route: '/judgeReview',
@@ -207,6 +207,11 @@ let database = [
     icon: '',
     name: '用户管理',
     route: '/userManage',
+  }, {
+    id: '13',
+    icon: '',
+    name: '横向对比',
+    route: '/crossComparison',
   }
 ]
 

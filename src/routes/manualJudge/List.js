@@ -16,19 +16,30 @@ const List = ({ dispatch, ...tableProps }) => {
 
 
   const handleChange = (record) => {
-    if (!_.find(UserTypeDataDTO, u => u.columnName === record.columnName)) {
-      UserTypeDataDTO.push(record)
+    let { dataSource } = tableProps;
+    if (!_.find(dataSource, u => u.columnName === record.columnName)) {
+      dataSource.push(record)
       return false
     }
-    UserTypeDataDTO.map((dto) => {
-      if (dto.id === record.id) {
+    dataSource = dataSource.map((dto) => {
+      if (dto.columnName === record.columnName && dto.tableName === record.tableName) {
+        console.warn({ ...dto, ...record });
         return { ...dto, ...record }
       }
+      return dto;
+    });
+    // console.warn(dataSource);
+
+
+    dispatch({
+      type: 'paramsBrowse/updateState',
+      payload: { judgeList: dataSource },
     })
   }
 
   const resultChange = (record, value) => {
     console.log('resultChange---', value)
+    console.log({ ...record, result: value });
     handleChange({ ...record, result: value })
   }
 
@@ -73,20 +84,23 @@ const List = ({ dispatch, ...tableProps }) => {
     // 保存判读结果
     // FIXME: 行内修改的结果要同步
     saveJudgeResult: () => {
+      const { dataSource } = tableProps;
+      // console.log(dataSource);
       // console.log('tableProps: ', tableProps);
       // // 过滤 --已选中的
       // console.log(UserTypeDataDTO);
-      // const selectedLlist = UserTypeDataDTO.filter(v => selectedRowKeys.indexOf(`${v.tableName}-${v.columnName}`) > -1)
+      const selectedLlist = dataSource.filter(v => selectedRowKeys.indexOf(`${v.tableName}-${v.columnName}`) > -1)
+      console.log('selectedLlist', selectedLlist);
       // console.log(selectedLlist);
       // const listParamResult = selectedLlist.map(dto => _.pick(dto, ['instanceId', 'paramCode', 'paramName', 'result', 'description']))
       // todo 可能要删除一下不需要的
-      const { dataSource } = tableProps
-      const selectedDto = dataSource.filter(v => selectedRowKeys.indexOf(`${v.tableName}-${v.columnName}`) > -1);
-      console.log('保存判读结果--', listParamResult)
+      // const { dataSource } = tableProps
+      // const selectedDto = dataSource.filter(v => selectedRowKeys.indexOf(`${v.tableName}-${v.columnName}`) > -1);
+      // console.log('保存判读结果--', listParamResult)
       dispatch({
         type: 'manualJudge/postJudgeResult',
         payload: {
-          listManualJudgeDTO: selectedDto,
+          listManualJudgeDTO: selectedLlist,
         },
       })
     },

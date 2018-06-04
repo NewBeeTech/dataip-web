@@ -15,23 +15,29 @@ export default (props) => {
     width: '90px',
     height: '90px',
   };
-  function onChangeCreateReport(name, value) {
+  function onChangeChooseReport(name, value) {
       props.dispatch({
-          type: 'manualJudge/onChangeCreateReport',
+          type: 'manualJudge/onChangeChooseReport',
           payload: {
               name,
               value: value.target ? value.target.value : value
           }
-      })
+      });
+
+      props.dispatch({
+          type: 'manualJudge/listReportMineModel',
+          payload: {
+          }
+      });
   }
   return (<div>
     <Modal
-        visible={props.createReportModal}
-        title='创建报告'
+        visible={props.chooseReportModal}
+        title='选择当前报告'
         onCancel={() => props.dispatch({
           type: 'manualJudge/updateState',
           payload: {
-            createReportModal: false,
+            chooseReportModal: false,
           }
         })}
         footer={
@@ -39,10 +45,10 @@ export default (props) => {
                 <Button  onClick={() => props.dispatch({
                   type: 'manualJudge/updateState',
                   payload: {
-                    createReportModal: false,
+                    chooseReportModal: false,
                   }
                 })}>取消</Button>
-                <Button onClick={props.createReport} type='primary' style={{marginLeft:10}}>创建</Button>
+                <Button onClick={props.chooseReport} type='primary' style={{marginLeft:10}}>选择</Button>
             </div>
         }
     >
@@ -52,7 +58,7 @@ export default (props) => {
                <InputSelect
                   style={{width:'100%'}}
                   disableInput
-                  onChange={value=>onChangeCreateReport('modelName', value)}
+                  onChange={value=>onChangeChooseReport('modelName', value)}
                   options={props.models} value={props.modelName}
                 >
                 </InputSelect>
@@ -62,7 +68,7 @@ export default (props) => {
               <InputSelect
                  style={{width:'100%'}}
                  disableInput
-                 onChange={value=>onChangeCreateReport('taskName', value)}
+                 onChange={value=>onChangeChooseReport('taskName', value)}
                  options={props.tasks} value={props.taskName}
                >
                </InputSelect>
@@ -77,8 +83,7 @@ export default (props) => {
                  onChange={value => {
                    console.log(value);
                    const values = value && value.split(',');
-                   onChangeCreateReport('instanceName', values[0]);
-                   onChangeCreateReport('instanceId', values[1]);
+                   onChangeChooseReport('instanceId', values[1]);
                  }}
                  options={props.instances}
                >
@@ -86,22 +91,20 @@ export default (props) => {
             </Col>
         </Row>
         <Row style={{ marginTop: '15px' }}>
-            <Col span={2}>名称：</Col>
-            <Col span={19}>
-                <Input
-                    onChange={value => onChangeCreateReport('name', value)}
-                >
-                </Input>
-            </Col>
-        </Row>
-        <Row style={{ marginTop: '15px' }}>
-            <Col span={2}>描述：</Col>
-            <Col span={19}>
-                <Input
-                    type="textarea"
-                    onChange={value => onChangeCreateReport('description', value)}
-                >
-                </Input>
+            <Col span={2}>报告：</Col>
+            <Col span={22}>
+              <InputSelect
+                 style={{width:'100%'}}
+                 disableInput
+                 onChange={value => {
+                   onChangeChooseReport('reportId', value);
+                 }}
+                 options={props.reports.map(item => ({
+                   name: item.name,
+                   value: item.reportId,
+                 }))}
+               >
+               </InputSelect>
             </Col>
         </Row>
     </Modal>

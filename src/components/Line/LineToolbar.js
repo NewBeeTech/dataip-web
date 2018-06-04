@@ -5,7 +5,7 @@ import React from 'react'
 import { Button, Tooltip } from 'antd'
 import styles from './line.less'
 
-export default ({ reset, clear, report, queryChartData }) => { // eslint-disable-line
+export default ({ reset, clear, report, queryChartData, viewData }) => { // eslint-disable-line
   const BtnProps = {
     size: 'default',
     style: { marginBottom: 5 },
@@ -25,7 +25,7 @@ export default ({ reset, clear, report, queryChartData }) => { // eslint-disable
       <Button onClick={report} className={styles.iconBtn} {...BtnProps} icon="edit" />
     </Tooltip>
     <Tooltip title="查看数据">
-      <Button className={styles.iconBtn} {...BtnProps} icon="copy" />
+      <Button className={styles.iconBtn} {...BtnProps} icon="copy" onClick={viewData} />
     </Tooltip>
   </span>)
 }

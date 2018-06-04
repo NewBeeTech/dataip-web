@@ -11,6 +11,7 @@ import List from './List'
 import Line from './Line'
 import HasReportModal from './HasReportModal';
 import CreateReportModal from './CreateReportModal';
+import ChooseReportModal from './ChooseReportModal'
 
 class ManualJudgePage extends React.Component {
   constructor (props) {
@@ -44,6 +45,20 @@ class ManualJudgePage extends React.Component {
     }
 
     const lineProps = {
+      start: manualJudge.start,
+      end: manualJudge.end,
+      dataSource: paramsBrowse.judgeList,
+      rowSelection: {
+        selectedRowKeys,
+        onChange: (keys) => {
+          dispatch({
+            type: 'manualJudge/updateState',
+            payload: {
+              selectedRowKeys: keys,
+            },
+          })
+        },
+      },
       // 上边表格当前选中的
       selectedJudges: paramsBrowse.judgeList.filter(v => selectedRowKeys.indexOf(`${v.tableName}-${v.columnName}`) > -1),
       // 放大缩小图表 start end
@@ -71,8 +86,47 @@ class ManualJudgePage extends React.Component {
 
     return (
       <Page inner>
-        <HasReportModal dispatch={dispatch} hasReportModal={manualJudge.hasReportModal} />
-        <CreateReportModal dispatch={dispatch} createReportModal={manualJudge.createReportModal} />
+        <HasReportModal
+          dispatch={dispatch}
+          hasReportModal={manualJudge.hasReportModal}
+          hasReport={manualJudge.hasReport}
+          currentReport={manualJudge.currentReport}
+          reportResult={() => {
+            dispatch({
+              type: 'manualJudge/reportResultModel',
+              payload: {
+                title: manualJudge.report.title,
+                description: manualJudge.report.description,
+                listManualJudgeDTO: paramsBrowse.judgeList,
+              }
+            });
+          }}
+        />
+        <CreateReportModal
+          dispatch={dispatch}
+          createReportModal={manualJudge.createReportModal}
+          models={manualJudge.models}
+          tasks={manualJudge.tasks}
+          instances={manualJudge.instances}
+          createReport={() => {
+            dispatch({
+              type: 'manualJudge/reportCreateModel',
+            });
+          }}
+        />
+        <ChooseReportModal
+          dispatch={dispatch}
+          chooseReportModal={manualJudge.chooseReportModal}
+          models={manualJudge.models}
+          tasks={manualJudge.tasks}
+          instances={manualJudge.instances}
+          reports={manualJudge.reports}
+          chooseReport={() => {
+            dispatch({
+              type: 'manualJudge/chooseReport',
+            });
+          }}
+        />
         {
           paramsBrowse.judgeList.length ?
             <div>
