@@ -10,6 +10,8 @@ import {
   getCurrentReportService,
   reportCreateService,
   getTaskListService,
+  listReportMineService,
+  setCurrentReportService,
 } from 'services/manualJudge';
 import {
   getModels,
@@ -32,6 +34,7 @@ export default modelExtend(pageModel, {
     models: [], // 型号
     tasks: [], // 任务
     instances: [], // 试验
+    reports: [], // 报告
     viewData: [], // 查看数据
     loadViewData: false,
     selectedRowKeys: [],
@@ -47,6 +50,9 @@ export default modelExtend(pageModel, {
     createReportModal: false, // 创建报告modal
     createReport: {
     },
+    chooseReportModal: false,
+    chooseReport: {
+    }
   },
 
   reducers: {
@@ -62,7 +68,17 @@ export default modelExtend(pageModel, {
                 [name]: value
             }
         }
-    }
+    },
+    onChangeChooseReport(state, { payload }) {
+        const {name, value} = payload;
+        return {
+            ...state,
+            chooseReport: {
+                ...state.chooseReport,
+                [name]: value
+            }
+        }
+    },
   },
 
   subscriptions: {
@@ -166,6 +182,24 @@ export default modelExtend(pageModel, {
           type: 'setState',
           payload: {
             list: data.data,
+          },
+        })
+      } else {
+        throw data
+      }
+    },
+    *listReportMineModel({ payload }, { call, put, select }) {
+      const chooseReport = yield select(_ => _.manualJudge.chooseReport);
+      const data = yield call(listReportMineService, {
+        modelName: chooseReport.modelName,
+        taskName: chooseReport.taskName,
+        instanceId: chooseReport.instanceId,
+      })
+      if (data.result === '0') {
+        yield put({
+          type: 'setState',
+          payload: {
+            reports: data.data,
           },
         })
       } else {
@@ -294,6 +328,23 @@ export default modelExtend(pageModel, {
           type: 'setState',
           payload: {
             createReportModal: false,
+          }
+        })
+      } else {
+        throw data
+      }
+    },
+    * chooseReport({ payload }, { call, put, select }) {
+      const chooseReport = yield select(_ => _.manualJudge.chooseReport);
+      const data = yield call(setCurrentReportService, {
+        reportId: chooseReport.reportId
+      });
+      if (data.result === '0') {
+        // 创建报告弹窗消失
+        yield put({
+          type: 'setState',
+          payload: {
+            chooseReportModal: false,
           }
         })
       } else {

@@ -43,7 +43,12 @@ export default (props) => {
             createReportModal: true,
           }
         })}>创建报告</Button>
-        <Button>选择已有报告</Button>
+        <Button onClick={() => props.dispatch({
+          type: 'manualJudge/updateState',
+          payload: {
+            chooseReportModal: true,
+          }
+        })}>选择已有报告</Button>
       </Row>
         <Row>
             <Col span={2}>标题：</Col>

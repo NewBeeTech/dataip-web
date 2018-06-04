@@ -11,6 +11,8 @@ const { startJudge, saveJudgeResultApi,
   getCurrentReportAPI,
   reportCreateAPI,
   getTaskListAPI,
+  listReportMineAPI,
+  setCurrentReportAPI,
 } = api
 
 
@@ -103,6 +105,22 @@ export async function reportCreateService(params) {
 export async function getTaskListService(params) {
   return request({
     url: getTaskListAPI,
+    method: 'post',
+    data: params,
+  });
+}
+
+export async function listReportMineService(params) {
+  return request({
+    url: listReportMineAPI,
+    method: 'post',
+    data: params,
+  });
+}
+
+export async function setCurrentReportService(params) {
+  return request({
+    url: setCurrentReportAPI,
     method: 'post',
     data: params,
   });

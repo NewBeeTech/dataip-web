@@ -18,6 +18,8 @@ module.exports = {
   APIV2,
   APIV3,
   api: {
+    setCurrentReportAPI: `${APIV3}/report/setCurrent`, // 设为当前报告
+    listReportMineAPI: `${APIV3}/report/listReportMine`, // 查询用户报告
     reportComparisonAPI: `${APIV3}/manual/judge/reportComparison`, // 将横向比对的结果写入到报告
     crossComparisonAPI: `${APIV3}/manual/judge/crossComparison`, // 显示横向比对页面
     getTaskListAPI: `${APIV3}/base/taskList`, // 获取型号任务列表

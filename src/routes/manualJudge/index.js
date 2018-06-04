@@ -11,6 +11,7 @@ import List from './List'
 import Line from './Line'
 import HasReportModal from './HasReportModal';
 import CreateReportModal from './CreateReportModal';
+import ChooseReportModal from './ChooseReportModal'
 
 class ManualJudgePage extends React.Component {
   constructor (props) {
@@ -81,6 +82,19 @@ class ManualJudgePage extends React.Component {
           createReport={() => {
             dispatch({
               type: 'manualJudge/reportCreateModel',
+            });
+          }}
+        />
+        <ChooseReportModal
+          dispatch={dispatch}
+          chooseReportModal={manualJudge.chooseReportModal}
+          models={manualJudge.models}
+          tasks={manualJudge.tasks}
+          instances={manualJudge.instances}
+          reports={manualJudge.reports}
+          chooseReport={() => {
+            dispatch({
+              type: 'manualJudge/chooseReport',
             });
           }}
         />
