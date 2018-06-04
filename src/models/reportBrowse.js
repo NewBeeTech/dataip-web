@@ -248,7 +248,10 @@ export default modelExtend(pageModel, {
         data = yield call(listInstanceService, {
           instanceId: chooseReport.instanceId,
         });
-        console.log(data);
+      } else if (chooseReport.taskName) {
+        data = yield call(listTaskService, {
+          taskName: chooseReport.taskName,
+        });
       }
 
       if (data.result === '0') {
@@ -259,7 +262,7 @@ export default modelExtend(pageModel, {
           },
         });
       } else {
-        throw data
+        // throw data
       }
     },
     // 保存判读结果
