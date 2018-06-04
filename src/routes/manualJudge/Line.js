@@ -6,6 +6,7 @@ import PropTypes from 'prop-types'
 import { Page } from 'components'
 import ChartComponent from 'components/Line/ChartComponent'
 import { connect } from 'dva'
+import { routerRedux } from 'dva/router'
 
 
 const Line = ({ manualJudge, ...prevProps }) => {
@@ -29,6 +30,21 @@ const Line = ({ manualJudge, ...prevProps }) => {
   }
 
   const chartProps = {
+    viewData: () => {
+      const { dataSource, start, end} = prevProps
+      const { selectedRowKeys } = prevProps.rowSelection
+      const selectedDto = dataSource.filter(v => selectedRowKeys.indexOf(`${v.tableName}-${v.columnName}`) > -1)
+      console.log(selectedDto, start, end);
+      prevProps.dispatch({
+        type: 'manualJudge/judgeListDataModel',
+        payload: {
+          listManualJudgeDTO: selectedDto,
+          start,
+          end,
+        }
+      });
+      prevProps.dispatch(routerRedux.push('/judgeReview'))
+    },
     lineChartData,
     colorArray,
     lineLoading,

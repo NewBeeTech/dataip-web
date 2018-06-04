@@ -32,6 +32,8 @@ const getRandomColor = () => {
 export default modelExtend(pageModel, {
   namespace: 'manualJudge',
   state: {
+    start: 0,
+    end: -1,
     models: [], // 型号
     tasks: [], // 任务
     instances: [], // 试验
@@ -236,6 +238,10 @@ export default modelExtend(pageModel, {
       //  根据 paramCode 区分每条线
       yield put({ type: 'setState', payload: { lineLoading: true } })
       const data = yield call(queryChartLine, payload)
+      yield put({
+        type: 'setState',
+        payload: { start: payload.start, end: payload.end }
+      })
       if (data.result === '0') {
         const analogDatasList = get(data, 'data.analogDataList.data', [])
         const lineKeys = Object.keys(_.first(analogDatasList) || {})

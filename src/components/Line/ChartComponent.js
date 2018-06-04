@@ -71,6 +71,7 @@ class ChartComponent extends React.Component {
       selectedJudges,
       clear,
       report,
+      viewData
     } = this.props
     const { refAreaLeft, refAreaRight } = this.state
 
@@ -78,6 +79,7 @@ class ChartComponent extends React.Component {
       queryChartData,
       clear,
       report,
+      viewData,
       reset () {
         zoomQueryChartData(0, -1)
       },

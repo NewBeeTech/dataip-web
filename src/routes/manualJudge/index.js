@@ -45,6 +45,20 @@ class ManualJudgePage extends React.Component {
     }
 
     const lineProps = {
+      start: manualJudge.start,
+      end: manualJudge.end,
+      dataSource: paramsBrowse.judgeList,
+      rowSelection: {
+        selectedRowKeys,
+        onChange: (keys) => {
+          dispatch({
+            type: 'manualJudge/updateState',
+            payload: {
+              selectedRowKeys: keys,
+            },
+          })
+        },
+      },
       // 上边表格当前选中的
       selectedJudges: paramsBrowse.judgeList.filter(v => selectedRowKeys.indexOf(`${v.tableName}-${v.columnName}`) > -1),
       // 放大缩小图表 start end
