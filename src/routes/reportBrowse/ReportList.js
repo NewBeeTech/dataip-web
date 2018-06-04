@@ -119,13 +119,13 @@ class ReportList extends React.Component {
     datas.forEach((data, index) => {
       dataSource.push({
         key: index,
-        no: 1,
-        reportName: 'XXXX报告',
-        writer: '我是编写人',
-        createAt: '2018-09-23 19:20:20',
-        proofer: '郝校对',
-        approver: '王审批',
-        ratifier: '张批准',
+        no: data.reportId,
+        reportName: data.name,
+        writer: data.author,
+        createAt: data.createTime,
+        proofer: data.checker,
+        approver: data.auditor,
+        ratifier: data.approve,
         operation: (
           <div>
             <a
@@ -230,13 +230,19 @@ class ReportList extends React.Component {
               试验：
               <InputSelect
                  disableInput
-                 onChange={value=>onChangeChooseReport('instance', value)}
+                 onChange={value=>onChangeChooseReport('instanceId', value)}
                  options={this.props.reportBrowse.instances}
-                 value={this.props.reportBrowse.chooseReport.instance}
+                 value={this.props.reportBrowse.chooseReport.instanceId}
                >
                </InputSelect>
             </div>
-            <Button type="primary" htmlType="submit">查询</Button>
+            <Button type="primary" onClick={() => {
+              this.props.dispatch({
+                type: 'reportBrowse/searchModel',
+                payload: {
+                }
+              });
+            }}>查询</Button>
             <Button type="primary" onClick={(e) => this.downLoadReport(e)}>下载报告</Button>
           </div>
         </Form>
@@ -244,7 +250,7 @@ class ReportList extends React.Component {
         <Table
           size="middle"
           columns={this.columns}
-          dataSource={this._renderDataSource(data)}
+          dataSource={this._renderDataSource(this.props.reportBrowse.searchData)}
           pagination={false}
           bordered
         />

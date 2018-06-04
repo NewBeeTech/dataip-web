@@ -19,7 +19,9 @@ import {
   query,
 } from 'services/paramsBrowse';
 import{
-  listInstanceByNameService
+  listInstanceByNameService,
+  listInstanceService,
+  listTaskService,
 } from 'services/reportBrowse';
 import { config } from 'utils'
 const { APIV3 } = config;
@@ -39,7 +41,7 @@ export default modelExtend(pageModel, {
     tasks: [], // 任务
     instances: [], // 试验
     reports: [], // 报告
-    viewData: [], // 查看数据
+    searchData: [], // 查看数据
     loadViewData: false,
     selectedRowKeys: [],
     list: [],
@@ -235,6 +237,27 @@ export default modelExtend(pageModel, {
           });
         }
 
+      } else {
+        throw data
+      }
+    },
+    *searchModel({ payload }, { call, put, select }) {
+      const chooseReport = yield select(_ => _.reportBrowse.chooseReport);
+      let data = {};
+      if (chooseReport.instanceId) {
+        data = yield call(listInstanceService, {
+          instanceId: chooseReport.instanceId,
+        });
+        console.log(data);
+      }
+
+      if (data.result === '0') {
+        yield put({
+          type: 'setState',
+          payload: {
+            searchData: data.data,
+          },
+        });
       } else {
         throw data
       }
