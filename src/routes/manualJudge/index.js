@@ -97,7 +97,7 @@ class ManualJudgePage extends React.Component {
               payload: {
                 title: manualJudge.report.title,
                 description: manualJudge.report.description,
-                listParamResult: paramsBrowse.judgeList,
+                listManualJudgeDTO: paramsBrowse.judgeList,
               }
             });
           }}
