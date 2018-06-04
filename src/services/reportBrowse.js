@@ -5,6 +5,7 @@ const {
   listInstanceByNameAPI,
   listTaskAPI,
   listInstanceAPI,
+  downloadReportAPI,
 } = api;
 
 // 通过型号查询任务下所有的报告
@@ -27,6 +28,14 @@ export async function listInstanceService(params) {
 export async function listTaskService(params) {
   return request({
     url: listTaskAPI,
+    method: 'post',
+    data: params,
+  });
+}
+
+export async function downloadReportService(params) {
+  return request({
+    url: downloadReportAPI,
     method: 'post',
     data: params,
   });

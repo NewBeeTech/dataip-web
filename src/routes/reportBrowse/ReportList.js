@@ -93,7 +93,12 @@ class ReportList extends React.Component {
   }
   downLoadReport = (e) => {
     e.preventDefault();
-    console.log('下载');
+    this.props.dispatch({
+      type: 'reportBrowse/downloadReportModel',
+      payload: {
+        listReportId: this.props.reportBrowse.searchData.map(item => item.reportId)
+      }
+    })
   }
   handleModelChange = (model) => {
     console.log(model);

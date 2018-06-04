@@ -18,6 +18,7 @@ module.exports = {
   APIV2,
   APIV3,
   api: {
+    downloadReportAPI: `${APIV3}/report/download`, // 下载判读报告
     listInstanceAPI: `${APIV3}/report/listInstance`, // 通过型号查询任务下所有的报告
     listTaskAPI: `${APIV3}/report/listTask`, // 通过型号查询任务下所有的报告
     listInstanceByNameAPI: `${APIV3}/instance/listInstanceByName`, // 通过任务名查询出对应的试验

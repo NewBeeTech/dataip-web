@@ -22,6 +22,7 @@ import{
   listInstanceByNameService,
   listInstanceService,
   listTaskService,
+  downloadReportService,
 } from 'services/reportBrowse';
 import { config } from 'utils'
 const { APIV3 } = config;
@@ -435,6 +436,14 @@ export default modelExtend(pageModel, {
       } else {
         throw data
       }
-    }
+    },
+    *downloadReportModel({ payload }, { call, put, select }) {
+      const data = yield call(downloadReportService, payload);
+      if (data.result === '0') {
+        window.open(APIV3+'/manual/judge/downloadZIP?ZIP='+data.data);
+      } else {
+        throw data
+      }
+    },
   },
 })
