@@ -405,6 +405,12 @@ export default modelExtend(pageModel, {
         if (data.result === '0') {
           const token = data.data; // 下载令牌
           window.open(APIV3+'/manual/judge/downloadZIP?ZIP='+token);
+          yield put({
+            type: 'updateState',
+            payload: {
+              showDownloadModal: false,
+            }
+          })
         } else {
           throw data
         }

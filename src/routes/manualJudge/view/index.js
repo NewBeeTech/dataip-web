@@ -49,15 +49,13 @@ class ViewChartData  extends React.PureComponent {
           <Spin spinning={true} />
         );
       } else {
-        const viewDataStr = window.localStorage.getItem('viewData');
-        if (!viewDataStr) {
+        let viewData = window.viewData || [];
+        if (!viewData || viewData.length == 0) {
           return(
             <div>暂无数据</div>
           );
         } else {
-          let viewData = window.localStorage.getItem('viewData');
-          console.log(new Date());
-          viewData = window.viewData || [];
+          // let viewData = window.localStorage.getItem('viewData');
           // viewData = viewData && JSON.parse(viewData);
           console.log(new Date());
           const view = [];
