@@ -265,7 +265,7 @@ export default modelExtend(pageModel, {
             return warning('请选择参数')
         }
         const data = yield call(addParamSet, {...paramsForm, listParamSelectDTO})
-        if(data) {
+        if(data.result == 0) {
             // dispatch({ type: 'queryIndex',
             //   payload: { },
             // })
@@ -301,6 +301,8 @@ export default modelExtend(pageModel, {
               //   },
               // })
             // }
+        } else {
+          error(data.errmsg)
         }
 
     },
