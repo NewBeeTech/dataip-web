@@ -254,7 +254,7 @@ export default modelExtend(pageModel, {
         let paramsForm = yield select(_ => _.paramsBrowse.paramsForm)
 
         const  {type, listParamSelectDTO = []} = payload;
-        console.warn('paramsForm',paramsForm);
+        // console.warn('paramsForm',paramsForm);
         if(!paramsForm.modelName) {
             return warning('缺少型号')
         }

@@ -302,7 +302,7 @@ class TransferTable extends React.Component {
             title='创建自定义参数组'
             footer={
                 <div>
-                    <Button  onClick={()=>dispatch({type:'paramsBrowse/updateState', payload: {isSaving:false}})}>取消</Button>
+                    <Button  onClick={()=>dispatch({type:'paramsBrowse/updateState', payload: {isSaving:false, paramsForm: {} }})}>取消</Button>
                     <Button onClick={confirmAdd} type='primary' style={{marginLeft:10}}>保存</Button>
                 </div>
             }
@@ -314,7 +314,9 @@ class TransferTable extends React.Component {
                     <InputSelect style={{width:'100%'}}
                         disableInput
                         onChange={value=>onChangeParamForm('modelName', value)}
-                        options={models} value={paramsForm.modelName}></InputSelect>
+                        options={models}
+                        value={paramsForm.modelName || ''}>
+                    </InputSelect>
                 </Col>
 
             </Row>
