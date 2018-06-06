@@ -278,7 +278,7 @@ class TransferTable extends React.Component {
             footer={
                 <div>
                     <Button  onClick={this.showDownloadModal}>取消</Button>
-                    <Button onClick={this.download} type='primary' style={{marginLeft:10}}>下载</Button>
+                    <Button loading={this.props.downloadLoading} onClick={this.download} type='primary' style={{marginLeft:10}}>下载</Button>
                 </div>
             }
         >

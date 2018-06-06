@@ -37,7 +37,7 @@ const Index = ({ user, paramsBrowse, dispatch, loading, location }) => {
       total: selectedInstanceList.length,
     },
     dataSource: selectedInstanceList.length ? selectedInstanceList : listInstance,
-    loading: loading.effects['paramsBrowse/query', 'crossComparison/crossComparisonModel'],
+    loading: loading.effects['paramsBrowse/query', 'crossComparison/crossComparisonModel', 'paramsBrowse/downloadFiles1Model'],
   }
 
   const modalProps = {
@@ -132,7 +132,7 @@ const Index = ({ user, paramsBrowse, dispatch, loading, location }) => {
 
         <Row style={{ marginLeft: '10px'}}>
           <Col span={24}>
-            <CustomTransfer {...paramsBrowse} {...transferProps} />
+            <CustomTransfer {...paramsBrowse} {...transferProps} downloadLoading={loading.effects['paramsBrowse/downloadFiles1Model']} />
           </Col>
         </Row>
       </Col>
