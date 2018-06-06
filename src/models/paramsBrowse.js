@@ -254,7 +254,7 @@ export default modelExtend(pageModel, {
         let paramsForm = yield select(_ => _.paramsBrowse.paramsForm)
 
         const  {type, listParamSelectDTO = []} = payload;
-        console.warn('paramsForm',paramsForm);
+        // console.warn('paramsForm',paramsForm);
         if(!paramsForm.modelName) {
             return warning('缺少型号')
         }
@@ -265,7 +265,7 @@ export default modelExtend(pageModel, {
             return warning('请选择参数')
         }
         const data = yield call(addParamSet, {...paramsForm, listParamSelectDTO})
-        if(data) {
+        if(data.result == 0) {
             // dispatch({ type: 'queryIndex',
             //   payload: { },
             // })
@@ -301,6 +301,8 @@ export default modelExtend(pageModel, {
               //   },
               // })
             // }
+        } else {
+          error(data.errmsg)
         }
 
     },
@@ -405,6 +407,12 @@ export default modelExtend(pageModel, {
         if (data.result === '0') {
           const token = data.data; // 下载令牌
           window.open(APIV3+'/manual/judge/downloadZIP?ZIP='+token);
+          yield put({
+            type: 'updateState',
+            payload: {
+              showDownloadModal: false,
+            }
+          })
         } else {
           throw data
         }

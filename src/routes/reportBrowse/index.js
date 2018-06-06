@@ -11,10 +11,10 @@ const TabPane = Tabs.TabPane
 const styles = require('./styles.css')
 
 
-const Index = ({ user, paramsBrowse, dispatch, loading, location, paramsManage }) => {
+const Index = ({ reportBrowse, paramsBrowse, dispatch, loading, location, paramsManage }) => {
   return (
     <div className={styles.content}>
-       <ReportList />
+       <ReportList reportBrowse={reportBrowse} dispatch={dispatch} />
     </div>
   )
 }
@@ -28,4 +28,4 @@ Index.propTypes = {
   dispatch: PropTypes.func,
 }
 
-export default connect(({ user, paramsBrowse, loading, paramsManage }) => ({ user, paramsBrowse, loading, paramsManage }))(Index)
+export default connect(({ loading, reportBrowse }) => ({ reportBrowse, loading, }))(Index)

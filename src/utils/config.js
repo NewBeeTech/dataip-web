@@ -18,6 +18,13 @@ module.exports = {
   APIV2,
   APIV3,
   api: {
+    checkReportAPI: `${APIV3}/report/check`, // 校对报告
+    auditReportAPI: `${APIV3}/report/audit`, // 审核报告
+    approveReportAPI: `${APIV3}/report/approve`, // 批准报告
+    downloadReportAPI: `${APIV3}/report/download`, // 下载判读报告
+    listInstanceAPI: `${APIV3}/report/listInstance`, // 通过型号查询任务下所有的报告
+    listTaskAPI: `${APIV3}/report/listTask`, // 通过型号查询任务下所有的报告
+    listInstanceByNameAPI: `${APIV3}/instance/listInstanceByName`, // 通过任务名查询出对应的试验
     reportResultAPI: `${APIV3}/report/reportResult`, // 用户在数据判读页面完成数据判读后点击写入报告时调用此接口
     setCurrentReportAPI: `${APIV3}/report/setCurrent`, // 设为当前报告
     listReportMineAPI: `${APIV3}/report/listReportMine`, // 查询用户报告

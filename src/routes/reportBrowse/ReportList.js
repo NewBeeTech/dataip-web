@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import { Table, Input, Button, Modal, Form, Checkbox, Select, Row, Col} from 'antd';
 import { push } from 'react-router-redux';
+import InputSelect from '@@/Inputselect'
 
 const styles = require('./styles.css')
 
@@ -90,9 +91,13 @@ class ReportList extends React.Component {
       console.log('Received values of form: ', values);
     });
   }
-  downLoadReport = (e) => {
-    e.preventDefault();
-    console.log('下载');
+  downLoadReport = (listReportId) => {
+    this.props.dispatch({
+      type: 'reportBrowse/downloadReportModel',
+      payload: {
+        listReportId,
+      }
+    })
   }
   handleModelChange = (model) => {
     console.log(model);
@@ -118,20 +123,19 @@ class ReportList extends React.Component {
     datas.forEach((data, index) => {
       dataSource.push({
         key: index,
-        no: 1,
-        reportName: 'XXXX报告',
-        writer: '我是编写人',
-        createAt: '2018-09-23 19:20:20',
-        proofer: '郝校对',
-        approver: '王审批',
-        ratifier: '张批准',
+        no: data.reportId,
+        reportName: data.name,
+        writer: data.author,
+        createAt: data.createTime,
+        proofer: data.checker,
+        approver: data.auditor,
+        ratifier: data.approve,
         operation: (
           <div>
             <a
               style={{color: '#1372d8'}}
               onClick={(e) => {
-                e.preventDefault();
-                this.setState({ visible: true })
+                this.downLoadReport([data.reportId]);
               }}
             >
               查看
@@ -139,6 +143,12 @@ class ReportList extends React.Component {
               style={{color: '#1372d8'}}
               onClick={(e) => {
                 e.preventDefault();
+                this.props.dispatch({
+                  type: 'reportBrowse/checkReportModel',
+                  payload: {
+                    reportId: data.reportId,
+                  }
+                });
               }}
             >
               校对
@@ -146,7 +156,12 @@ class ReportList extends React.Component {
               style={{color: '#1372d8'}}
               onClick={(e) => {
                 e.preventDefault();
-                this.setState({ passVisible: true })
+                this.props.dispatch({
+                  type: 'reportBrowse/auditReportModel',
+                  payload: {
+                    reportId: data.reportId,
+                  }
+                });
               }}
             >
               审批
@@ -154,7 +169,12 @@ class ReportList extends React.Component {
               style={{color: '#1372d8'}}
               onClick={(e) => {
                 e.preventDefault();
-                this.setState({ passVisible: true })
+                this.props.dispatch({
+                  type: 'reportBrowse/approveReportModel',
+                  payload: {
+                    reportId: data.reportId,
+                  }
+                });
               }}
             >
               批准
@@ -181,6 +201,23 @@ class ReportList extends React.Component {
         name: record.name,
       }),
     };
+    const onChangeChooseReport = (name, value) => {
+        this.props.dispatch({
+            type: 'reportBrowse/onChangeChooseReport',
+            payload: {
+                name,
+                value: value.target ? value.target.value : value
+            }
+        });
+        console.log(name);
+        if (name == 'taskName') {
+          this.props.dispatch({
+              type: 'reportBrowse/listInstanceByNameModel',
+              payload: {
+              }
+          });
+        }
+    }
     return (
       <div>
         {/*  用户列表  */}
@@ -189,62 +226,50 @@ class ReportList extends React.Component {
           className=""
           onSubmit={this.handleSearch}
         >
-          <Row gutter={24}>
-            <Col span={8}>
-              <FormItem label="型号">
-                {getFieldDecorator('model', {
-                  initialValue: this.state.model,
-                  onChange: (e) => this.handleModelChange(e)
-                })(
-                  <Select>
-                    <Option value="1">XXX-1</Option>
-                    <Option value="2">XXX-2</Option>
-                  </Select>
-                )}
-              </FormItem>
-            </Col>
-            <Col span={8}>
-              <FormItem label="任务">
-                {getFieldDecorator('task', {
-                  initialValue: this.state.model,
-                  onChange: (e) => this.handleTaskChange(e)
-                })(
-                  <Select>
-                    <Option value="1">MASK-XXX-1</Option>
-                    <Option value="2">MASK-XXX-1</Option>
-                  </Select>
-                )}
-              </FormItem>
-            </Col>
-            <Col span={8}>
-              <FormItem label="试验">
-                {getFieldDecorator('test', {
-                  initialValue: this.state.model,
-                  onChange: (e) => this.handleTestChange(e)
-                })(
-                  <Select>
-                    <Option value="1">TEXT-XXX-1</Option>
-                    <Option value="2">TEXT-XXX-2</Option>
-                  </Select>
-                )}
-              </FormItem>
-            </Col>
-          </Row>
-          <Row>
-            <Col span={4} offset={16} style={{ textAlign: 'right' }}>
-              <Button type="primary" htmlType="submit">查询</Button>
-            </Col>
-            <Col span={4} style={{ textAlign: 'right' }}>
-              <Button type="primary" onClick={(e) => this.downLoadReport(e)}>下载报告</Button>
-            </Col>
-          </Row>
+          <div className={styles.topSelect}>
+            <div className={styles.selectItem}>
+              型号：
+              <InputSelect
+                 disableInput
+                 onChange={value=>onChangeChooseReport('modelName', value)}
+                 options={this.props.reportBrowse.models}
+               >
+               </InputSelect>
+            </div>
+            <div className={styles.selectItem}>
+              任务：
+              <InputSelect
+                 disableInput
+                 onChange={value=>onChangeChooseReport('taskName', value)}
+                 options={this.props.reportBrowse.tasks}
+               >
+               </InputSelect>
+            </div>
+            <div className={styles.selectItem}>
+              试验：
+              <InputSelect
+                 disableInput
+                 onChange={value=>onChangeChooseReport('instanceId', value)}
+                 options={this.props.reportBrowse.instances}
+                 value={this.props.reportBrowse.chooseReport.instanceId}
+               >
+               </InputSelect>
+            </div>
+            <Button type="primary" onClick={() => {
+              this.props.dispatch({
+                type: 'reportBrowse/searchModel',
+                payload: {
+                }
+              });
+            }}>查询</Button>
+            <Button type="primary" onClick={() => this.downLoadReport(this.props.reportBrowse.searchData.map(item => item.reportId))}>下载报告</Button>
+          </div>
         </Form>
         </div>
         <Table
-          rowSelection={rowSelection}
           size="middle"
           columns={this.columns}
-          dataSource={this._renderDataSource(data)}
+          dataSource={this._renderDataSource(this.props.reportBrowse.searchData)}
           pagination={false}
           bordered
         />
