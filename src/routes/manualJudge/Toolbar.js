@@ -19,16 +19,16 @@ export default ({ saveJudgeResult, viewData, downloadData, report }) => {
     height: '90px',
   };
   return (<div className={styles.toolBar} style={style}>
-    <Tooltip title='查看数据'>
+    <Tooltip placement="leftTop" title='查看数据'>
       <Button className={styles.iconBtn} {...BtnProps} icon="copy" onClick={viewData}></Button>
     </Tooltip>
-    <Tooltip title='保存判读结果'>
+    <Tooltip placement="leftTop" title='保存判读结果'>
       <Button className={styles.iconBtn} {...BtnProps} icon="save" onClick={saveJudgeResult}></Button>
     </Tooltip>
-    <Tooltip title='写入报告'>
+    <Tooltip placement="leftTop" title='写入报告'>
       <Button className={styles.iconBtn} {...BtnProps} icon="edit" onClick={report}></Button>
     </Tooltip>
-    <Tooltip title='数据下载'>
+    <Tooltip placement="leftTop" title='数据下载'>
       <Button className={styles.iconBtn} {...BtnProps} icon="download" onClick={downloadData}></Button>
     </Tooltip>
   </div>)

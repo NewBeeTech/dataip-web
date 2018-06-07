@@ -118,10 +118,10 @@ const Index = ({ user, paramsBrowse, dispatch, loading, location }) => {
           </Col>
           <Col span={1}>
             <div style={{ marginBottom: 10, width: 20, marginLeft: 10 }}>
-              <Tooltip title='选择试验'>
+              <Tooltip placement="leftTop" title='选择试验'>
                 <Button className={styles.iconBtn} onClick={handleBtnClick} icon='select'></Button>
               </Tooltip>
-              <Tooltip title='设置当前任务'>
+              <Tooltip placement="leftTop" title='设置当前任务'>
                 <Button className={styles.iconBtn} onClick={setCurrentTask} icon='setting'></Button>
               </Tooltip>
 

@@ -241,30 +241,30 @@ class TransferTable extends React.Component {
           </Col>
           <Col span={1} >
               <div style={{width:15}} style={{ marginLeft: '10px'}}>
-                <Tooltip title='启动判读'>
+                <Tooltip placement="leftTop" title='启动判读'>
                     <Button className={indexStyles.iconBtn + ' margin-bottom8'} icon='play-circle' onClick={this.handleStarter}  title='启动判读' ></Button>
                 </Tooltip>
 
-                <Tooltip title='横向对比'>
+                <Tooltip placement="leftTop" title='横向对比'>
                     <Button className={indexStyles.iconBtn + ' margin-bottom8'} icon='layout' onClick={this.crossComparison}  title='启动判读' ></Button>
                 </Tooltip>
 
 
-                <Tooltip title='数据下载'>
+                <Tooltip placement="leftTop" title='数据下载'>
                     <Button className={indexStyles.iconBtn + ' margin-bottom8'} icon='download' onClick={this.showDownloadModal} title='数据下载' ></Button>
                 </Tooltip>
 
 
-                <Tooltip title='保存为参数组'>
+                <Tooltip placement="leftTop" title='保存为参数组'>
                     <Button className={indexStyles.iconBtn + ' margin-bottom8'} icon='save' onClick={this.saveParamSetModal} title='保存为参数组' ></Button>
                 </Tooltip>
 
 
-                <Tooltip title='更新参数组'>
+                <Tooltip placement="leftTop" title='更新参数组'>
                     <Button className={indexStyles.iconBtn + ' margin-bottom8'} icon='sync' onClick={this.updateParamSet} title='更新参数组' ></Button>
                 </Tooltip>
 
-                <Tooltip title='管理参数组'>
+                <Tooltip placement="leftTop" title='管理参数组'>
                     <Button className={indexStyles.iconBtn + ' margin-bottom8'} icon='exception' onClick={this.navToParamsManage} title='管理参数组' ></Button>
                 </Tooltip>
 
