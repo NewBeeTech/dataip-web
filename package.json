@@ -20,6 +20,7 @@
     "highcharts-exporting": "^0.1.2",
     "highcharts-more": "^0.1.2",
     "history": "^4.7.2",
+    "html2canvas": "^1.0.0-alpha.12",
     "js-beautify": "^1.6.14",
     "jsonp": "^0.2.1",
     "less-vars-to-js": "^1.1.2",

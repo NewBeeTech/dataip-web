@@ -2,6 +2,7 @@ import React from 'react'
 import propTypes from 'prop-types'
 import { Row, Col, Spin } from 'antd'
 import { Legend, LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, ReferenceArea } from 'recharts'
+import html2canvas from 'html2canvas';
 
 import LineToolbar from './LineToolbar'
 
@@ -80,6 +81,37 @@ class ChartComponent extends React.Component {
       clear,
       report,
       viewData,
+      saveImg() {
+        console.log('save');
+        console.log(document.getElementById('chartContainer'));
+        html2canvas(document.getElementById('chartContainer'), {
+            logging: true,
+            // allowTaint: true,
+            useCORS: true,
+          }).then(canvas => {
+            // const dataURL = canvas.toDataURL("image/png");
+            // console.log(dataURL);
+            canvas.toBlob(function(blob) {
+              var anchor = document.createElement('a'),
+              dataUrl  = URL.createObjectURL(blob),
+              fileName = 'line.png';
+
+              // set a attributes
+              anchor.setAttribute('href', dataUrl);
+              anchor.setAttribute('target', '_blank');
+              anchor.setAttribute('download', fileName);
+              // simulate click
+              if (document.createEvent) {
+                const evtObj = document.createEvent('MouseEvents');
+                evtObj.initEvent('click', true, true);
+                anchor.dispatchEvent(evtObj);
+              }
+              else if (anchor.click) {
+                anchor.click();
+              }
+            });
+          })
+      },
       reset () {
         zoomQueryChartData(0, -1)
       },
@@ -134,7 +166,7 @@ class ChartComponent extends React.Component {
           <Col xs={4} sm={4} md={2} lg={1}>
             <LineToolbar {...toolBarProps} />
           </Col>
-          <Col xs={20} sm={20} md={22} lg={23} id="chartContainer">
+          <Col id="line" xs={20} sm={20} md={22} lg={23} id="chartContainer">
             <Spin spinning={lineLoading}>
               <LineChart
                 margin={{ top: 15, right: 5, bottom: 5, left: 10 }}
