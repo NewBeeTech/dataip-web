@@ -119,8 +119,8 @@ const List = ({ analogDataKeys, analogDataList }) => {
         pagination={false}
         // rowSelection={() => {}}
         bordered
-        // scroll={{  y: 700 }}
-        columns={analogDataKeys}
+        scroll={{  y: 700 }}
+        columns={analogDataKeys.map((item, index) => ({...item, width: '100', key: index }))}
         dataSource={analogDataList}
         simple
       />
