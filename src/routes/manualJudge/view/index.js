@@ -62,7 +62,18 @@ class ViewChartData  extends React.PureComponent {
           viewData.map(list => {
             console.log(list);
             view.push(
-              <List key={list.tableName} analogDataKeys={list.analogDataKeys} analogDataList={list.analogDataList} />
+              // <Spin spinning={this.props.loading.effects['manualJudge/exceptionDataModel']} key={list.tableName}>
+              <List
+                key={list.tableName}
+                tableName={list.tableName}
+                analogDataKeys={list.analogDataKeys}
+                analogDataList={list.analogDataList}
+                dispatch={this.props.dispatch}
+                listManualJudgeDTO={this.props.manualJudge.listManualJudgeDTO}
+                loading={this.props.loading.effects['manualJudge/downloadData']}
+                exceptionDataLoading={this.props.loading.effects['manualJudge/exceptionDataModel']}
+              />
+            // </Spin>
             );
           });
           return(

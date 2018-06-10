@@ -62,6 +62,12 @@ const List = ({ dispatch, ...tableProps }) => {
           end: -1,
         }
       });
+      dispatch({
+        type: 'manualJudge/updateState',
+        payload: {
+          listManualJudgeDTO: selectedDto,
+        }
+      });
       dispatch(routerRedux.push('/judgeReview'))
     },
     downloadData: () => {

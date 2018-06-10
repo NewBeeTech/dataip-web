@@ -14,6 +14,7 @@ const { startJudge, saveJudgeResultApi,
   listReportMineAPI,
   setCurrentReportAPI,
   reportResultAPI,
+  exceptionDataAPI,
 } = api
 
 
@@ -129,6 +130,13 @@ export async function setCurrentReportService(params) {
 export async function reportResultService(params) {
   return request({
     url: reportResultAPI,
+    method: 'post',
+    data: params,
+  });
+}
+export async function exceptionDataService(params) {
+  return request({
+    url: exceptionDataAPI,
     method: 'post',
     data: params,
   });

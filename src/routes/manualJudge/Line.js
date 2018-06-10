@@ -43,6 +43,12 @@ const Line = ({ manualJudge, ...prevProps }) => {
           end,
         }
       });
+      dispatch({
+        type: 'manualJudge/updateState',
+        payload: {
+          listManualJudgeDTO: selectedDto,
+        }
+      });
       prevProps.dispatch(routerRedux.push('/judgeReview'))
     },
     lineChartData,

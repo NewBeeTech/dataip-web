@@ -13,6 +13,7 @@ import {
   listReportMineService,
   setCurrentReportService,
   reportResultService,
+  exceptionDataService,
 } from 'services/manualJudge';
 import {
   getModels,
@@ -60,7 +61,8 @@ export default modelExtend(pageModel, {
     currentReport: {
     },
     report: {
-    }
+    },
+    listManualJudgeDTO: [],
   },
 
   reducers: {
@@ -298,7 +300,8 @@ export default modelExtend(pageModel, {
           }));
           return {
             analogDataKeys: columns1,
-            analogDataList: item.analogDataList,
+            analogDataList: item.analogDataList && item.analogDataList.map(item1 => ({...item1, key: item1.id })),
+            tableName: item.tableName,
           }
         })
         window.viewData = viewData;
@@ -394,6 +397,15 @@ export default modelExtend(pageModel, {
       } else {
         throw data
       }
-    }
+    },
+    *exceptionDataModel({ payload }, { call, put, select }) {
+      const data = yield call(exceptionDataService, payload);
+      if (data.result === '0') {
+        // 创建报告弹窗消失
+        message.success('设置成功')
+      } else {
+        throw data
+      }
+    },
   },
 })

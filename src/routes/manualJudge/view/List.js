@@ -3,7 +3,7 @@
  */
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Table, Modal, Button, Icon } from 'antd'
+import { Table, Modal, Button, Icon, Popconfirm } from 'antd'
 import classnames from 'classnames'
 import { DropOption } from 'components'
 import { Link } from 'react-router-dom'
@@ -16,9 +16,15 @@ var columns1;
 var columns;
 
 
-const List = ({ analogDataKeys, analogDataList }) => {
+const List = ({ analogDataKeys, analogDataList, dispatch, listManualJudgeDTO, loading, tableName, exceptionDataLoading }) => {
   const handleDeleteClick = (record) => {
 
+  }
+  const download = () => {
+    dispatch({
+      type: 'manualJudge/downloadData',
+      payload: { listManualJudgeDTO: listManualJudgeDTO },
+    });
   }
 
 
@@ -111,18 +117,59 @@ const List = ({ analogDataKeys, analogDataList }) => {
 
   return (
     <div style={{ marginRight: '20px'}}>
-      <Button style={{ marginRight: '10px' }}>设为野点</Button>
-      <Button>下载</Button>
+      {/* <Button style={{ marginRight: '10px' }}>设为野点</Button> */}
+      <Button loading={loading} onClick={download}>下载</Button>
       <Table
-
+        loading={exceptionDataLoading}
         size="middle"
         pagination={false}
         // rowSelection={() => {}}
         bordered
         scroll={{  y: 700 }}
-        columns={analogDataKeys.map((item, index) => ({...item, width: '100', key: index }))}
+        columns={analogDataKeys.map((item, index) => ({...item, width: '100px', key: item.dataIndex, render:(text, row, index) => (
+          <Popconfirm
+            key={index+''+row.id}
+            title="是否设为野点"
+            onConfirm={
+              () => {
+                // console.log(text, row, index, item);
+                // console.log(item);
+                // console.log(
+                //   {
+                //     dataId: row.id,
+                //     data: text,
+                //     judgeParam: {
+                //       tableName,
+                //       [item.dataIndex]: item.title,
+                //     }
+                //   }
+                // )
+                dispatch({
+                  type: 'manualJudge/exceptionDataModel',
+                  payload: {
+                    dataId: row.id,
+                    data: text,
+                    judgeParam: {
+                      tableName,
+                      [item.dataIndex]: item.title,
+                    }
+                  }
+                });
+              }
+            }
+          >
+            <div>{text}</div>
+          </Popconfirm>
+        )}))}
         dataSource={analogDataList}
         simple
+        onRow={(record, index) => {
+          return {
+            onClick: (row) => {
+              console.log(record, row);
+            }
+          }
+        }}
       />
     </div>
   )
