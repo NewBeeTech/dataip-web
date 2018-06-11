@@ -151,7 +151,7 @@ const List = ({ analogDataKeys, analogDataList, dispatch, listManualJudgeDTO, lo
                     data: text,
                     judgeParam: {
                       tableName,
-                      [item.dataIndex]: item.title,
+                      paramCode: item.title,
                     }
                   }
                 });
