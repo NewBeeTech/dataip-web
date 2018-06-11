@@ -420,6 +420,14 @@ export default modelExtend(pageModel, {
         throw data
       }
     },
+    * setCurrentReportModel({ payload }, { call, put, select }) {
+      const data = yield call(setCurrentReportService, payload);
+      if (data.result === '0') {
+        message.success('设置成功');
+      } else {
+        throw data
+      }
+    },
     * chooseReport({ payload }, { call, put, select }) {
       const chooseReport = yield select(_ => _.manualJudge.chooseReport);
       const data = yield call(setCurrentReportService, {

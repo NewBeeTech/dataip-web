@@ -176,7 +176,21 @@ class ReportList extends React.Component {
               }}
             >
               编辑
+            </a> | <a
+              style={{color: '#1372d8'}}
+              onClick={(e) => {
+                e.preventDefault();
+                this.props.dispatch({
+                  type: 'reportBrowse/setCurrentReportModel',
+                  payload: {
+                    reportId: data.reportId,
+                  }
+                });
+              }}
+            >
+              设为当前报告
             </a>
+
           </div>
         ),
       });
@@ -272,7 +286,6 @@ class ReportList extends React.Component {
                 });
               }}>查询</Button>
               <Button style={{ marginLeft: '10px' }} type="primary" onClick={() => this.downLoadReport(this.props.reportBrowse.searchData.map(item => item.reportId))}>下载报告</Button>
-              <Button style={{ marginLeft: '10px' }} type="primary" onClick={(e) => this.setReport(e)}>设为当前报告</Button>
             </Col>
           </Row>
         </Form>
