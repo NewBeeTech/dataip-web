@@ -159,7 +159,7 @@ class DecideMustList extends React.Component {
           className=""
           onSubmit={this.handleSearch}
         >
-          <Row gutter={24}>
+          {/* <Row gutter={24}>
             <Col span={8}>
               <FormItem label="型号">
                 {getFieldDecorator('model', {
@@ -199,7 +199,7 @@ class DecideMustList extends React.Component {
                 )}
               </FormItem>
             </Col>
-          </Row>
+          </Row> */}
           <Row>
             <Col span={4} offset={20} style={{ textAlign: 'right' }}>
               <Button type="primary" htmlType="submit">查询</Button>
