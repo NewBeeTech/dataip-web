@@ -95,10 +95,16 @@ class ReportList extends React.Component {
       width: '100px'
     }];
   }
-  changeModalAction = (visible) => {
-    this.setState({
-      editVisible: visible
-    })
+  changeModalAction = (visible, reportId) => {
+    this.props.dispatch({
+      type: 'reportBrowse/updateState',
+      payload: {
+        showEditReport: visible,
+        editReport: {
+          reportId,
+        }
+      }
+    });
   }
   handleSearch = (e) => {
     e.preventDefault();
@@ -166,6 +172,7 @@ class ReportList extends React.Component {
                 //     reportId: data.reportId,
                 //   }
                 // });
+                this.changeModalAction(true, data.reportId);
               }}
             >
               编辑
@@ -277,11 +284,17 @@ class ReportList extends React.Component {
           pagination={false}
           bordered
         />
-        <EditReport
+        {this.props.reportBrowse.showEditReport&&<EditReport
+          editReport={this.props.reportBrowse.editReport}
           changeModalAction={(visible) => this.changeModalAction(visible)}
-          visible={this.state.editVisible}
+          visible={this.props.reportBrowse.showEditReport}
           editData={this.state.editData}
-        />
+          models={this.props.reportBrowse.models}
+          tasks={this.props.reportBrowse.tasks}
+          instances={this.props.reportBrowse.instances}
+          dispatch={this.props.dispatch}
+        />}
+
       </div>
     );
   }

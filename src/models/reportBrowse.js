@@ -67,7 +67,10 @@ export default modelExtend(pageModel, {
     currentReport: {
     },
     report: {
-    }
+    },
+    editReport: {
+    },
+    showEditReport: false,
   },
 
   reducers: {
@@ -100,6 +103,16 @@ export default modelExtend(pageModel, {
             ...state,
             report: {
                 ...state.report,
+                [name]: value
+            }
+        }
+    },
+    onChangeEditReport (state, { payload }) {
+        const {name, value} = payload;
+        return {
+            ...state,
+            editReport: {
+                ...state.editReport,
                 [name]: value
             }
         }
