@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { Table } from 'antd';
+import { Table, Button } from 'antd';
 import { push } from 'react-router-redux';
 
 const styles = require('./styles.css')
@@ -27,18 +27,18 @@ class Interpretation extends React.Component {
     super(props, context);
     this.columns = [{
       title: '序号',
-      dataIndex: 'no',
-      key: 'no',
+      dataIndex: 'instanceId',
+      key: 'instanceId',
       width: 50,
     }, {
       title: '试验名称',
-      dataIndex: 'roleName',
-      key: 'roleName',
+      dataIndex: 'instanceName',
+      key: 'instanceName',
       width: 100,
     }, {
       title: '试验时间',
-      dataIndex: 'time',
-      key: 'time',
+      dataIndex: 'testTime',
+      key: 'testTime',
       width: 100,
     }];
   }
@@ -48,9 +48,9 @@ class Interpretation extends React.Component {
     datas.forEach((data, index) => {
       dataSource.push({
         key: index,
-        no: 1,
-        roleName: '角色1',
-        time: 'time',
+        instanceId: data.instanceId,
+        instanceName: data.instanceName,
+        testTime: data.testTime,
       });
     });
     }
@@ -61,12 +61,17 @@ class Interpretation extends React.Component {
       <div>
         {/*  判读结果列表  */}
         <div className={styles.tableTitle}>
-           预加载数据
+           <Button>预加载数据</Button>
         </div>
         <Table
+          rowSelection={{
+            onChange: () => {
+
+            }
+          }}
           size="middle"
           columns={this.columns}
-          dataSource={this._renderDataSource(data)}
+          dataSource={this._renderDataSource(this.props.leftTable)}
           pagination={false}
           bordered
         />

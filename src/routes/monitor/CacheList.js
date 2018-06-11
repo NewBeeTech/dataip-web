@@ -27,8 +27,8 @@ class CacheList extends React.Component {
     super(props, context);
     this.columns = [{
       title: '序号',
-      dataIndex: 'no',
-      key: 'no',
+      dataIndex: 'instanceId',
+      key: 'instanceId',
       width: 50,
     }, {
       title: '任务',
@@ -62,6 +62,7 @@ class CacheList extends React.Component {
       dataSource.push({
         key: index,
         // no: 1,
+        instanceId: data.instanceId,
         taskName: data.taskName,
         instanceName: data.instanceName,
         testTime: data.testTime,

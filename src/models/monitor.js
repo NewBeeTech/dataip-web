@@ -10,8 +10,11 @@ import get from 'lodash/get'
 import {
   managerStatusService,
   ipControlService,
+} from 'services/monitor';
+import{
+  listInstanceByNameService,
+} from 'services/reportBrowse';
 
-} from 'services/monitor'
 
 import { config } from 'utils'
 
@@ -29,6 +32,7 @@ export default modelExtend(pageModel, {
     ipControl: null,
     serverStatusDTO: {},
     instanceCacheDTOList: [],
+    leftTable: [],
   },
 
   reducers: {
@@ -61,7 +65,7 @@ export default modelExtend(pageModel, {
     * managerStatusModel({payload}, {call, put}){
         const data = yield call(managerStatusService, payload);
         if(data.result == 0){
-          console.log(data);
+          // console.log(data);
           yield put({
             type: 'updateState',
             payload: {
@@ -79,6 +83,18 @@ export default modelExtend(pageModel, {
           yield put({
             type: 'managerStatusModel',
             payload: {},
+          });
+        }
+    },
+    * listInstanceByNameModel({payload}, {call, put}){
+        const data = yield call(listInstanceByNameService, payload);
+        if(data.result == 0){
+          console.log(data);
+          yield put({
+            type: 'updateState',
+            payload: {
+              leftTable: data.data,
+            },
           });
         }
     },

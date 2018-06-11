@@ -28,7 +28,7 @@ export default modelExtend(pageModel, {
   subscriptions: {
     setup ({ dispatch, history }) {
       history.listen((location) => {
-        if (location.pathname === '/trial/admin' || location.pathname === '/paramsBrowse') {
+        if (location.pathname === '/trial/admin' || location.pathname === '/paramsBrowse' || location.pathname === '/system/monitor') {
           const payload = location.query || { page: 1, pageSize: 10 }
           dispatch({
             type: 'queryTree',

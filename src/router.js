@@ -81,7 +81,7 @@ const Routers = function ({ history, app }) {
     }, {
       // 状态监控
       path: '/system/monitor',
-      models: () => [import('./models/monitor')],
+      models: () => [import('./models/monitor'), import('./models/user')],
       component: () => import('./routes/monitor'),
     }, {
       // 横向对比

@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'dva'
-import { Row, Col, Tabs, Button, Icon, Input, Tooltip, Modal, Checkbox, Table} from 'antd'
+import { Row, Col, Tabs, Button, Icon, Input, Tooltip, Modal, Checkbox, Table } from 'antd'
 import { routerRedux } from 'dva/router'
 import InputSelect from '@@/Inputselect'
 import CacheList from './CacheList'
@@ -9,6 +9,7 @@ import Interpretation from './Interpretation'
 // import { Pie } from 'ant-design-pro/lib/Charts';
 import { WaterWave } from 'ant-design-pro/lib/Charts';
 import 'ant-design-pro/dist/ant-design-pro.css';
+import Tree from '../user/Tree'
 
 const TabPane = Tabs.TabPane
 
@@ -57,21 +58,53 @@ class Index extends React.Component {
           {this.renderIpControl()}
         </div>
         <div className={styles.content}>
-           <div>第一块</div>
-           <Interpretation />
+           <div>
+             <Tree
+               listTask={this.props.user.listTask}
+               onSelect={(selectedKeys, info) => {
+                 console.log(selectedKeys, info);
+                 if (selectedKeys[0]) {
+                   this.props.dispatch({
+                     type: 'monitor/listInstanceByNameModel',
+                     payload: {
+                       taskName: selectedKeys[0],
+                     },
+                   })
+                 }
+                   // const { device } = info.node.props
+
+                   // console.log('selected', selectedKeys, device)
+
+                   // if (device && selectedKeys[0]) {
+                     // dispatch({
+                       // type: 'user/queryInstanceList',
+                       // payload: {
+                         // taskName: selectedKeys[0],
+                       // },
+                     // })
+                   // }
+                }}
+             />
+           </div>
+           <Interpretation leftTable={this.props.monitor.leftTable} />
            <CacheList instanceCacheDTOList={this.props.monitor.instanceCacheDTOList} />
            <div>
-             <WaterWave
-               height={161}
-               title="服务器内存占用状态"
-               percent={this.props.monitor.serverStatusDTO.memoryUnused}
-             />
+             {this.props.monitor.serverStatusDTO.memoryUnused&&
+               <WaterWave
+                 height={161}
+                 title="服务器内存占用状态"
+                 percent={this.props.monitor.serverStatusDTO.memoryUnused}
+               />
+             }
              <br />
-             <WaterWave
-               height={161}
-               title="服务器CPU占用状态"
-               percent={this.props.monitor.serverStatusDTO.cpuUsed}
-             />
+             {
+               this.props.monitor.serverStatusDTO.cpuUsed&&
+               <WaterWave
+                 height={161}
+                 title="服务器CPU占用状态"
+                 percent={this.props.monitor.serverStatusDTO.cpuUsed}
+               />
+             }
            </div>
         </div>
       </div>
@@ -93,4 +126,4 @@ Index.propTypes = {
   dispatch: PropTypes.func,
 }
 
-export default connect(({ monitor, loading }) => ({ monitor, loading }))(Index)
+export default connect(({ monitor, loading, user }) => ({ monitor, loading, user }))(Index)
