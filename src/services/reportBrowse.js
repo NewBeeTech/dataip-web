@@ -9,6 +9,7 @@ const {
   checkReportAPI,
   auditReportAPI,
   approveReportAPI,
+  updateReportAPI,
 } = api;
 
 // 通过型号查询任务下所有的报告
@@ -60,6 +61,14 @@ export async function auditReportService(params) {
 export async function approveReportService(params) {
   return request({
     url: approveReportAPI,
+    method: 'post',
+    data: params,
+  });
+}
+
+export async function updateReportService(params) {
+  return request({
+    url: updateReportAPI,
     method: 'post',
     data: params,
   });

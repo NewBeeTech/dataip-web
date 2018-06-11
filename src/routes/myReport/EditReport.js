@@ -24,6 +24,14 @@ export default (props) => {
           }
       })
   }
+  function editReport() {
+    props.dispatch({
+        type: 'reportBrowse/updateReportModel',
+        payload: {
+           ...props.editReport,
+        }
+    })
+  }
   return (<div>
     <Modal
         visible={props.visible}
@@ -42,7 +50,7 @@ export default (props) => {
                     showEditReport: false,
                   }
                 })}>取消</Button>
-                <Button onClick={props.createReport} type='primary' style={{marginLeft:10}}>确定</Button>
+                <Button onClick={editReport} type='primary' style={{marginLeft:10}}>确定</Button>
             </div>
         }
     >

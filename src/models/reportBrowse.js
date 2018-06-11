@@ -26,6 +26,7 @@ import{
   checkReportService,
   auditReportService,
   approveReportService,
+  updateReportService,
 } from 'services/reportBrowse';
 import { config } from 'utils'
 const { APIV3 } = config;
@@ -487,6 +488,24 @@ export default modelExtend(pageModel, {
       const data = yield call(approveReportService, payload);
       if (data.result === '0') {
         message.success(data.data);
+        yield put({
+          type: 'searchModel',
+        });
+      } else {
+        throw data
+      }
+    },
+    *updateReportModel({ payload }, { call, put, select }) {
+      const data = yield call(updateReportService, payload);
+      if (data.result === '0') {
+        message.success(data.data);
+        yield put({
+          type: 'setState',
+          payload: {
+            editReport: {},
+            showEditReport: false,
+          }
+        });
         yield put({
           type: 'searchModel',
         });

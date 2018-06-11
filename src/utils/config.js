@@ -18,6 +18,7 @@ module.exports = {
   APIV2,
   APIV3,
   api: {
+    updateReportAPI: `${APIV3}/report/update`, // 创建报告
     exceptionDataAPI: `${APIV3}/manual/judge/exceptionData`, // 设为野点
     checkReportAPI: `${APIV3}/report/check`, // 校对报告
     auditReportAPI: `${APIV3}/report/audit`, // 审核报告
