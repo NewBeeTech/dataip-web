@@ -7,7 +7,11 @@ import get from 'lodash/get'
 //   saveJudgeResult,
 //   queryChartLine,
 // } from 'services/manualJudge'
-import {  managerStatusService } from 'services/monitor'
+import {
+  managerStatusService,
+  ipControlService,
+
+} from 'services/monitor'
 
 import { config } from 'utils'
 
@@ -22,7 +26,9 @@ const getRandomColor = () => {
 export default modelExtend(pageModel, {
   namespace: 'monitor',
   state: {
+    ipControl: null,
     serverStatusDTO: {},
+    instanceCacheDTOList: [],
   },
 
   reducers: {
@@ -53,7 +59,6 @@ export default modelExtend(pageModel, {
 
   effects: {
     * managerStatusModel({payload}, {call, put}){
-
         const data = yield call(managerStatusService, payload);
         if(data.result == 0){
           console.log(data);
@@ -61,7 +66,19 @@ export default modelExtend(pageModel, {
             type: 'updateState',
             payload: {
               serverStatusDTO: data.data.serverStatusDTO,
+              ipControl: data.data.ipControl,
+              instanceCacheDTOList: data.data.instanceCacheDTOList || [],
             }
+          });
+        }
+    },
+    * ipControlModel({payload}, {call, put}){
+        const data = yield call(ipControlService, payload);
+        if(data.result == 0){
+          message.success(data.data);
+          yield put({
+            type: 'managerStatusModel',
+            payload: {},
           });
         }
     },

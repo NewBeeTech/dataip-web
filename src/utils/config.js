@@ -18,6 +18,7 @@ module.exports = {
   APIV2,
   APIV3,
   api: {
+    ipControlAPI: `${APIV3}/manager/ipControl`, // 启用/禁用判读
     managerStatusAPI: `${APIV3}/manager/status`, // 获取服务器端的状态
     updateReportAPI: `${APIV3}/report/update`, // 创建报告
     exceptionDataAPI: `${APIV3}/manual/judge/exceptionData`, // 设为野点

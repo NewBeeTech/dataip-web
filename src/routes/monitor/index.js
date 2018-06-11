@@ -25,25 +25,55 @@ class Index extends React.Component {
       });
     }, 2000);
   }
-
+  ipControl = (ipControl) => {
+    this.props.dispatch({
+      type: 'monitor/ipControlModel',
+      payload: {
+        ipControl,
+      }
+    });
+  }
+  renderIpControl() {
+    if (this.props.monitor.ipControl == 1) {
+      return (
+        <div style={{ paddingTop: '20px'}}>
+          <span style={{ marginRight: '10px' }}>当前状态：已启用判读</span>
+          <Button onClick={() => this.ipControl(0)} type="danger">禁用</Button>
+        </div>
+      );
+    } else if (this.props.monitor.ipControl == 0) {
+      return (
+        <div style={{ paddingTop: '20px'}}>
+          <span style={{ marginRight: '10px' }}>当前状态：已禁用判读</span>
+          <Button onClick={() => this.ipControl(1)} type="primary">启用</Button>
+        </div>
+      );
+    }
+  }
   render() {
     return (
-      <div className={styles.content}>
-         <div>第一块</div>
-         <Interpretation />
-         <CacheList />
-         <div>
-           <WaterWave
-             height={161}
-             title="服务器内存占用状态"
-             percent={this.props.monitor.serverStatusDTO.memoryUnused}
-           />
-           <WaterWave
-             height={161}
-             title="服务器CPU占用状态"
-             percent={this.props.monitor.serverStatusDTO.cpuUsed}
-           />
-         </div>
+      <div>
+        <div>
+          {this.renderIpControl()}
+        </div>
+        <div className={styles.content}>
+           <div>第一块</div>
+           <Interpretation />
+           <CacheList />
+           <div>
+             <WaterWave
+               height={161}
+               title="服务器内存占用状态"
+               percent={this.props.monitor.serverStatusDTO.memoryUnused}
+             />
+             <br />
+             <WaterWave
+               height={161}
+               title="服务器CPU占用状态"
+               percent={this.props.monitor.serverStatusDTO.cpuUsed}
+             />
+           </div>
+        </div>
       </div>
     );
   }
