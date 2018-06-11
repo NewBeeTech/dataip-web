@@ -212,6 +212,11 @@ let database = [
     icon: '',
     name: '横向对比',
     route: '/crossComparison',
+  }, {
+    id: '14',
+    icon: '',
+    name: '监控状态',
+    route: '/system/monitor',
   }
 ]
 

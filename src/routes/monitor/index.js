@@ -6,22 +6,53 @@ import { routerRedux } from 'dva/router'
 import InputSelect from '@@/Inputselect'
 import CacheList from './CacheList'
 import Interpretation from './Interpretation'
+// import { Pie } from 'ant-design-pro/lib/Charts';
+import { WaterWave } from 'ant-design-pro/lib/Charts';
+import 'ant-design-pro/dist/ant-design-pro.css';
 
 const TabPane = Tabs.TabPane
 
 const styles = require('./styles.css')
 
+class Index extends React.Component {
+  timer = null;
+  componentWillMount() {
+    const that = this;
+    this.timer = setInterval(function () {
+      that.props.dispatch({
+        type: 'monitor/managerStatusModel',
+        payload: {},
+      });
+    }, 2000);
+  }
 
-const Index = ({ user, paramsBrowse, dispatch, loading, location, paramsManage }) => {
-  return (
-    <div className={styles.content}>
-       <div>第一块</div>
-       <Interpretation />
-       <CacheList />
-       <div>第四块</div>
-    </div>
-  )
+  render() {
+    return (
+      <div className={styles.content}>
+         <div>第一块</div>
+         <Interpretation />
+         <CacheList />
+         <div>
+           <WaterWave
+             height={161}
+             title="服务器内存占用状态"
+             percent={this.props.monitor.serverStatusDTO.memoryUnused}
+           />
+           <WaterWave
+             height={161}
+             title="服务器CPU占用状态"
+             percent={this.props.monitor.serverStatusDTO.cpuUsed}
+           />
+         </div>
+      </div>
+    );
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timer);
+  }
 }
+
 
 Index.propTypes = {
   user: PropTypes.object,
@@ -32,4 +63,4 @@ Index.propTypes = {
   dispatch: PropTypes.func,
 }
 
-export default connect(({ user, paramsBrowse, loading, paramsManage }) => ({ user, paramsBrowse, loading, paramsManage }))(Index)
+export default connect(({ monitor, loading }) => ({ monitor, loading }))(Index)

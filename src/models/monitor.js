@@ -7,7 +7,7 @@ import get from 'lodash/get'
 //   saveJudgeResult,
 //   queryChartLine,
 // } from 'services/manualJudge'
-import {  getModels } from 'services/paramsBrowse'
+import {  managerStatusService } from 'services/monitor'
 
 import { config } from 'utils'
 
@@ -20,20 +20,9 @@ const getRandomColor = () => {
 }
 
 export default modelExtend(pageModel, {
-  namespace: 'paramsManage',
+  namespace: 'monitor',
   state: {
-    models: [],  // 型号下拉列表数据
-    selectedRowKeys: [],
-    list: [],
-    lineLoading: false,
-    colorArray: [],
-    lineChartData: [],
-    lineKeys: [],
-    YAxisMin: 0,
-    YAxisMax: 0,
-    paramsForm: { // 保存为参数组数据
-        modelName: ''
-    }
+    serverStatusDTO: {},
   },
 
   reducers: {
@@ -56,19 +45,26 @@ export default modelExtend(pageModel, {
     setup ({ dispatch, history }) {
       history.listen((location) => {
         // todo 这里切换时不要再次请求
-        if (location.pathname === '/paramsManage') {
-          // dispatch({ type: 'queryIndex',
-          //   payload: { },
-          // })
-          dispatch({ type: 'getModels',
-            payload: { },
-          });
+        if (location.pathname === '/system/monitor') {
         }
       })
     },
   },
 
   effects: {
+    * managerStatusModel({payload}, {call, put}){
+
+        const data = yield call(managerStatusService, payload);
+        if(data.result == 0){
+          console.log(data);
+          yield put({
+            type: 'updateState',
+            payload: {
+              serverStatusDTO: data.data.serverStatusDTO,
+            }
+          });
+        }
+    },
     // 获取型号下拉列表
     * getModels({payload}, {call, put}){
 
