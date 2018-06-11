@@ -10,3 +10,38 @@
 .editTree {
   width: 200px;
 }
+
+.content {
+  display: flex;
+  background-color: #fff;
+  min-height: 85vh;
+  padding: 20px;
+  justify-content: space-around;
+}
+
+/* 用户列表 */
+.tableTitle {
+  margin: 10px;
+}
+
+.ant-advanced-search-form {
+  padding: 24px;
+  background: #fbfbfb;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+}
+
+.ant-advanced-search-form .ant-form-item {
+  display: flex;
+}
+.selectItem {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.topSelect {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin-bottom: 20px;
+}

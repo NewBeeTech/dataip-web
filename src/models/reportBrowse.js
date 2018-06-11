@@ -109,7 +109,7 @@ export default modelExtend(pageModel, {
   subscriptions: {
     setup ({ dispatch, history }) {
       history.listen((location) => {
-        if (location.pathname === '/report/list') {
+        if (location.pathname === '/report/list' || location.pathname === '/report/mine') {
           // 清空表格line chart 数据
           dispatch({ type: 'setState',
             payload: {

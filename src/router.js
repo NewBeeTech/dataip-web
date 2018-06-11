@@ -56,7 +56,7 @@ const Routers = function ({ history, app }) {
     }, {
       // 报告管理-我的报告
       path: '/report/mine',
-      models: () => [import('./models/myReport')],
+      models: () => [import('./models/reportBrowse')],
       component: () => import('./routes/myReport'),
     }, {
       // 判读 数据查看
