@@ -59,7 +59,7 @@ class Index extends React.Component {
         <div className={styles.content}>
            <div>第一块</div>
            <Interpretation />
-           <CacheList />
+           <CacheList instanceCacheDTOList={this.props.monitor.instanceCacheDTOList} />
            <div>
              <WaterWave
                height={161}

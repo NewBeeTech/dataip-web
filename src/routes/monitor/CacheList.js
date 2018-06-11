@@ -32,23 +32,23 @@ class CacheList extends React.Component {
       width: 50,
     }, {
       title: '任务',
-      dataIndex: 'operation',
-      key: 'operation',
+      dataIndex: 'taskName',
+      key: 'taskName',
       width: 100,
     }, {
       title: '试验名称',
-      dataIndex: 'roleName',
-      key: 'roleName',
+      dataIndex: 'instanceName',
+      key: 'instanceName',
       width: 100,
     }, {
       title: '试验时间',
-      dataIndex: 'time',
-      key: 'time',
+      dataIndex: 'testTime',
+      key: 'testTime',
       width: 100,
     }, {
       title: '缓存状态',
-      dataIndex: 'state',
-      key: 'state',
+      dataIndex: 'status',
+      key: 'status',
       width: 100,
     }];
     this.state = {
@@ -61,11 +61,11 @@ class CacheList extends React.Component {
     datas.forEach((data, index) => {
       dataSource.push({
         key: index,
-        no: 1,
-        roleName: '角色1',
-        operation: '角色1',
-        time: 'time',
-        state: 'state'
+        // no: 1,
+        taskName: data.taskName,
+        instanceName: data.instanceName,
+        testTime: data.testTime,
+        status: data.status,
       });
     });
     }
@@ -81,7 +81,7 @@ class CacheList extends React.Component {
         <Table
           size="middle"
           columns={this.columns}
-          dataSource={this._renderDataSource(data)}
+          dataSource={this._renderDataSource(this.props.instanceCacheDTOList)}
           pagination={false}
           bordered
         />
