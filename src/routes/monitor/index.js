@@ -7,7 +7,7 @@ import InputSelect from '@@/Inputselect'
 import CacheList from './CacheList'
 import Interpretation from './Interpretation'
 // import { Pie } from 'ant-design-pro/lib/Charts';
-import { WaterWave } from 'ant-design-pro/lib/Charts';
+// import { WaterWave } from 'ant-design-pro/lib/Charts';
 import 'ant-design-pro/dist/ant-design-pro.css';
 import Tree from '../user/Tree'
 
@@ -88,7 +88,7 @@ class Index extends React.Component {
            </div>
            <Interpretation leftTable={this.props.monitor.leftTable} />
            <CacheList instanceCacheDTOList={this.props.monitor.instanceCacheDTOList} />
-           <div>
+           {/* <div>
              {this.props.monitor.serverStatusDTO.memoryUnused&&
                <WaterWave
                  height={161}
@@ -105,7 +105,7 @@ class Index extends React.Component {
                  percent={this.props.monitor.serverStatusDTO.cpuUsed}
                />
              }
-           </div>
+           </div> */}
         </div>
       </div>
     );
