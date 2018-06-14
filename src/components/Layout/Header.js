@@ -35,7 +35,7 @@ const Header = ({ user, logout, switchSider, siderFold, isNavbar, menuPopoverVis
         </div>}
       <div className={styles.rightWarpper}>
         <div className={styles.button}>
-          <Icon type="mail" />
+          {/* <Icon type="mail" /> */}
         </div>
         <Menu mode="horizontal" onClick={handleClickMenu}>
           <SubMenu
