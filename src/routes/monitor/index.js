@@ -8,7 +8,7 @@ import CacheList from './CacheList'
 import Interpretation from './Interpretation'
 // import { Pie } from 'ant-design-pro/lib/Charts';
 // import { WaterWave } from 'ant-design-pro/lib/Charts';
-import 'ant-design-pro/dist/ant-design-pro.css';
+// import 'ant-design-pro/dist/ant-design-pro.css';
 import Tree from '../user/Tree'
 
 const TabPane = Tabs.TabPane
