@@ -36,7 +36,7 @@ const List = ({ ...tableProps }) => {
         }}
         {...tableProps}
         bordered
-        scroll={{ x: 1200 }}
+        scroll={{ x: 1200, y: 300 }}
         columns={columns}
         simple
         className={styles.table}
