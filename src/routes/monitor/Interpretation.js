@@ -58,7 +58,7 @@ class Interpretation extends React.Component {
   }
   render() {
     return (
-      <div>
+      <div style={{marginRight: '10px'}}>
         {/*  判读结果列表  */}
         <div className={styles.tableTitle}>
            <Button>预加载数据</Button>

@@ -43,7 +43,7 @@ const Line = ({ manualJudge, ...prevProps }) => {
           end,
         }
       });
-      dispatch({
+      prevProps.dispatch({
         type: 'manualJudge/updateState',
         payload: {
           listManualJudgeDTO: selectedDto,

@@ -74,7 +74,7 @@ class CacheList extends React.Component {
   }
   render() {
     return (
-      <div>
+      <div style={{ marginRight: '10px' }}>
         {/*  角色列表  */}
         <div className={styles.tableTitle}>
            <div>缓存试验列表</div>

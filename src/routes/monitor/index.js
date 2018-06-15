@@ -96,7 +96,7 @@ class Index extends React.Component {
           {this.renderIpControl()}
         </div>
         <div className={styles.content}>
-           <div>
+           <div style={{ marginRight: '10px' }}>
              <Tree
                listTask={this.props.user.listTask}
                onSelect={(selectedKeys, info) => {
