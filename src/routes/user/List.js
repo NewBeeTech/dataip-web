@@ -95,9 +95,10 @@ const List = ({ onDeleteItem, onEditItem, onEditFlyItem, isMotion, location, ...
         size="middle"
         className={classnames({ [styles.table]: true, [styles.motion]: isMotion })}
         bordered
-        scroll={{ x: 1250 }}
+        scroll={{ x: 1250, y: 700 }}
         columns={columns}
         simple
+        pagination={false}
         getBodyWrapper={getBodyWrapper}
       />
     </div>
