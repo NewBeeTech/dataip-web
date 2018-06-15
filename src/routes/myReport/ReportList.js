@@ -239,7 +239,7 @@ class ReportList extends React.Component {
         }
     }
     return (
-      <div>
+      <div style={{ width: '100%' }}>
         {/*  用户列表  */}
         <div className={styles.tableTitle}>
         <Form
@@ -275,19 +275,15 @@ class ReportList extends React.Component {
                >
                </InputSelect>
             </div>
+            <Button type="primary" onClick={() => {
+              this.props.dispatch({
+                type: 'reportBrowse/searchModel',
+                payload: {
+                }
+              });
+            }}>查询</Button>
+            <Button style={{ marginLeft: '10px' }} type="primary" onClick={() => this.downLoadReport(this.props.reportBrowse.searchData.map(item => item.reportId))}>下载报告</Button>
           </div>
-          <Row>
-            <Col span={24} style={{ textAlign: 'right' }}>
-              <Button type="primary" onClick={() => {
-                this.props.dispatch({
-                  type: 'reportBrowse/searchModel',
-                  payload: {
-                  }
-                });
-              }}>查询</Button>
-              <Button style={{ marginLeft: '10px' }} type="primary" onClick={() => this.downLoadReport(this.props.reportBrowse.searchData.map(item => item.reportId))}>下载报告</Button>
-            </Col>
-          </Row>
         </Form>
         </div>
         <Table

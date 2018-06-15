@@ -219,7 +219,7 @@ class ReportList extends React.Component {
         }
     }
     return (
-      <div>
+      <div style={{ width: '100%'}}>
         {/*  用户列表  */}
         <div className={styles.tableTitle}>
         <Form
