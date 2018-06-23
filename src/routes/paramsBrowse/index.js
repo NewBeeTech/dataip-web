@@ -105,9 +105,9 @@ const Index = ({ user, paramsBrowse, dispatch, loading, location }) => {
   return (<div className="content-inner">
     <Row>
       <Col span={3} className={styles.leftTree}>
-        <p>自定义参数组</p>
+        <p className={styles.leftTreeHeader}>自定义参数组</p>
         <Tree {...customTreeProps} />
-        <p>默认参数组</p>
+        <p className={styles.leftTreeHeader}>默认参数组</p>
         <Tree {...treeProps} />
       </Col>
       <Col span={21}>
@@ -130,7 +130,7 @@ const Index = ({ user, paramsBrowse, dispatch, loading, location }) => {
         </Row>
 
 
-        <Row style={{ marginLeft: '10px'}}>
+        <Row style={{ marginLeft: '10px'}} className={styles.rightCard}>
           <Col span={24}>
             <CustomTransfer {...paramsBrowse} {...transferProps} downloadLoading={loading.effects['paramsBrowse/downloadFiles1Model']} />
           </Col>

@@ -169,8 +169,8 @@ class ChartComponent extends React.Component {
           <Col id="line" xs={20} sm={20} md={22} lg={23} id="chartContainer">
             <Spin spinning={lineLoading}>
               <LineChart
-                margin={{ top: 15, right: 5, bottom: 5, left: 10 }}
-                width={containerWidth - 200} // legend width
+                margin={{ top: 15, right: 0, bottom: 5, left: 10 }}
+                width={containerWidth - 350} // legend width
                 height={520}
                 data={lineChartData}
                 onMouseDown={(e) => e && this.setState({ refAreaLeft:e.activeLabel }) }

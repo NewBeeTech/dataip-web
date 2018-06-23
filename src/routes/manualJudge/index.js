@@ -12,6 +12,7 @@ import Line from './Line'
 import HasReportModal from './HasReportModal';
 import CreateReportModal from './CreateReportModal';
 import ChooseReportModal from './ChooseReportModal'
+import styles from './styles.less';
 
 class ManualJudgePage extends React.Component {
   constructor (props) {
@@ -131,7 +132,9 @@ class ManualJudgePage extends React.Component {
           paramsBrowse.judgeList.length ?
             <div>
               <List {...listProps} />
-              <Line {...lineProps} />
+              <div className={styles.lineCard}>
+                <Line {...lineProps} />
+              </div>
             </div> :
             <div>暂无数据</div>
         }
