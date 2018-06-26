@@ -37,12 +37,12 @@ const Routers = function ({ history, app }) {
       models: () => [import('./models/paramsBrowse'), import('./models/manualJudge')],
       component: () => import('./routes/manualJudge/'),
     },
-    // {
+    {
       // 判读结果管理-判读结果统计
-      // path: '/statisticsResult',
-      // models: () => [import('./models/reportBrowse')],
-      // component: () => import('./routes/reportBrowse'),
-    // },
+      path: '/statisticsResult',
+      models: () => [import('./models/reportBrowse')],
+      component: () => import('./routes/statisticsResult'),
+    },
     {
       // 判读结果管理-必判参数统计
       path: '/forcedResult',
