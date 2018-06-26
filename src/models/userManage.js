@@ -9,6 +9,10 @@ import get from 'lodash/get'
 // } from 'services/manualJudge'
 import {  getModels } from 'services/paramsBrowse'
 
+import {
+  userListService
+} from 'services/user'
+
 import { config } from 'utils'
 
 import { pageModel } from 'models/common'
@@ -20,8 +24,9 @@ const getRandomColor = () => {
 }
 
 export default modelExtend(pageModel, {
-  namespace: 'paramsManage',
+  namespace: 'userManage',
   state: {
+    userList: [],
     models: [],  // 型号下拉列表数据
     selectedRowKeys: [],
     list: [],
@@ -56,11 +61,8 @@ export default modelExtend(pageModel, {
     setup ({ dispatch, history }) {
       history.listen((location) => {
         // todo 这里切换时不要再次请求
-        if (location.pathname === '/paramsManage') {
-          // dispatch({ type: 'queryIndex',
-          //   payload: { },
-          // })
-          dispatch({ type: 'getModels',
+        if (location.pathname === '/system/userManage') {
+          dispatch({ type: 'userListModel',
             payload: { },
           });
         }
@@ -69,6 +71,18 @@ export default modelExtend(pageModel, {
   },
 
   effects: {
+    * userListModel({ payload }, { call, put }) {
+      const data = yield call(userListService);
+      console.warn(data);
+      if (data.result === 0) {
+        yield put({
+          type: 'updateState',
+          payload: {
+            userList: data.data,
+          }
+        });
+      }
+    },
     // 获取型号下拉列表
     * getModels({payload}, {call, put}){
 

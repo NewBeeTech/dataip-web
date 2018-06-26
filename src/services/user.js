@@ -1,7 +1,21 @@
 import { request, config } from 'utils'
 
 const { api } = config
-const { user, listInstance, instanceUpdate, instanceDelete } = api
+const {
+  user,
+  listInstance,
+  instanceUpdate,
+  instanceDelete,
+  userListAPI,
+} = api
+
+export async function userListService(params) {
+  return request({
+    url: userListAPI,
+    method: 'POST',
+    data: params,
+  });
+}
 
 export async function query (params) {
   return request({
