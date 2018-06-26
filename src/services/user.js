@@ -7,7 +7,16 @@ const {
   instanceUpdate,
   instanceDelete,
   userListAPI,
+  roleListAPI,
 } = api
+
+export async function roleListService(params) {
+  return request({
+    url: roleListAPI,
+    method: 'POST',
+    data: params,
+  });
+}
 
 export async function userListService(params) {
   return request({

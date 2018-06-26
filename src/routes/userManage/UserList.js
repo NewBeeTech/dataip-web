@@ -39,11 +39,6 @@ class UserList extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.columns = [{
-      title: '序号',
-      dataIndex: 'no',
-      key: 'no',
-      width: '100px'
-    }, {
       title: '操作',
       dataIndex: 'operation',
       key: 'operation',
@@ -65,11 +60,6 @@ class UserList extends React.Component {
       width: '100px'
     }];
     this.roleColumns = [{
-      title: '序号',
-      dataIndex: 'no',
-      key: 'no',
-      width: '100px'
-    }, {
       title: '角色名称',
       dataIndex: 'roleName',
       key: 'roleName',
@@ -84,12 +74,12 @@ class UserList extends React.Component {
     const dataSource = [];
     if(datas) {
     datas.forEach((data, index) => {
+      console.log('data: ', data);
       dataSource.push({
         key: index,
-        no: 1,
-        userName: 'haha',
-        name: '丽姬',
-        role: '角色1',
+        userName: data.username,
+        name: data.trueName,
+        role: '',
         operation: (
           <div>
             <a
@@ -155,7 +145,7 @@ class UserList extends React.Component {
         <Table
           size="middle"
           columns={this.columns}
-          dataSource={this._renderDataSource(data)}
+          dataSource={this._renderDataSource(this.props.userList)}
           pagination={false}
           bordered
         />

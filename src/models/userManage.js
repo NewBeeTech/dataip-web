@@ -10,7 +10,8 @@ import get from 'lodash/get'
 import {  getModels } from 'services/paramsBrowse'
 
 import {
-  userListService
+  userListService,
+  roleListService,
 } from 'services/user'
 
 import { config } from 'utils'
@@ -27,6 +28,7 @@ export default modelExtend(pageModel, {
   namespace: 'userManage',
   state: {
     userList: [],
+    roleList: [],
     models: [],  // 型号下拉列表数据
     selectedRowKeys: [],
     list: [],
@@ -65,16 +67,30 @@ export default modelExtend(pageModel, {
           dispatch({ type: 'userListModel',
             payload: { },
           });
+          dispatch({ type: 'roleListModel',
+            payload: { },
+          });
         }
       })
     },
   },
 
   effects: {
+    * roleListModel({ payload }, { call, put }) {
+      const data = yield call(roleListService);
+      if (data.result == 0) {
+        yield put({
+          type: 'updateState',
+          payload: {
+            roleList: data.data,
+          }
+        });
+      }
+    },
     * userListModel({ payload }, { call, put }) {
       const data = yield call(userListService);
       console.warn(data);
-      if (data.result === 0) {
+      if (data.result == 0) {
         yield put({
           type: 'updateState',
           payload: {

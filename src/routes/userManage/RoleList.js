@@ -54,8 +54,8 @@ class RoleList extends React.Component {
     datas.forEach((data, index) => {
       dataSource.push({
         key: index,
-        no: 1,
-        roleName: '角色1',
+        no: data.roleId,
+        roleName: data.roleName,
         operation: (
           <div>
             <a
@@ -96,7 +96,7 @@ class RoleList extends React.Component {
         <Table
           size="middle"
           columns={this.columns}
-          dataSource={this._renderDataSource(data)}
+          dataSource={this._renderDataSource(this.props.roleList)}
           pagination={false}
           bordered
         />

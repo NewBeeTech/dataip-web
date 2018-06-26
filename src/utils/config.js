@@ -18,6 +18,7 @@ module.exports = {
   APIV2,
   APIV3,
   api: {
+    roleListAPI: `${APIV3}/role/list`, // 查询所有角色信息
     userListAPI: `${APIV3}/user/list`, // 查询所有用户信息
     ipControlAPI: `${APIV3}/manager/ipControl`, // 启用/禁用判读
     managerStatusAPI: `${APIV3}/manager/status`, // 获取服务器端的状态
