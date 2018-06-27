@@ -8,22 +8,6 @@ const { TextArea } = Input;
 const FormItem = Form.Item;
 const TreeNode = Tree.TreeNode;
 
-const data = [{
-  key: '1',
-  name: 'John Brown',
-  age: 32,
-  address: 'New York No. 1 Lake Park',
-}, {
-  key: '2',
-  name: 'Jim Green',
-  age: 42,
-  address: 'London No. 1 Lake Park',
-}, {
-  key: '3',
-  name: 'Joe Black',
-  age: 32,
-  address: 'Sidney No. 1 Lake Park',
-}];
 
 class RoleList extends React.Component {
   constructor(props, context) {
@@ -50,36 +34,65 @@ class RoleList extends React.Component {
   }
   _renderDataSource(datas) {
     const dataSource = [];
-    if(datas) {
-    datas.forEach((data, index) => {
-      dataSource.push({
-        key: index,
-        no: data.roleId,
-        roleName: data.roleName,
-        operation: (
-          <div>
-            <a
-              style={{color: '#1372d8'}}
-              onClick={(e) => {
-                e.preventDefault();
-                this.setState({ visible: true })
-              }}
-            >
-              编辑
+    if (datas) {
+      datas.forEach((data, index) => {
+        dataSource.push({
+          key: index,
+          no: data.roleId,
+          roleName: data.roleName,
+          operation: (
+            <div>
+              <a
+                style={{ color: '#1372d8' }}
+                onClick={(e) => {
+                  e.preventDefault();
+                  this.setState({ visible: true })
+                }}
+              >
+                编辑
             </a> | <a
-              style={{color: '#1372d8'}}
-              onClick={(e) => {
-                e.preventDefault();
-              }}
-            >
-              删除
+                style={{ color: '#1372d8' }}
+                onClick={(e) => {
+                  e.preventDefault();
+                }}
+              >
+                删除
             </a>
-          </div>
-        ),
+            </div>
+          ),
+        });
       });
-    });
     }
     return dataSource;
+  }
+  renderRightTree() {
+    const rightsList = this.props.rightsList;
+    const treeNode = rightsList.map(rights => {
+      const subRightsList = rights.children;
+      const subTreeNode = subRightsList.map(right => {
+        return (
+          <TreeNode title={right.function} key={right.function}>
+          </TreeNode> 
+        )
+      })
+      return (
+        <TreeNode title={rights.function} key={rights.function}>
+          {subTreeNode}
+        </TreeNode>
+      )
+    });
+    return (
+      <Tree
+        checkable
+        defaultExpandedKeys={['0-0-0', '0-0-1']}
+        defaultSelectedKeys={['0-0-0', '0-0-1']}
+        defaultCheckedKeys={['0-0-0', '0-0-1']}
+        onSelect={this.onSelect}
+        onCheck={this.onCheck}
+      >
+        {treeNode}
+      </Tree>
+    )
   }
   render() {
     const formItemLayout = {
@@ -90,8 +103,8 @@ class RoleList extends React.Component {
       <div>
         {/*  角色列表  */}
         <div className={styles.tableTitle}>
-           <div>角色列表</div>
-           <Button type="primary" onClick={() => { this.setState({ visible: true })}}>新增角色</Button>
+          <div>角色列表</div>
+          <Button type="primary" onClick={() => { this.setState({ visible: true }) }}>新增角色</Button>
         </div>
         <Table
           size="middle"
@@ -105,47 +118,39 @@ class RoleList extends React.Component {
         <Modal
           title="角色编辑"
           visible={this.state.visible}
-          onOk={() => {}}
-          onCancel={() => { this.setState({ visible: false })}}
+          onOk={() => { }}
+          onCancel={() => { this.setState({ visible: false }) }}
           okText="确认"
           cancelText="取消"
           width="600"
         >
-        <Form
+          <Form
             horizontal
             className="advanced-search-form"
           >
-                <FormItem
-                  label="角色名称"
-                  {...formItemLayout}
-                >
-                  <Input
-                    placeholder="角色名称"
-                  />
-               </FormItem>
-               <FormItem
-                 label="权限列表"
-                 {...formItemLayout}
-               >
-                 <Tree
-                    checkable
-                    defaultExpandedKeys={['0-0-0', '0-0-1']}
-                    defaultSelectedKeys={['0-0-0', '0-0-1']}
-                    defaultCheckedKeys={['0-0-0', '0-0-1']}
-                    onSelect={this.onSelect}
-                    onCheck={this.onCheck}
-                  >
-                    <TreeNode title="parent 1" key="0-0">
-                      <TreeNode title="parent 1-0" key="0-0-0">
-                        <TreeNode title="leaf" key="0-0-0-0" />
-                        <TreeNode title="leaf" key="0-0-0-1" />
-                      </TreeNode>
-                      <TreeNode title="parent 1-1" key="0-0-1">
-                        <TreeNode title={<span style={{ color: '#1890ff' }}>sss</span>} key="0-0-1-0" />
-                      </TreeNode>
-                    </TreeNode>
-                  </Tree>
-                </FormItem>
+            <FormItem
+              label="角色名称"
+              {...formItemLayout}
+            >
+              <Input
+                placeholder="角色名称"
+              />
+            </FormItem>
+            <FormItem
+              label="权限列表"
+              {...formItemLayout}
+            >
+              <Tree
+                checkable
+                defaultExpandedKeys={['0-0-0', '0-0-1']}
+                defaultSelectedKeys={['0-0-0', '0-0-1']}
+                defaultCheckedKeys={['0-0-0', '0-0-1']}
+                onSelect={this.onSelect}
+                onCheck={this.onCheck}
+              >
+                {this.renderRightTree()}
+              </Tree>
+            </FormItem>
           </Form>
         </Modal>
       </div>

@@ -18,6 +18,7 @@ module.exports = {
   APIV2,
   APIV3,
   api: {
+    getRightsAPI: `${APIV3}/role/getRights`, // 查询所有权限
     roleListAPI: `${APIV3}/role/list`, // 查询所有角色信息
     userListAPI: `${APIV3}/user/list`, // 查询所有用户信息
     ipControlAPI: `${APIV3}/manager/ipControl`, // 启用/禁用判读

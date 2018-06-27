@@ -8,7 +8,16 @@ const {
   instanceDelete,
   userListAPI,
   roleListAPI,
+  getRightsAPI,
 } = api
+
+export async function getRightsService(params) {
+  return request({
+    url: getRightsAPI,
+    method: 'POST',
+    data: params,
+  });
+}
 
 export async function roleListService(params) {
   return request({

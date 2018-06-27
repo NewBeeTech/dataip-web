@@ -16,7 +16,10 @@ const Index = ({ user, userManage, dispatch, loading, location }) => {
   return (
     <div className={styles.content}>
        <UserList userList={userManage.userList} />
-       <RoleList roleList={userManage.roleList} />
+       <RoleList
+        rightsList={userManage.rightsList}
+        roleList={userManage.roleList}
+       />
     </div>
   )
 }

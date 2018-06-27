@@ -12,11 +12,13 @@ import {  getModels } from 'services/paramsBrowse'
 import {
   userListService,
   roleListService,
+  getRightsService,
 } from 'services/user'
 
 import { config } from 'utils'
 
 import { pageModel } from 'models/common'
+import { isYieldExpression } from 'typescript';
 
 const { downloadZipUrl } = config.api
 const getRandomColor = () => {
@@ -29,6 +31,7 @@ export default modelExtend(pageModel, {
   state: {
     userList: [],
     roleList: [],
+    rightsList: [],
     models: [],  // 型号下拉列表数据
     selectedRowKeys: [],
     list: [],
@@ -70,12 +73,27 @@ export default modelExtend(pageModel, {
           dispatch({ type: 'roleListModel',
             payload: { },
           });
+          dispatch({
+            type: 'getRightsModel',
+            payload: {}
+          });
         }
       })
     },
   },
 
   effects: {
+    * getRightsModel({ payload }, { call, put }) {
+      const data = yield call(getRightsService);
+      if (data.result == 0) {
+        yield put({
+          type: 'updateState',
+          payload: {
+            rightsList: data.data,
+          }
+        });
+      }
+    },
     * roleListModel({ payload }, { call, put }) {
       const data = yield call(roleListService);
       if (data.result == 0) {
