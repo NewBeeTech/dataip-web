@@ -21,6 +21,7 @@ module.exports = {
     getRoleRightsAPI: `${APIV3}/role/getRoleRights`, // 查询角色的权限 
     addRoleAPI: `${APIV3}/role/add`, // 新增角色 
     updateRoleAPI: `${APIV3}/role/update`, // 更新角色 
+    deleteRoleAPI: `${APIV3}/role/delete`, // 删除角色 
     getRightsAPI: `${APIV3}/role/getRights`, // 查询所有权限
     roleListAPI: `${APIV3}/role/list`, // 查询所有角色信息
     userListAPI: `${APIV3}/user/list`, // 查询所有用户信息

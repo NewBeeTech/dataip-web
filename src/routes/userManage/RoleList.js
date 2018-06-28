@@ -65,7 +65,13 @@ class RoleList extends React.Component {
             </a> | <a
                 style={{ color: '#1372d8' }}
                 onClick={(e) => {
-                  e.preventDefault();
+                  this.props.dispatch({
+                    type: 'userManage/deleteRoleModel',
+                    payload: {
+                      roleId: data.roleId,
+                      roleName: data.roleName,
+                    }
+                  })
                 }}
               >
                 删除

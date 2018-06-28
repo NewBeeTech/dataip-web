@@ -13,7 +13,16 @@ const {
   addRoleAPI,
   updateRoleAPI,
   getRoleRightsAPI,
+  deleteRoleAPI,
 } = api
+
+export async function deleteRoleService(params) {
+  return request({
+    url: deleteRoleAPI,
+    method: 'POST',
+    data: params,
+  });
+}
 
 export async function updateRoleService(params) {
   return request({
