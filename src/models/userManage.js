@@ -14,6 +14,8 @@ import {
   roleListService,
   getRightsService,
   addRoleService,
+  updateRoleService,
+  getRoleRightsService,
 } from 'services/user'
 
 import { config } from 'utils'
@@ -34,6 +36,12 @@ export default modelExtend(pageModel, {
     roleList: [],
     rightsList: [],
     showRoleModal: false,
+    editRoleInfo: {
+      rightsIdList: [],
+      roleName: '',
+      oldName: '',
+    },
+
     models: [],  // 型号下拉列表数据
     selectedRowKeys: [],
     list: [],
@@ -56,8 +64,8 @@ export default modelExtend(pageModel, {
         const {name, value} = payload;
         return {
             ...state,
-            paramsForm: {
-                ...state.paramsForm,
+            editRoleInfo: {
+                ...state.editRoleInfo,
                 [name]: value
             }
         }
@@ -83,8 +91,24 @@ export default modelExtend(pageModel, {
       })
     },
   },
-
   effects: {
+    * getRoleRightsModel({ payload }, { call, put }) {
+      const data = yield call(getRoleRightsService, payload);
+      if (data.result == 0) {
+        yield put({
+          type: 'updateState',
+          payload: {
+            showRoleModal: true,
+            editRoleInfo: {
+              roleId: payload.roleId,
+              oldName: payload.roleName,
+              roleName: payload.roleName,
+              rightsIdList: data.data.roleRightsList,
+            }
+          }
+        });
+      }
+    },
     * addRoleModel({ payload }, { call, put }) {
       const data = yield call(addRoleService, payload);
       if (data.result == 0) {
@@ -94,10 +118,33 @@ export default modelExtend(pageModel, {
           payload: {
             showRoleModal: false,
             roleList: data.data,
+            editRoleInfo: {
+              rightsIdList: [],
+              roleName: '',
+              oldName: '',
+            },
           }
         });
       }
     },
+    * updateRoleModel({ payload }, { call, put }) {
+    const data = yield call(updateRoleService, payload);
+    if (data.result == 0) {
+      message.success('更新成功');
+      yield put({
+        type: 'updateState',
+        payload: {
+          showRoleModal: false,
+          roleList: data.data,
+          editRoleInfo: {
+            rightsIdList: [],
+            roleName: '',
+            oldName: '',
+          },
+        }
+      });
+    }
+  },
     * getRightsModel({ payload }, { call, put }) {
       const data = yield call(getRightsService);
       if (data.result == 0) {

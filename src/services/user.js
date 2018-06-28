@@ -11,7 +11,25 @@ const {
   roleListAPI,
   getRightsAPI,
   addRoleAPI,
+  updateRoleAPI,
+  getRoleRightsAPI,
 } = api
+
+export async function updateRoleService(params) {
+  return request({
+    url: updateRoleAPI,
+    method: 'POST',
+    data: params,
+  });
+}
+
+export async function getRoleRightsService(params) {
+  return request({
+    url: getRoleRightsAPI,
+    method: 'POST',
+    data: params,
+  });
+}
 
 export async function addRoleService(params) {
   return request({
@@ -24,7 +42,7 @@ export async function addRoleService(params) {
 export async function getRightsService(params) {
   return request({
     url: getRightsAPI,
-    method: 'POST',
+    method: 'post',
     data: params,
   });
 }

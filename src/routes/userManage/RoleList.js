@@ -49,8 +49,16 @@ class RoleList extends React.Component {
               <a
                 style={{ color: '#1372d8' }}
                 onClick={(e) => {
-                  e.preventDefault();
-                  this.setState({ visible: true })
+                  this.props.dispatch({
+                    type: 'userManage/getRoleRightsModel',
+                    payload: {
+                      roleId: data.roleId,
+                      oldName: null,
+                      operator: null,
+                      rightsIdList: [],
+                      roleName: data.roleName,
+                    }
+                  });
                 }}
               >
                 编辑
@@ -70,9 +78,16 @@ class RoleList extends React.Component {
     return dataSource;
   }
   onCheck(checkedKeys, e) {
-    this.setState({
-      rightsIdList: checkedKeys,
+    this.props.dispatch({
+      type: 'userManage/updateParamForm',
+      payload: {
+        name: 'rightsIdList',
+        value: checkedKeys,
+      }
     });
+    // this.setState({
+    //   rightsIdList: checkedKeys,
+    // });
   }
   renderRightTree() {
     const rightsList = this.props.rightsList;
@@ -90,13 +105,17 @@ class RoleList extends React.Component {
         </TreeNode>
       )
     });
+    let rightsIdList = this.props.editRoleInfo.rightsIdList || [];
+    rightsIdList = rightsIdList.map(item => item+'');
     return (
       <Tree
         checkable
+        checkedKeys={rightsIdList}
+        // expandedKeys={this.props.editRoleInfo.rightsIdList.map(item => item+'')}
         // defaultExpandedKeys={['0-0-0', '0-0-1']}
         // defaultSelectedKeys={['0-0-0', '0-0-1']}
         // defaultCheckedKeys={['0-0-0', '0-0-1']}
-        onSelect={this.onSelect}
+        // onSelect={this.onSelect}
         onCheck={(checkedKeys, e) => this.onCheck(checkedKeys, e)}
       >
         {treeNode}
@@ -138,24 +157,36 @@ class RoleList extends React.Component {
           title="角色编辑"
           visible={this.props.showRoleModal}
           onOk={() => {
-            console.log({
-              roleName: this.state.roleName,
-              rightsIdList: this.state.rightsIdList,
-            });
-            
-            this.props.dispatch({
-              type: 'userManage/addRoleModel',
-              payload: {
-                roleName: this.state.roleName,
-                rightsIdList: this.state.rightsIdList,
-              }
-            });
+            if (this.props.editRoleInfo.oldName) { // 更新
+              this.props.dispatch({
+                type: 'userManage/updateRoleModel',
+                payload: {
+                  roleId: this.props.editRoleInfo.roleId,
+                  oldName: this.props.editRoleInfo.oldName,
+                  roleName: this.props.editRoleInfo.roleName,
+                  rightsIdList: this.props.editRoleInfo.rightsIdList,
+                }
+              });
+            } else { // 创建
+              this.props.dispatch({
+                type: 'userManage/addRoleModel',
+                payload: {
+                  roleName: this.props.editRoleInfo.roleName,
+                  rightsIdList: this.props.editRoleInfo.rightsIdList,
+                }
+              });
+            }
           }}
           onCancel={() => { 
             this.props.dispatch({
               type: 'userManage/updateState',
               payload: {
                 showRoleModal: false,
+                editRoleInfo: {
+                  rightsIdList: [],
+                  roleName: '',
+                  oldName: '',
+                },
               }
             });
           }}
@@ -173,10 +204,14 @@ class RoleList extends React.Component {
             >
               <Input
                 placeholder="角色名称"
-                value={this.state.roleName}
+                value={this.props.editRoleInfo.roleName}
                 onChange={e => {
-                  this.setState({
-                    roleName: e.target.value,
+                  this.props.dispatch({
+                    type: 'userManage/updateParamForm',
+                    payload: {
+                      name: 'roleName',
+                      value: e.target.value,
+                    }
                   });
                 }}
               />

@@ -21,6 +21,7 @@ const Index = ({ user, userManage, dispatch, loading, location }) => {
         dispatch={dispatch}
         rightsList={userManage.rightsList}
         roleList={userManage.roleList}
+        editRoleInfo={userManage.editRoleInfo}
        />
     </div>
   )
