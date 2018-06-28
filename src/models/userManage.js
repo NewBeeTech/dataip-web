@@ -33,6 +33,7 @@ export default modelExtend(pageModel, {
     userList: [],
     roleList: [],
     rightsList: [],
+    showRoleModal: false,
     models: [],  // 型号下拉列表数据
     selectedRowKeys: [],
     list: [],
@@ -88,6 +89,13 @@ export default modelExtend(pageModel, {
       const data = yield call(addRoleService, payload);
       if (data.result == 0) {
         message.success('创建成功');
+        yield put({
+          type: 'updateState',
+          payload: {
+            showRoleModal: false,
+            roleList: data.data,
+          }
+        });
       }
     },
     * getRightsModel({ payload }, { call, put }) {

@@ -113,7 +113,16 @@ class RoleList extends React.Component {
         {/*  角色列表  */}
         <div className={styles.tableTitle}>
           <div>角色列表</div>
-          <Button type="primary" onClick={() => { this.setState({ visible: true }) }}>新增角色</Button>
+          <Button type="primary" onClick={() => {
+            this.props.dispatch({
+              type: 'userManage/updateState',
+              payload: {
+                showRoleModal: true,
+              }
+            })
+          }}>
+            新增角色
+          </Button>
         </div>
         <Table
           size="middle"
@@ -124,9 +133,10 @@ class RoleList extends React.Component {
         />
 
         {/*  角色新增或编辑  */}
-        <Modal
+        { this.props.showRoleModal && 
+          <Modal
           title="角色编辑"
-          visible={this.state.visible}
+          visible={this.props.showRoleModal}
           onOk={() => {
             console.log({
               roleName: this.state.roleName,
@@ -141,7 +151,14 @@ class RoleList extends React.Component {
               }
             });
           }}
-          onCancel={() => { this.setState({ visible: false }) }}
+          onCancel={() => { 
+            this.props.dispatch({
+              type: 'userManage/updateState',
+              payload: {
+                showRoleModal: false,
+              }
+            });
+          }}
           okText="确认"
           cancelText="取消"
           width="600"
@@ -182,6 +199,7 @@ class RoleList extends React.Component {
             </FormItem>
           </Form>
         </Modal>
+        }
       </div>
     );
   }

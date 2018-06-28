@@ -17,6 +17,7 @@ const Index = ({ user, userManage, dispatch, loading, location }) => {
     <div className={styles.content}>
        <UserList userList={userManage.userList} />
        <RoleList
+        showRoleModal={userManage.showRoleModal}
         dispatch={dispatch}
         rightsList={userManage.rightsList}
         roleList={userManage.roleList}
