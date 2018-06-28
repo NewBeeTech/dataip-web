@@ -32,6 +32,10 @@ class RoleList extends React.Component {
       visible: false,
     }
   }
+  state = {
+    rightsIdList: [],
+    roleName: '',
+  }
   _renderDataSource(datas) {
     const dataSource = [];
     if (datas) {
@@ -65,18 +69,23 @@ class RoleList extends React.Component {
     }
     return dataSource;
   }
+  onCheck(checkedKeys, e) {
+    this.setState({
+      rightsIdList: checkedKeys,
+    });
+  }
   renderRightTree() {
     const rightsList = this.props.rightsList;
     const treeNode = rightsList.map(rights => {
       const subRightsList = rights.children;
       const subTreeNode = subRightsList.map(right => {
         return (
-          <TreeNode title={right.function} key={right.function}>
+          <TreeNode title={right.function} key={right.id}>
           </TreeNode> 
         )
       })
       return (
-        <TreeNode title={rights.function} key={rights.function}>
+        <TreeNode title={rights.function} key={rights.id}>
           {subTreeNode}
         </TreeNode>
       )
@@ -88,7 +97,7 @@ class RoleList extends React.Component {
         // defaultSelectedKeys={['0-0-0', '0-0-1']}
         // defaultCheckedKeys={['0-0-0', '0-0-1']}
         onSelect={this.onSelect}
-        onCheck={this.onCheck}
+        onCheck={(checkedKeys, e) => this.onCheck(checkedKeys, e)}
       >
         {treeNode}
       </Tree>
@@ -118,7 +127,20 @@ class RoleList extends React.Component {
         <Modal
           title="角色编辑"
           visible={this.state.visible}
-          onOk={() => { }}
+          onOk={() => {
+            console.log({
+              roleName: this.state.roleName,
+              rightsIdList: this.state.rightsIdList,
+            });
+            
+            this.props.dispatch({
+              type: 'userManage/addRoleModel',
+              payload: {
+                roleName: this.state.roleName,
+                rightsIdList: this.state.rightsIdList,
+              }
+            });
+          }}
           onCancel={() => { this.setState({ visible: false }) }}
           okText="确认"
           cancelText="取消"
@@ -134,6 +156,12 @@ class RoleList extends React.Component {
             >
               <Input
                 placeholder="角色名称"
+                value={this.state.roleName}
+                onChange={e => {
+                  this.setState({
+                    roleName: e.target.value,
+                  });
+                }}
               />
             </FormItem>
             <FormItem

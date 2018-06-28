@@ -13,6 +13,7 @@ import {
   userListService,
   roleListService,
   getRightsService,
+  addRoleService,
 } from 'services/user'
 
 import { config } from 'utils'
@@ -83,6 +84,12 @@ export default modelExtend(pageModel, {
   },
 
   effects: {
+    * addRoleModel({ payload }, { call, put }) {
+      const data = yield call(addRoleService, payload);
+      if (data.result == 0) {
+        message.success('创建成功');
+      }
+    },
     * getRightsModel({ payload }, { call, put }) {
       const data = yield call(getRightsService);
       if (data.result == 0) {

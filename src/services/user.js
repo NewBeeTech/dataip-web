@@ -1,4 +1,5 @@
 import { request, config } from 'utils'
+import { asyncComponent } from 'react-async-component';
 
 const { api } = config
 const {
@@ -9,7 +10,16 @@ const {
   userListAPI,
   roleListAPI,
   getRightsAPI,
+  addRoleAPI,
 } = api
+
+export async function addRoleService(params) {
+  return request({
+    url: addRoleAPI,
+    method: 'POST',
+    data: params,
+  });
+}
 
 export async function getRightsService(params) {
   return request({
