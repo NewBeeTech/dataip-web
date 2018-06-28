@@ -84,9 +84,9 @@ class RoleList extends React.Component {
     return (
       <Tree
         checkable
-        defaultExpandedKeys={['0-0-0', '0-0-1']}
-        defaultSelectedKeys={['0-0-0', '0-0-1']}
-        defaultCheckedKeys={['0-0-0', '0-0-1']}
+        // defaultExpandedKeys={['0-0-0', '0-0-1']}
+        // defaultSelectedKeys={['0-0-0', '0-0-1']}
+        // defaultCheckedKeys={['0-0-0', '0-0-1']}
         onSelect={this.onSelect}
         onCheck={this.onCheck}
       >
@@ -140,16 +140,17 @@ class RoleList extends React.Component {
               label="权限列表"
               {...formItemLayout}
             >
-              <Tree
+              {this.renderRightTree()}
+              {/* <Tree
                 checkable
-                defaultExpandedKeys={['0-0-0', '0-0-1']}
-                defaultSelectedKeys={['0-0-0', '0-0-1']}
-                defaultCheckedKeys={['0-0-0', '0-0-1']}
+                // defaultExpandedKeys={['0-0-0', '0-0-1']}
+                // defaultSelectedKeys={['0-0-0', '0-0-1']}
+                // defaultCheckedKeys={['0-0-0', '0-0-1']}
                 onSelect={this.onSelect}
                 onCheck={this.onCheck}
               >
                 {this.renderRightTree()}
-              </Tree>
+              </Tree> */}
             </FormItem>
           </Form>
         </Modal>
